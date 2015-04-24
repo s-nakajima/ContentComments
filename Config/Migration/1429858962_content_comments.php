@@ -13,7 +13,7 @@
  * ContentComments CakeMigration
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @package NetCommons\Videos\Config\Migration
+ * @package NetCommons\ContentComments\Config\Migration
  */
 class ContentComments extends CakeMigration {
 

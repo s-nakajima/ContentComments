@@ -1,6 +1,6 @@
 <?php
 /**
- * Schema file
+ * ContentCommentFixture
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
@@ -10,46 +10,16 @@
  */
 
 /**
- * ContentCommentsSchema CakeSchema
- *
- * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @package NetCommons\ContentComments\Config\Schema
- * @SuppressWarnings(PHPMD.LongVariable)
+ * Summary for ContentCommentFixture
  */
-class ContentCommentSchema extends CakeSchema {
+class ContentCommentFixture extends CakeTestFixture {
 
 /**
- * Database connection
- *
- * @var string
- */
-	public $connection = 'master';
-
-/**
- * before
- *
- * @param array $event savent
- * @return bool
- */
-	public function before($event = array()) {
-		return true;
-	}
-
-/**
- * after
- *
- * @param array $event savent
- * @return bool
- */
-	public function after($event = array()) {
-	}
-
-/**
- * content_comments table
+ * Fields
  *
  * @var array
  */
-	public $content_comments = array(
+	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary', 'comment' => 'ID |  |  | '),
 		'block_key' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_general_ci', 'comment' => 'block key | ブロックKey | blocks.key | ', 'charset' => 'utf8'),
 		'plugin_key' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_general_ci', 'comment' => 'plugin key | プラグインKey | plugins.key | ', 'charset' => 'utf8'),
@@ -67,6 +37,27 @@ class ContentCommentSchema extends CakeSchema {
 			'fk_content_comments_blocks1_idx' => array('column' => 'block_key', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
+
+/**
+ * Records
+ *
+ * @var array
+ */
+	public $records = array(
+		array(
+			'id' => 1,
+			'block_key' => 'Lorem ipsum dolor sit amet',
+			'plugin_key' => 'Lorem ipsum dolor sit amet',
+			'content_key' => 'Lorem ipsum dolor sit amet',
+			'status' => 1,
+			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+			'created_user' => 1,
+			'created' => '2015-04-24 16:45:16',
+			'modified_user' => 1,
+			'modified' => '2015-04-24 16:45:16',
+			'blocks_id' => 1
+		),
 	);
 
 }
