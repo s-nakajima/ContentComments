@@ -1,5 +1,6 @@
 {
     "name": "netcommons/content-comments",
+    "version": "3.0.0",
     "description": "ContentComments for NetCommons Plugin",
     "homepage": "http://www.netcommons.org/",
     "extra": {
@@ -32,7 +33,7 @@
         }
     ],
     "type":        "cakephp-plugin",
-    "keywords":    ["cakephp", "content-comments"],
+    "keywords":    ["cakephp", "content-comments", "netcommons"],
     "config": {
         "vendor-dir": "vendors"
     }
