@@ -1,7 +1,7 @@
 # ContentComments
 ContentComments for NetCommons3 
 
-[![Build Status](https://travis-ci.org/NetCommons3/ContentComments.svg?branch=master)](https://travis-ci.org/NetCommons3/ContentComments)
+[![Build Status](https://api.travis-ci.org/NetCommons3/ContentComments.svg?branch=master)](https://travis-ci.org/NetCommons3/ContentComments)
 [![Coverage Status](https://img.shields.io/coveralls/NetCommons3/ContentComments.svg)](https://coveralls.io/r/NetCommons3/ContentComments?branch=master)
 
 | dependencies | status |
