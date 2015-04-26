@@ -81,16 +81,6 @@ class ContentComment extends ContentCommentsAppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'blocks_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -100,13 +90,20 @@ class ContentComment extends ContentCommentsAppModel {
  *
  * @var array
  */
-	public $belongsTo = array(
-		'Blocks' => array(
-			'className' => 'Blocks',
-			'foreignKey' => 'blocks_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+	//public $belongsTo = array();
+
+	/**
+	 * コンテンツコメントデータ取得
+	 *
+	 * @param array $conditions conditions
+	 * @return array
+	 */
+	public function geContentComments($conditions) {
+		return $this->find('all', array(
+				'conditions' => $conditions,
+				'order' => $this->alias . '.created DESC',
+			)
+		);
+	}
+
 }

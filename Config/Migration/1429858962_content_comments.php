@@ -43,7 +43,6 @@ class ContentComments extends CakeMigration {
 					'created' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'created datetime | 作成日時 |  | '),
 					'modified_user' => array('type' => 'integer', 'null' => true, 'default' => '0', 'comment' => 'modified user | 更新者 | users.id | '),
 					'modified' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'modified datetime | 更新日時 |  | '),
-					'blocks_id' => array('type' => 'integer', 'null' => false, 'default' => null),
 					'indexes' => array(
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 						'fk_comments_plugins1_idx' => array('column' => 'plugin_key', 'unique' => 0),

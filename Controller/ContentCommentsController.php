@@ -20,6 +20,20 @@ App::uses('ContentCommentsAppController', 'ContentComments.Controller');
 class ContentCommentsController extends ContentCommentsAppController {
 
 /**
+ * start limit
+ *
+ * @var int
+ */
+	const START_LIMIT = 5;
+
+/**
+ * max limit
+ *
+ * @var int
+ */
+	const MAX_LIMIT = 100;
+
+/**
  * use model
  *
  * @var array
