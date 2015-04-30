@@ -10,52 +10,60 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 ?>
+<?php echo $this->Html->css('/content_comments/css/style.css', false); ?>
 
-<div class="row">
-	<div class="col-xs-12">
-	<label class="control-label" for="CommentComment">
-		<span class="glyphicon glyphicon-comment"></span>
-		<?php echo sprintf(__d('content_comments', '%sコメント'), '999') ?>
-	</label>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-2">
-		<?php /* アバター */ ?>
-		<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
-			'alt' => $video['userAttributesUser']['value'],
-			'width' => '60',
-			'height' => '60',
-		)); ?>
-	</div>
-	<div class="col-xs-10">
-		<div class="form-group" ng-class="workflow.input.class()">
-			<div class="input textarea">
-				<?php echo $this->Form->textarea(
-					'Comment.comment',
-					array(
-						'class' => 'form-control nc-noresize',
-						'rows' => 2,
-					)) ?>
-			</div>
+<div class="content-comments">
+	<div class="comment form-group">
+	<div class="row">
+		<div class="col-xs-12">
+		<label class="control-label" for="CommentComment">
+			<span class="glyphicon glyphicon-comment"></span>
+			<?php echo sprintf(__d('content_comments', '%sコメント'), '999') ?>
+		</label>
 		</div>
-
-		<div class="has-error">
-			<?php if ($this->validationErrors['Comment']): ?>
-			<?php foreach ($this->validationErrors['Comment']['comment'] as $message): ?>
-				<div class="help-block">
-					<?php echo $message ?>
+	</div>
+	<div class="row">
+		<div class="col-xs-2">
+			<?php /* アバター 暫定対応(;'∀') */ ?>
+			<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
+				'alt' => $video['userAttributesUser']['value'],
+				'width' => '60',
+				'height' => '60',
+			)); ?>
+		</div>
+		<div class="col-xs-10">
+			<div class="form-group" ng-class="workflow.input.class()">
+				<div class="input textarea">
+					<?php echo $this->Form->textarea(
+						'contentComment.comment',
+						array(
+							'class' => 'form-control nc-noresize',
+							'rows' => 2,
+					)); ?>
 				</div>
-			<?php endforeach ?>
-			<?php endif ?>
-		</div>
+			</div>
 
-		<div class="row">
-			<div class="col-xs-12 text-center">
-				<a href="<?php echo $this->Html->url('#'); ?>" class="btn btn-success btn-sm">
-					<?php echo __d('content_comments', 'コメントする') ?>
-				</a>
+			<div class="has-error">
+				<?php if ($this->validationErrors['contentComment']): ?>
+				<?php foreach ($this->validationErrors['contentComment']['comment'] as $message): ?>
+					<div class="help-block">
+						<?php echo $message ?>
+					</div>
+				<?php endforeach ?>
+				<?php endif ?>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<?php echo $this->Form->button(
+						__d('content_comments', 'コメントする'),
+						array(
+							'class' => 'btn btn-success btn-sm',
+							'name' => 'add',
+					)); ?>
+				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </div>

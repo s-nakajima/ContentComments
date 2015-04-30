@@ -11,21 +11,35 @@
  */
 
 App::uses('ContentCommentsController', 'ContentComments.Controller');
+echo $this->Html->css('/content_comments/css/style.css', false);
 ?>
 
 <?php if ($contentComments): ?>
-<div class="panel panel-default">
-	<div class="panel-body workflow-comments">
+	<div class="content-comments">
 		<?php foreach ($contentComments as $i => $contentComment): ?>
 		<div class="comment form-group <?php echo $i >= ContentCommentsController::START_LIMIT ? 'hidden' : '' ?>">
-			<div>
-				<a href="" ng-click="user.showUser(<?php echo $contentComment['trackableCreator']['id'] ?>)">
-					<b><?php echo $contentComment['trackableCreator']['username'] ?></b>
-				</a>
-				<small class="text-muted"><?php echo $contentComment['comment']['created'] ?></small>
-			</div>
-			<div>
-				<?php echo nl2br($contentComment['comment']['comment']) ?>
+			<div class="row">
+				<div class="col-xs-2">
+					<?php /* アバター 暫定対応(;'∀') */ ?>
+					<a href="" ng-click="user.showUser(<?php echo $contentComment['trackableCreator']['id'] ?>)">
+						<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
+							'alt' => $video['userAttributesUser']['value'],
+							'width' => '60',
+							'height' => '60',
+						)); ?>
+					</a>
+				</div>
+				<div class="col-xs-10">
+					<div>
+						<a href="" ng-click="user.showUser(<?php echo $contentComment['trackableCreator']['id'] ?>)">
+							<b><?php echo $contentComment['trackableCreator']['username'] ?></b>
+						</a>
+						<small class="text-muted"><?php echo $contentComment['contentComment']['created'] ?></small>
+					</div>
+					<div>
+						<?php echo nl2br($contentComment['contentComment']['comment']) ?>
+					</div>
+				</div>
 			</div>
 		</div>
 		<?php endforeach ?>
@@ -37,5 +51,5 @@ App::uses('ContentCommentsController', 'ContentComments.Controller');
 			</button>
 		</div>
 	</div>
-</div>
 <?php endif ?>
+&nbsp;

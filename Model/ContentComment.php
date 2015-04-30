@@ -1,6 +1,6 @@
 <?php
 /**
- * ContentComment Model
+ * コンテンツコメント Model
  *
  * @property Blocks $Blocks
  *
@@ -92,13 +92,13 @@ class ContentComment extends ContentCommentsAppModel {
  */
 	//public $belongsTo = array();
 
-	/**
-	 * コンテンツコメントデータ取得
-	 *
-	 * @param array $conditions conditions
-	 * @return array
-	 */
-	public function geContentComments($conditions) {
+/**
+ * コンテンツコメント データ取得
+ *
+ * @param array $conditions conditions
+ * @return array
+ */
+	public function getContentComments($conditions) {
 		return $this->find('all', array(
 				'conditions' => $conditions,
 				'order' => $this->alias . '.created DESC',
@@ -106,4 +106,44 @@ class ContentComment extends ContentCommentsAppModel {
 		);
 	}
 
+/**
+ * コンテンツコメント データ保存
+ *
+ * @param array $data received post data
+ * @return mixed On success Model::$data if its not empty or true, false on failure
+ * @throws InternalErrorException
+ */
+	public function saveContentComments($data) {
+		$this->loadModels(array(
+			'ContentComment' => 'ContentComments.ContentComment',
+		));
+
+		//トランザクションBegin
+		$dataSource = $this->getDataSource();
+		$dataSource->begin();
+
+		try {
+			// 値をセット
+			$this->set($data);
+
+			// 入力チェック
+			$this->validates();
+			if ($this->validationErrors) {
+				return false;
+			}
+
+			$contentComment = $this->save(null, false);
+			if (!$contentComment) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$dataSource->commit();
+
+		} catch (InternalErrorException $ex) {
+			$dataSource->rollback();
+			CakeLog::write(LOG_ERR, $ex);
+			throw $ex;
+		}
+		return $contentComment;
+	}
 }
