@@ -19,11 +19,18 @@ App::uses('ContentCommentsAppModel', 'ContentComments.Model');
 class ContentComment extends ContentCommentsAppModel {
 
 /**
- * Use database config
+ * 公開状況 公開中
  *
  * @var string
  */
-	public $useDbConfig = 'master';
+	const STATUS_PUBLISHED = '1';
+
+/**
+ * 公開状況 未承認
+ *
+ * @var string
+ */
+	const STATUS_APPROVED = '2';
 
 /**
  * Validation rules

@@ -8,14 +8,16 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
+.content-comments {
+	padding: 0em 1em;
+}
+.content-comments > .comment-form {
+	padding: 1em 0em;
+}
 .content-comments > .comment {
-	/* border-top: 1px solid #ddd; */
-	padding: 0.5em 1em;
+	border-top: 1px solid #ddd;
+	padding: 1em 0em;
 }
-.content-comments > .comment:first-child {
-	/* border: 0 none; */
+.content-comments > .comment-more {
+	padding-bottom: 1em;
 }
-
-/* .content-comments-form > .comment {
-	padding: 0.5em 1em;
-} */

@@ -8,10 +8,10 @@
  * ContentComments Javascript
  *
  * @param {string} Controller name
- * @param {function(scope, http, sce, timeout)} Controller
+ * @param {function(scope)} Controller
  */
 NetCommonsApp.controller('ContentComments',
-                         function($scope , $http, $sce, $timeout) {
+                         function($scope) {
 
       /**
        * Initialize
@@ -21,4 +21,15 @@ NetCommonsApp.controller('ContentComments',
       $scope.initialize = function() {
 
       };
+
+      /**
+       * Initialize
+       *
+       * @return {void}
+       */
+      $scope.more = function() {
+        $('div.comment:hidden').removeClass('hidden');
+        $('button.more').hide(0);
+      };
     });
+
