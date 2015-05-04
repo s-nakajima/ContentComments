@@ -23,7 +23,7 @@ NetCommonsApp.controller('ContentComments',
       };
 
       /**
-       * Initialize
+       * もっと見る
        *
        * @return {void}
        */

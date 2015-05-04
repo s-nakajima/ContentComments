@@ -9,6 +9,10 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+/**
+ * @param string $formName フォーム名
+ */
 ?>
 <?php echo $this->Html->css('/content_comments/css/style.css', false); ?>
 
@@ -32,37 +36,43 @@
 				)); ?>
 			</div>
 			<div class="col-xs-10">
-				<div class="form-group" ng-class="workflow.input.class()">
-					<div class="input textarea">
-						<?php echo $this->Form->textarea(
-							'contentComment.comment',
-							array(
-								'class' => 'form-control nc-noresize',
-								'rows' => 2,
-						)); ?>
-					</div>
-				</div>
-
-				<div class="has-error">
-					<?php if ($this->validationErrors['contentComment']): ?>
-					<?php foreach ($this->validationErrors['contentComment']['comment'] as $message): ?>
-						<div class="help-block">
-							<?php echo $message ?>
+				<?php echo $this->Form->create($formName, array(
+					'name' => 'form',
+				)); ?>
+					<div class="form-group">
+						<div class="input textarea">
+							<?php echo $this->Form->textarea(
+								'contentComment.comment',
+								array(
+									'class' => 'form-control nc-noresize',
+									'rows' => 2,
+							)); ?>
 						</div>
-					<?php endforeach ?>
-					<?php endif ?>
-				</div>
-
-				<div class="row">
-					<div class="col-xs-12 text-center">
-						<?php echo $this->Form->button(
-							__d('content_comments', 'コメントする'),
-							array(
-								'class' => 'btn btn-success btn-sm',
-								'name' => 'add',
-						)); ?>
 					</div>
-				</div>
+
+					<div class="has-error">
+						<?php if ($this->validationErrors['contentComment']): ?>
+							<?php foreach ($this->validationErrors['contentComment'] as $validationErrors): ?>
+								<?php foreach ($validationErrors as $message): ?>
+									<div class="help-block">
+										<?php echo $message ?>
+									</div>
+								<?php endforeach ?>
+							<?php endforeach ?>
+						<?php endif ?>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 text-center">
+							<?php echo $this->Form->button(
+								__d('content_comments', 'コメントする'),
+								array(
+									'class' => 'btn btn-success btn-sm',
+									'name' => 'process_' . ContentCommentsComponent::PROCESS_ADD,
+							)); ?>
+						</div>
+					</div>
+				<?php echo $this->Form->end(); ?>
 			</div>
 		</div>
 	</div>

@@ -37,58 +37,7 @@ class ContentComment extends ContentCommentsAppModel {
  *
  * @var array
  */
-	public $validate = array(
-		'block_key' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'plugin_key' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'content_key' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'status' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'comment' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
+	public $validate = array();
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -98,6 +47,55 @@ class ContentComment extends ContentCommentsAppModel {
  * @var array
  */
 	//public $belongsTo = array();
+
+/**
+ * Called during validation operations, before validation. Please note that custom
+ * validation rules can be defined in $validate.
+ *
+ * @param array $options Options passed from Model::save().
+ * @return bool True if validate operation should continue, false to abort
+ * @link http://book.cakephp.org/2.0/en/models/callback-methods.html#beforevalidate
+ * @see Model::save()
+ */
+	public function beforeValidate($options = array()) {
+		$this->validate = Hash::merge($this->validate, array(
+			'block_key' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
+					'message' => __d('net_commons', 'Invalid request.'),
+					'required' => true,
+				),
+			),
+			'plugin_key' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
+					'message' => __d('net_commons', 'Invalid request.'),
+					'required' => true,
+				),
+			),
+			'content_key' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
+					'message' => __d('net_commons', 'Invalid request.'),
+					'required' => true,
+				),
+			),
+			'status' => array(
+				'numeric' => array(
+					'rule' => array('numeric'),
+					'message' => __d('net_commons', 'Invalid request.'),
+				),
+			),
+			'comment' => array(
+				'notEmpty' => array(
+					'rule' => array('notEmpty'),
+					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('content_comments', 'Comment')),
+				),
+			),
+		));
+
+		return parent::beforeValidate($options);
+	}
 
 /**
  * コンテンツコメント データ取得
@@ -120,7 +118,7 @@ class ContentComment extends ContentCommentsAppModel {
  * @return mixed On success Model::$data if its not empty or true, false on failure
  * @throws InternalErrorException
  */
-	public function saveContentComments($data) {
+	public function saveContentComment($data) {
 		$this->loadModels(array(
 			'ContentComment' => 'ContentComments.ContentComment',
 		));
@@ -152,5 +150,39 @@ class ContentComment extends ContentCommentsAppModel {
 			throw $ex;
 		}
 		return $contentComment;
+	}
+
+/**
+ * コンテンツコメント データ削除
+ *
+ * @param int $id ID
+ * @return mixed On success Model::$data if its not empty or true, false on failure
+ * @throws InternalErrorException
+ */
+	public function deleteContentComment($id) {
+		if (empty($id)) {
+			return false;
+		}
+		$this->loadModels(array(
+			'ContentComment' => 'ContentComments.ContentComment',
+		));
+
+		//トランザクションBegin
+		$dataSource = $this->getDataSource();
+		$dataSource->begin();
+
+		try {
+			if (! $this->delete($id, false)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+
+			$dataSource->commit();
+
+		} catch (InternalErrorException $ex) {
+			$dataSource->rollback();
+			CakeLog::write(LOG_ERR, $ex);
+			throw $ex;
+		}
+		return true;
 	}
 }
