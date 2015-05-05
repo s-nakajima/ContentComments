@@ -10,45 +10,15 @@
  */
 
 App::uses('ContentComment', 'ContentComments.Model');
+App::uses('ContentCommentAppTest', 'ContentComments.Test/Case/Model');
 
 /**
  * ContentComment Test Case
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @package app.Plugin.ContentComments.Model
+ * @package NetCommons\ContentComments\Test\Case\Model
  */
-class ContentCommentTest extends CakeTestCase {
-
-/**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = array(
-		'plugin.content_comments.content_comment',
-		'plugin.content_comments.block',
-	);
-
-/**
- * setUp method
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-		$this->ContentComment = ClassRegistry::init('ContentComments.ContentComment');
-	}
-
-/**
- * tearDown method
- *
- * @return void
- */
-	public function tearDown() {
-		unset($this->ContentComment);
-
-		parent::tearDown();
-	}
+class ContentCommentTest extends ContentCommentAppTest {
 
 /**
  * testFindById
