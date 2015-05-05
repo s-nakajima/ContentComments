@@ -21,7 +21,7 @@ App::uses('ContentCommentAppTest', 'ContentComments.Test/Case/Model');
 class ContentCommentExceptionTest extends ContentCommentAppTest {
 
 /**
- * block_keyなしエラーテスト 未完成
+ * データ保存 例外テスト 未完成(;'∀')
  *
  * @return void
  */
@@ -41,5 +41,17 @@ class ContentCommentExceptionTest extends ContentCommentAppTest {
 		$this->ContentComment->saveContentComment($data);
 		//$rtn = $this->ContentComment->saveContentComment($data);
 		//var_dump($rtn);
+	}
+
+/**
+ * データ削除 例外テスト
+ *
+ * @return void
+ */
+	public function testDeleteContentCommentException() {
+		$this->setExpectedException('InternalErrorException');
+
+		$id = -1;
+		$this->ContentComment->deleteContentComment($id);
 	}
 }

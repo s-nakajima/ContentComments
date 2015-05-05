@@ -81,7 +81,7 @@ class ContentCommentsComponent extends Component {
  */
 	public function comment($pluginKey, $contentKey) {
 		// コンテンツコメントの処理名をパースして取得
-		if (!$process = $this->parseProcess()) {
+		if (!$process = $this->__parseProcess()) {
 			return false;
 		}
 
@@ -91,7 +91,7 @@ class ContentCommentsComponent extends Component {
 			$process == $this::PROCESS_APPROVED) {
 
 			// dataの準備
-			$data = $this->readyData($process, $pluginKey, $contentKey);
+			$data = $this->__readyData($process, $pluginKey, $contentKey);
 
 			// コンテンツコメントのデータ保存
 			if (!$this->controller->ContentComment->saveContentComment($data)) {
@@ -119,7 +119,7 @@ class ContentCommentsComponent extends Component {
  * @throws BadRequestException
  * @return int どの処理
  */
-	public function parseProcess() {
+	private function __parseProcess() {
 		if ($matches = preg_grep('/^process_\d/', array_keys($this->controller->data))) {
 			list(, $process) = explode('_', array_shift($matches));
 		} else {
@@ -145,7 +145,9 @@ class ContentCommentsComponent extends Component {
  * @param string $contentKey コンテンツキー
  * @return array data
  */
-	public function readyData($process, $pluginKey, $contentKey) {
+	private function __readyData($process, $pluginKey, $contentKey) {
+		$data = null;
+
 		// 登録
 		if ($process == $this::PROCESS_ADD) {
 			$data = array('ContentComment' => array(
