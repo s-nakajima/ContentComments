@@ -26,7 +26,7 @@ class ContentCommentAppTest extends YACakeTestCase {
  */
 	public $fixtures = array(
 		'plugin.content_comments.content_comment',
-		'plugin.content_comments.block',
+		'plugin.blocks.block',
 		'plugin.users.user',
 	);
 

@@ -11,6 +11,9 @@
 
 /**
  * Summary for ContentCommentFixture
+ *
+ * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
+ * @package NetCommons\ContentComments\Test\Fixture
  */
 class ContentCommentFixture extends CakeTestFixture {
 
@@ -30,7 +33,6 @@ class ContentCommentFixture extends CakeTestFixture {
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'created datetime | 作成日時 |  | '),
 		'modified_user' => array('type' => 'integer', 'null' => true, 'default' => '0', 'comment' => 'modified user | 更新者 | users.id | '),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null, 'comment' => 'modified datetime | 更新日時 |  | '),
-		'blocks_id' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'fk_comments_plugins1_idx' => array('column' => 'plugin_key', 'unique' => 0),
@@ -56,7 +58,18 @@ class ContentCommentFixture extends CakeTestFixture {
 			'created' => '2015-04-24 16:45:16',
 			'modified_user' => 1,
 			'modified' => '2015-04-24 16:45:16',
-			'blocks_id' => 1
+		),
+		array(
+			'id' => 2,
+			'block_key' => 'block_1',
+			'plugin_key' => 'plugin_1',
+			'content_key' => 'content_1',
+			'status' => 1,
+			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+			'created_user' => 1,
+			'created' => '2015-04-24 16:45:16',
+			'modified_user' => 1,
+			'modified' => '2015-04-24 16:45:16',
 		),
 	);
 

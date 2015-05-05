@@ -13,7 +13,7 @@
  * ContentComments All Test Case
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @package app.Plugin.ContentComments.Test.Case
+ * @package NetCommons\ContentComments\Test\Case
  * @codeCoverageIgnore
  */
 class AllContentCommentsTest extends CakeTestSuite {
