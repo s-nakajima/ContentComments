@@ -22,7 +22,7 @@
 			<div class="col-xs-12">
 			<label class="control-label" for="CommentComment">
 				<span class="glyphicon glyphicon-comment"></span>
-				<?php echo sprintf(__d('content_comments', '%sコメント'), '999') ?>
+				<?php echo sprintf(__d('content_comments', '%s comments'), '999') ?>
 			</label>
 			</div>
 		</div>
@@ -65,7 +65,7 @@
 					<div class="row">
 						<div class="col-xs-12 text-center">
 							<?php echo $this->Form->button(
-								__d('content_comments', 'コメントする'),
+								__d('content_comments', 'Comment'),
 								array(
 									'class' => 'btn btn-success btn-sm',
 									'name' => 'process_' . ContentCommentsComponent::PROCESS_ADD,

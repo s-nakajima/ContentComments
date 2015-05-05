@@ -84,10 +84,10 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 								<div class="row">
 									<div class="col-xs-12 text-center">
 										<button type="button" class="btn btn-default btn-sm" ng-click="isDisplayEdit<?php echo $frameId . '_' . $contentComment['contentComment']['id']; ?> = false;">
-											<?php echo __d('content_comments', 'キャンセル') ?>
+											<?php echo __d('content_comments', 'Cancel') ?>
 										</button>
 										<?php echo $this->Form->button(
-											__d('content_comments', 'コメントする'),
+											__d('content_comments', 'Comment'),
 											array(
 												'class' => 'btn btn-success btn-sm',
 												'name' => 'process_' . ContentCommentsComponent::PROCESS_EDIT,
@@ -114,7 +114,7 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 								array(
 									'class' => 'btn btn-warning btn-sm',
 									'name' => 'process_' . ContentCommentsComponent::PROCESS_APPROVED,
-									'onclick' => 'return confirm(\'' . sprintf(__d('content_comments', '%s を承認します。本当によろしいですか。'), __d('content_comments', 'comment')) . '\')'
+									'onclick' => 'return confirm(\'' . sprintf(__d('content_comments', 'Approving the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')'
 							)); ?>
 						<?php echo $this->Form->end(); ?>
 					<?php endif; ?>

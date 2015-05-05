@@ -1,0 +1,46 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2015-05-05 02:43+0000\n"
+"PO-Revision-Date: 2015-05-05 11:51+0900\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: ja_JP\n"
+"X-Generator: Poedit 1.7.6\n"
+
+#: Plugin/ContentComments/Model/ContentComment.php:92
+#: Plugin/ContentComments/View/Elements/index.ctp:117;142
+msgid "comment"
+msgstr "コメント"
+
+#: Plugin/ContentComments/View/Elements/form.ctp:25
+msgid "%s comments"
+msgstr "%s コメント"
+
+#: Plugin/ContentComments/View/Elements/form.ctp:68
+#: Plugin/ContentComments/View/Elements/index.ctp:90
+msgid "Comment"
+msgstr "コメントする"
+
+#: Plugin/ContentComments/View/Elements/index.ctp:87
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: Plugin/ContentComments/View/Elements/index.ctp:117
+msgid "Approving the %s. Are you sure to proceed?"
+msgstr "%s を承認します。本当によろしいですか。"
+
+#: Plugin/ContentComments/View/Elements/index.ctp:142
+msgid "Deleting the %s. Are you sure to proceed?"
+msgstr "%s を削除します。本当によろしいですか。"
+
+#: Plugin/ContentComments/View/Elements/status_label.ctp:16
+msgid "Approving"
+msgstr "未承認"
