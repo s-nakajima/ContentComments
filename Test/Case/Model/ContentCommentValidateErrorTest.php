@@ -59,7 +59,8 @@ class ContentCommentValidateErrorTest extends ContentCommentAppTest {
 			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 		));
 		if (!$this->ContentComment->saveContentComment($data)) {
-			$this->assertEquals('入力値が不正です。', $this->ContentComment->validationErrors['block_key'][0]);
+			//入力値が不正です
+			$this->assertInternalType('string', $this->ContentComment->validationErrors['block_key'][0]);
 		} else {
 			$this->fail('期待通りのバリデートエラーが発生しませんでした。');
 		}
@@ -79,7 +80,8 @@ class ContentCommentValidateErrorTest extends ContentCommentAppTest {
 			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 		));
 		if (!$this->ContentComment->saveContentComment($data)) {
-			$this->assertEquals('入力値が不正です。', $this->ContentComment->validationErrors['plugin_key'][0]);
+			//入力値が不正です
+			$this->assertInternalType('string', $this->ContentComment->validationErrors['plugin_key'][0]);
 		} else {
 			$this->fail('期待通りのバリデートエラーが発生しませんでした。');
 		}
@@ -99,7 +101,8 @@ class ContentCommentValidateErrorTest extends ContentCommentAppTest {
 			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 		));
 		if (!$this->ContentComment->saveContentComment($data)) {
-			$this->assertEquals('入力値が不正です。', $this->ContentComment->validationErrors['content_key'][0]);
+			//入力値が不正です
+			$this->assertInternalType('string', $this->ContentComment->validationErrors['content_key'][0]);
 		} else {
 			$this->fail('期待通りのバリデートエラーが発生しませんでした。');
 		}
@@ -119,7 +122,8 @@ class ContentCommentValidateErrorTest extends ContentCommentAppTest {
 			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 		));
 		if (!$this->ContentComment->saveContentComment($data)) {
-			$this->assertEquals('入力値が不正です。', $this->ContentComment->validationErrors['status'][0]);
+			//入力値が不正です
+			$this->assertInternalType('string', $this->ContentComment->validationErrors['status'][0]);
 		} else {
 			$this->fail('期待通りのバリデートエラーが発生しませんでした。');
 		}
@@ -139,7 +143,8 @@ class ContentCommentValidateErrorTest extends ContentCommentAppTest {
 			'comment' => null,
 		));
 		if (!$this->ContentComment->saveContentComment($data)) {
-			$this->assertEquals('コメントを入力してください', $this->ContentComment->validationErrors['comment'][0]);
+			//コメントを入力してください
+			$this->assertInternalType('string', $this->ContentComment->validationErrors['comment'][0]);
 		} else {
 			$this->fail('期待通りのバリデートエラーが発生しませんでした。');
 		}
