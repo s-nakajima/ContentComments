@@ -18,6 +18,18 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 	<div id="nc-content-comments-<?php echo (int)$frameId; ?>" ng-controller="ContentComments">
 		<div class="content-comments">
 			<?php foreach ($contentComments as $i => $contentComment): ?>
+
+			<?php // ・未承認のコメントは表示しない。
+				// ・自分のコメントは表示する。
+				// ・承認権限ありの場合、表示する。
+				if ($contentCommentPublishable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')) {
+					// 表示
+				} elseif ($contentComment['contentComment']['status'] == ContentComment::STATUS_APPROVED) {
+					// 非表示
+					continue;
+				}
+			?>
+
 			<div class="comment <?php echo $i >= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>">
 				<div class="row">
 					<div class="col-xs-2">

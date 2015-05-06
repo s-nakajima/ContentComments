@@ -77,9 +77,10 @@ class ContentCommentsComponent extends Component {
  *
  * @param string $pluginKey プラグインキー
  * @param string $contentKey コンテンツキー
+ * @param bool $isCommentApproved コメントの自動承認
  * @return bool 成功 or 失敗
  */
-	public function comment($pluginKey, $contentKey) {
+	public function comment($pluginKey, $contentKey, $isCommentApproved) {
 		// コンテンツコメントの処理名をパースして取得
 		if (!$process = $this->__parseProcess()) {
 			return false;
@@ -95,7 +96,7 @@ class ContentCommentsComponent extends Component {
 			$process == $this::PROCESS_APPROVED) {
 
 			// dataの準備
-			$data = $this->__readyData($process, $pluginKey, $contentKey);
+			$data = $this->__readyData($process, $pluginKey, $contentKey, $isCommentApproved);
 
 			// コンテンツコメントのデータ保存
 			if (!$this->controller->ContentComment->saveContentComment($data)) {
@@ -159,16 +160,17 @@ class ContentCommentsComponent extends Component {
 		)) {
 			return true;
 
-			// 承認処理 and 承認権限あり
-		} elseif ($process == $this::PROCESS_APPROVED && $this->controller->viewVars['contentCommentPublishable']) {
-			return true;
-
 			// 削除処理 and (編集権限あり or 自分で投稿したコメントなら、編集・削除可能)
 		} elseif ($process == $this::PROCESS_DELETE && (
 				$this->controller->viewVars['contentCommentEditable'] ||
 				$this->controller->data['contentComment']['createdUser'] == (int)AuthComponent::user('id')
 			)) {
 			return true;
+
+			// 承認処理 and 承認権限あり
+		} elseif ($process == $this::PROCESS_APPROVED && $this->controller->viewVars['contentCommentPublishable']) {
+			return true;
+
 		}
 		return false;
 	}
@@ -179,18 +181,22 @@ class ContentCommentsComponent extends Component {
  * @param int $process どの処理
  * @param string $pluginKey プラグインキー
  * @param string $contentKey コンテンツキー
+ * @param bool $isCommentApproved コメントの自動承認
  * @return array data
  */
-	private function __readyData($process, $pluginKey, $contentKey) {
+	private function __readyData($process, $pluginKey, $contentKey, $isCommentApproved) {
 		$data = null;
 
 		// 登録処理
 		if ($process == $this::PROCESS_ADD) {
+			// 公開 or 未承認
+			$status = $isCommentApproved ? ContentComment::STATUS_PUBLISHED : ContentComment::STATUS_APPROVED;
+
 			$data = array('ContentComment' => array(
 				'block_key' => $this->controller->viewVars['blockKey'],
 				'plugin_key' => $pluginKey,
 				'content_key' => $contentKey,
-				'status' => ContentComment::STATUS_PUBLISHED, // 公開
+				'status' => $status,
 				'comment' => $this->controller->data['contentComment']['comment'],
 			));
 
