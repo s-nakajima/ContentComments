@@ -84,6 +84,10 @@ class ContentCommentsComponent extends Component {
 		if (!$process = $this->__parseProcess()) {
 			return false;
 		}
+		// パーミッションがあるかチェック
+		if (!$this->__checkPermission($process)) {
+			return false;
+		}
 
 		// 登録・編集・承認
 		if ($process == $this::PROCESS_ADD ||
@@ -138,6 +142,38 @@ class ContentCommentsComponent extends Component {
 	}
 
 /**
+ * パーミッションがあるかチェック
+ *
+ * @param int $process どの処理
+ * @return bool true:パーミッションあり or false:パーミッションなし
+ */
+	private function __checkPermission($process) {
+		// 登録処理 and 投稿権限あり
+		if ($process == $this::PROCESS_ADD && $this->controller->viewVars['contentCommentCreatable']) {
+			return true;
+
+			// 編集処理 and (編集権限あり or 自分で投稿したコメントなら、編集・削除可能)
+		} elseif ($process == $this::PROCESS_EDIT && (
+				$this->controller->viewVars['contentCommentEditable'] ||
+				$this->controller->data['contentComment']['createdUser'] == (int)AuthComponent::user('id')
+		)) {
+			return true;
+
+			// 承認処理 and 承認権限あり
+		} elseif ($process == $this::PROCESS_APPROVED && $this->controller->viewVars['contentCommentPublishable']) {
+			return true;
+
+			// 削除処理 and (編集権限あり or 自分で投稿したコメントなら、編集・削除可能)
+		} elseif ($process == $this::PROCESS_DELETE && (
+				$this->controller->viewVars['contentCommentEditable'] ||
+				$this->controller->data['contentComment']['createdUser'] == (int)AuthComponent::user('id')
+			)) {
+			return true;
+		}
+		return false;
+	}
+
+/**
  * dataの準備
  *
  * @param int $process どの処理
@@ -148,7 +184,7 @@ class ContentCommentsComponent extends Component {
 	private function __readyData($process, $pluginKey, $contentKey) {
 		$data = null;
 
-		// 登録
+		// 登録処理
 		if ($process == $this::PROCESS_ADD) {
 			$data = array('ContentComment' => array(
 				'block_key' => $this->controller->viewVars['blockKey'],
@@ -158,7 +194,7 @@ class ContentCommentsComponent extends Component {
 				'comment' => $this->controller->data['contentComment']['comment'],
 			));
 
-			// 編集
+			// 編集処理
 		} elseif ($process == $this::PROCESS_EDIT) {
 			$data = array('ContentComment' => array(
 				'id' => $this->controller->data['contentComment']['id'],
@@ -168,7 +204,7 @@ class ContentCommentsComponent extends Component {
 				'comment' => $this->controller->data['contentComment']['comment'],
 			));
 
-			// 承認
+			// 承認処理
 		} elseif ($process == $this::PROCESS_APPROVED) {
 			$data = array('ContentComment' => array(
 				'id' => $this->controller->data['contentComment']['id'],
