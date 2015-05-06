@@ -101,8 +101,6 @@ class ContentCommentsComponent extends Component {
 			// コンテンツコメントのデータ保存
 			if (!$this->controller->ContentComment->saveContentComment($data)) {
 				if (!$this->controller->handleValidationError($this->controller->ContentComment->validationErrors)) {
-					// コンテンツコメント編集表示を開く
-					//$results['isDisplayEdit'] = $frameId . '_' . $this->data['contentComment']['id'];
 					$this->log($this->controller->validationErrors, 'debug');
 				}
 			}
@@ -114,7 +112,6 @@ class ContentCommentsComponent extends Component {
 				return false;
 			}
 		}
-		//unset($this->data['ContentComment']['comment']);
 		return true;
 	}
 

@@ -58,14 +58,14 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 						</div>
 
 						<?php /* コメント表示 */ ?>
-						<div ng-hide="isDisplayEdit<?php echo $frameId . '_' . $contentComment['contentComment']['id']; ?>">
+						<div ng-hide="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>">
 							<?php echo nl2br($contentComment['contentComment']['comment']) ?>
 						</div>
 
 						<?php /* コンテンツコメント編集権限あり or 自分で投稿したコメントなら、編集可能 */ ?>
 						<?php if ($contentCommentEditable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')): ?>
 							<?php /* 編集フォーム 非表示 */ ?>
-							<div ng-show="isDisplayEdit<?php echo $frameId . '_' . $contentComment['contentComment']['id']; ?>">
+							<div ng-show="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>">
 								<?php echo $this->Form->create($formName, array(
 									'name' => 'form',
 								)); ?>
@@ -77,31 +77,43 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 									)); ?>
 									<div class="form-group">
 										<div class="input textarea">
-											<?php echo $this->Form->textarea(
-												'contentComment.comment',
-												array(
+											<?php
+												$contentCommentComment = array(
 													'class' => 'form-control nc-noresize',
 													'rows' => 2,
-													'value' => nl2br($contentComment['contentComment']['comment']),
-												)); ?>
+													'default' => nl2br($contentComment['contentComment']['comment']),
+												);
+												/* 編集時入力エラー対応 編集処理で、idが同じのみvalueをセットしない */
+												if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
+													$this->request->data('contentComment.id') == $contentComment['contentComment']['id']) {
+													// 何もしない
+												} else {
+													$contentCommentComment['value'] = nl2br($contentComment['contentComment']['comment']);
+												}
+												echo $this->Form->textarea('contentComment.comment', $contentCommentComment);
+											?>
 										</div>
 									</div>
 
 									<div class="has-error">
-										<?php if ($this->validationErrors['contentComment']): ?>
-											<?php foreach ($this->validationErrors['contentComment'] as $validationErrors): ?>
-												<?php foreach ($validationErrors as $message): ?>
-													<div class="help-block">
-														<?php echo $message ?>
-													</div>
+										<?php /* 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置 */ ?>
+										<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
+											$this->request->data('contentComment.id') == $contentComment['contentComment']['id']): ?>
+											<?php if ($this->validationErrors['contentComment']): ?>
+												<?php foreach ($this->validationErrors['contentComment'] as $validationErrors): ?>
+													<?php foreach ($validationErrors as $message): ?>
+														<div class="help-block">
+															<?php echo $message ?>
+														</div>
+													<?php endforeach ?>
 												<?php endforeach ?>
-											<?php endforeach ?>
-										<?php endif ?>
+											<?php endif ?>
+										<?php endif; ?>
 									</div>
 
 									<div class="row">
 										<div class="col-xs-12 text-center">
-											<button type="button" class="btn btn-default btn-sm" ng-click="isDisplayEdit<?php echo $frameId . '_' . $contentComment['contentComment']['id']; ?> = false;">
+											<button type="button" class="btn btn-default btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?> = false;">
 												<?php echo __d('content_comments', 'Cancel') ?>
 											</button>
 											<?php echo $this->Form->button(
@@ -118,7 +130,7 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 
 					</div>
 				</div>
-				<div class="text-right" ng-hide="isDisplayEdit<?php echo $frameId . '_' . $contentComment['contentComment']['id']; ?>">
+				<div class="text-right" ng-hide="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>">
 					<?php /* 承認権限あり and 未承認のコメント  */ ?>
 					<?php if ($contentCommentPublishable && $contentComment['contentComment']['status'] == ContentComment::STATUS_APPROVED): ?>
 						<?php /* 承認 */ ?>
@@ -143,8 +155,13 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 					<?php if ($contentCommentEditable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')): ?>
 						<?php /* 編集 */ ?>
 						<?php /* 編集の表示・非表示フラグ 非表示 */ ?>
-						<input class="hide" type="checkbox" ng-model="isDisplayEdit<?php echo $frameId . '_' . $contentComment['contentComment']['id']; ?>" checked="checked">
-						<button type="button" class="btn btn-primary btn-sm" ng-click="isDisplayEdit<?php echo $frameId . '_' . $contentComment['contentComment']['id']; ?> = true;">
+						<input class="hide" type="checkbox" ng-model="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>"
+							<?php /* 編集時入力エラー対応　編集処理で、idが同じなら編集画面を開く */ ?>
+							<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
+								$this->request->data('contentComment.id') == $contentComment['contentComment']['id']): ?>
+								ng-init="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?> = true;"
+							<?php endif; ?>>
+						<button type="button" class="btn btn-primary btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?> = true;">
 							<span class='glyphicon glyphicon-edit'></span>
 						</button>
 

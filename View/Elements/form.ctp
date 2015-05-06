@@ -47,20 +47,23 @@
 									array(
 										'class' => 'form-control nc-noresize',
 										'rows' => 2,
-										'value'=> '',
+										'default' => '',
 								)); ?>
 							</div>
 						</div>
 
 						<div class="has-error">
-							<?php if ($this->validationErrors['contentComment']): ?>
-								<?php foreach ($this->validationErrors['contentComment'] as $validationErrors): ?>
-									<?php foreach ($validationErrors as $message): ?>
-										<div class="help-block">
-											<?php echo $message ?>
-										</div>
+							<?php /* 登録時入力エラー対応 登録処理のみエラー表示エリア配置 */ ?>
+							<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_ADD, $this->request->data)): ?>
+								<?php if ($this->validationErrors['contentComment']): ?>
+									<?php foreach ($this->validationErrors['contentComment'] as $validationErrors): ?>
+										<?php foreach ($validationErrors as $message): ?>
+											<div class="help-block">
+												<?php echo $message ?>
+											</div>
+										<?php endforeach ?>
 									<?php endforeach ?>
-								<?php endforeach ?>
+								<?php endif ?>
 							<?php endif ?>
 						</div>
 
