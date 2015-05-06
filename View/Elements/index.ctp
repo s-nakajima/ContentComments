@@ -17,7 +17,8 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 <?php if ($contentComments): ?>
 	<div id="nc-content-comments-<?php echo (int)$frameId; ?>" ng-controller="ContentComments">
 		<div class="content-comments">
-			<?php foreach ($contentComments as $i => $contentComment): ?>
+			<?php $i = 0; ?>
+			<?php foreach ($contentComments as $contentComment): ?>
 
 			<?php // ・未承認のコメントは表示しない。
 				// ・自分のコメントは表示する。
@@ -169,11 +170,12 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 					<?php endif; ?>
 				</div>
 			</div>
+			<?php $i++; ?>
 			<?php endforeach ?>
 
 			<?php /* もっと見る */ ?>
 			<div class="comment-more">
-				<button type="button" class="btn btn-info btn-block more <?php echo $i < ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>"
+				<button type="button" class="btn btn-info btn-block more <?php echo $i <= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>"
 						ng-click="more();">
 					<?php echo h(__d('net_commons', 'More')); ?>
 				</button>
