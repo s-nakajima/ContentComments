@@ -1,6 +1,5 @@
 {
     "name": "netcommons/content-comments",
-    "version": "3.0.0",
     "description": "ContentComments for NetCommons Plugin",
     "homepage": "http://www.netcommons.org/",
     "extra": {
