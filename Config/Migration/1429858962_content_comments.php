@@ -60,11 +60,122 @@ class ContentComments extends CakeMigration {
 	);
 
 /**
- * recodes
+ * Records keyed by model name.
  *
  * @var array $records
  */
-	public $records = array();
+	public $records = array(
+		'default_role_permission' => array(
+			//コンテンツコメント投稿権限
+			array(
+				'role_key' => 'room_administrator',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_creatable',
+				'value' => 1,
+				'fixed' => 1,
+			),
+			array(
+				'role_key' => 'chief_editor',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_creatable',
+				'value' => 1,
+				'fixed' => 1,
+			),
+			array(
+				'role_key' => 'editor',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_creatable',
+				'value' => 1,
+				'fixed' => 1,
+			),
+			array(
+				'role_key' => 'general_user',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_creatable',
+				'value' => 1,
+				'fixed' => 1,
+			),
+			array(
+				'role_key' => 'visitor',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_creatable',
+				'value' => 0,
+				'fixed' => 1,
+			),
+			//コンテンツコメント編集権限
+			array(
+				'role_key' => 'room_administrator',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_editable',
+				'value' => 1,
+				'fixed' => 1,
+			),
+			array(
+				'role_key' => 'chief_editor',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_editable',
+				'value' => 1,
+				'fixed' => 1,
+			),
+			array(
+				'role_key' => 'editor',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_editable',
+				'value' => 1,
+				'fixed' => 1,
+			),
+			array(
+				'role_key' => 'general_user',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_editable',
+				'value' => 0,
+				'fixed' => 1,
+			),
+			array(
+				'role_key' => 'visitor',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_editable',
+				'value' => 0,
+				'fixed' => 1,
+			),
+			//コンテンツコメント公開権限
+			array(
+				'role_key' => 'room_administrator',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_publishable',
+				'value' => 1,
+				'fixed' => 1,
+			),
+			array(
+				'role_key' => 'chief_editor',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_publishable',
+				'value' => 1,
+				'fixed' => 0,
+			),
+			array(
+				'role_key' => 'editor',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_publishable',
+				'value' => 1,
+				'fixed' => 0,
+			),
+			array(
+				'role_key' => 'general_user',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_publishable',
+				'value' => 0,
+				'fixed' => 1,
+			),
+			array(
+				'role_key' => 'visitor',
+				'type' => 'content_comment_role',
+				'permission' => 'content_comment_publishable',
+				'value' => 0,
+				'fixed' => 1,
+			),
+		),
+	);
 
 /**
  * Before migration callback
