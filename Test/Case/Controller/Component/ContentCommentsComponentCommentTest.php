@@ -212,4 +212,33 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAppTes
 
 		$this->assertFalse($this->contentComments->comment($pluginKey, $contentKey, $isCommentApproved));
 	}
+
+/**
+ * コメントする Ajaxで __parseProcess() でパース失敗テスト
+ *
+ * @return void
+ */
+	public function testCommentAjaxFailParseProcess() {
+		$this->controller->data = array(
+			'process_xxx' => '',
+			'contentComment' => array(
+				'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+			)
+		);
+		$this->controller->viewVars = array(
+			'blockKey' => 'block_1',
+			'contentCommentPublishable' => true,
+			'contentCommentEditable' => true,
+			'contentCommentCreatable' => true,
+		);
+		$this->contentComments->initialize($this->controller);
+
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'; // ajax通信
+
+		$pluginKey = 'plugin_1';
+		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
+
+		$this->assertFalse($this->contentComments->comment($pluginKey, $contentKey, $isCommentApproved));
+	}
 }

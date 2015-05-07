@@ -50,21 +50,27 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		$this->assertEquals(ContentCommentsComponent::PROCESS_ADD, $process);
 	}
 
-	///**
-	// * コメントの処理名をパースして取得 Ajaxテスト 未対応(;'∀')
-	// *
-	// * @return void
-	// */
-	//	public function testParseProcessAjax() {
-	//		$this->controller->data = array(
-	//			'process_' . ContentCommentsComponent::PROCESS_ADD => '' // 登録
-	//		);
-	//		//$this->controller->request->accepts('ajax');
-	//		$this->contentComments->initialize($this->controller);
-	//		$process = $this->contentComments->parseProcess();
-	//
-	//		$this->assertEquals(ContentCommentsComponent::PROCESS_ADD, $process);
-	//	}
+/**
+ * コメントの処理名をパースして取得 Ajax失敗テスト
+ *
+ * @return void
+ */
+	public function testParseProcessAjaxFail() {
+		$this->controller->data = array(
+			'process_xxx' => ''
+		);
+		$this->controller->viewClass = 'Json';
+		$this->contentComments->initialize($this->controller);
+
+		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'; // ajax通信
+
+		// privateメソッド呼び出し
+		$privateMethod = new ReflectionMethod($this->contentComments, '__parseProcess');
+		$privateMethod->setAccessible(true);
+		$process = $privateMethod->invoke($this->contentComments);
+
+		$this->assertFalse($process);
+	}
 
 /**
  * dataの準備 登録時テスト
@@ -90,7 +96,6 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
 		$privateMethod->setAccessible(true);
-		//$data = $this->contentComments->__readyData();
 		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
 
 		$this->assertCount(1, $data);
@@ -120,7 +125,6 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
 		$privateMethod->setAccessible(true);
-		//$data = $this->contentComments->__readyData();
 		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
 
 		$this->assertEqual(ContentComment::STATUS_PUBLISHED, $data['ContentComment']['status']);
@@ -150,7 +154,6 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
 		$privateMethod->setAccessible(true);
-		//$data = $this->contentComments->__readyData();
 		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
 
 		$this->assertEqual(ContentComment::STATUS_APPROVED, $data['ContentComment']['status']);
@@ -181,7 +184,6 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
 		$privateMethod->setAccessible(true);
-		//$data = $this->contentComments->__readyData();
 		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
 
 		$this->assertCount(1, $data);
@@ -212,7 +214,6 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
 		$privateMethod->setAccessible(true);
-		//$data = $this->contentComments->__readyData();
 		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
 
 		$this->assertCount(1, $data);
@@ -234,7 +235,6 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
 		$privateMethod->setAccessible(true);
-		//$data = $this->contentComments->__readyData();
 		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
 
 		$this->assertNull($data);
