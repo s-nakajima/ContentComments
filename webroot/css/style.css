@@ -18,6 +18,9 @@
 	border-top: 1px solid #ddd;
 	padding: 1em 0em;
 }
+.content-comments > .comment-no-form {
+	border: 0 none;
+}
 .content-comments > .comment-more {
 	padding-bottom: 1em;
 }

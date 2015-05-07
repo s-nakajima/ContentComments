@@ -31,7 +31,9 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 				}
 			?>
 
-			<div class="comment <?php echo $i >= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>">
+			<?php /* visitar対応 1件目 and 投稿権限なしで border-top 表示しない */ ?>
+			<div class="comment <?php echo $i >= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>
+						 <?php echo $i == 0 && !$contentCommentCreatable ? 'comment-no-form' : ''; ?>">
 				<div class="row">
 					<div class="col-xs-2">
 						<?php /* アバター 暫定対応(;'∀') */ ?>
