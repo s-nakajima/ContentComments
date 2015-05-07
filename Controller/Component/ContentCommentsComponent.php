@@ -146,25 +146,25 @@ class ContentCommentsComponent extends Component {
  * @return bool true:パーミッションあり or false:パーミッションなし
  */
 	private function __checkPermission($process) {
-		// 登録処理 and 投稿権限あり
+		// 登録処理 and 投稿許可あり
 		if ($process == $this::PROCESS_ADD && $this->controller->viewVars['contentCommentCreatable']) {
 			return true;
 
-			// 編集処理 and (編集権限あり or 自分で投稿したコメントなら、編集・削除可能)
+			// 編集処理 and (編集許可あり or 自分で投稿したコメントなら、編集・削除可能)
 		} elseif ($process == $this::PROCESS_EDIT && (
 				$this->controller->viewVars['contentCommentEditable'] ||
 				$this->controller->data['contentComment']['createdUser'] == (int)AuthComponent::user('id')
 		)) {
 			return true;
 
-			// 削除処理 and (編集権限あり or 自分で投稿したコメントなら、編集・削除可能)
+			// 削除処理 and (編集許可あり or 自分で投稿したコメントなら、編集・削除可能)
 		} elseif ($process == $this::PROCESS_DELETE && (
 				$this->controller->viewVars['contentCommentEditable'] ||
 				$this->controller->data['contentComment']['createdUser'] == (int)AuthComponent::user('id')
 			)) {
 			return true;
 
-			// 承認処理 and 承認権限あり
+			// 承認処理 and 承認許可あり
 		} elseif ($process == $this::PROCESS_APPROVED && $this->controller->viewVars['contentCommentPublishable']) {
 			return true;
 

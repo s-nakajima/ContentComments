@@ -35,13 +35,17 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAppTes
 		);
 		$this->controller->viewVars = array(
 			'blockKey' => 'block_1',
+			'contentCommentPublishable' => true,
+			'contentCommentEditable' => true,
+			'contentCommentCreatable' => true,
 		);
 		$this->contentComments->initialize($this->controller);
 
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
-		$this->assertTrue($this->contentComments->comment($pluginKey, $contentKey));
+		$this->assertTrue($this->contentComments->comment($pluginKey, $contentKey, $isCommentApproved));
 	}
 
 /**
@@ -58,16 +62,47 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAppTes
 		);
 		$this->controller->viewVars = array(
 			'blockKey' => 'block_1',
+			'contentCommentPublishable' => true,
+			'contentCommentEditable' => true,
+			'contentCommentCreatable' => true,
 		);
 		$this->contentComments->initialize($this->controller);
 
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
-		$this->contentComments->comment($pluginKey, $contentKey);
+		$this->contentComments->comment($pluginKey, $contentKey, $isCommentApproved);
 
 		//コメントを入力してください
 		$this->assertInternalType('string', $this->controller->validationErrors['comment'][0]);
+	}
+
+/**
+ * コメントする 登録テスト 投稿許可なし
+ *
+ * @return void
+ */
+	public function testCommentAddNoPermission() {
+		$this->controller->data = array(
+			'process_' . ContentCommentsComponent::PROCESS_ADD => '', // 登録
+			'contentComment' => array(
+				'comment' => null,
+			)
+		);
+		$this->controller->viewVars = array(
+			'blockKey' => 'block_1',
+			'contentCommentPublishable' => true,
+			'contentCommentEditable' => true,
+			'contentCommentCreatable' => false, // 投稿許可なし
+		);
+		$this->contentComments->initialize($this->controller);
+
+		$pluginKey = 'plugin_1';
+		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
+
+		$this->assertFalse($this->contentComments->comment($pluginKey, $contentKey, $isCommentApproved));
 	}
 
 /**
@@ -85,13 +120,17 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAppTes
 		);
 		$this->controller->viewVars = array(
 			'blockKey' => 'block_1',
+			'contentCommentPublishable' => true,
+			'contentCommentEditable' => true,
+			'contentCommentCreatable' => true,
 		);
 		$this->contentComments->initialize($this->controller);
 
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
-		$this->assertTrue($this->contentComments->comment($pluginKey, $contentKey));
+		$this->assertTrue($this->contentComments->comment($pluginKey, $contentKey, $isCommentApproved));
 	}
 
 /**
@@ -109,13 +148,17 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAppTes
 		);
 		$this->controller->viewVars = array(
 			'blockKey' => 'block_1',
+			'contentCommentPublishable' => true,
+			'contentCommentEditable' => true,
+			'contentCommentCreatable' => true,
 		);
 		$this->contentComments->initialize($this->controller);
 
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
-		$this->assertTrue($this->contentComments->comment($pluginKey, $contentKey));
+		$this->assertTrue($this->contentComments->comment($pluginKey, $contentKey, $isCommentApproved));
 	}
 
 /**
@@ -130,12 +173,18 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAppTes
 				'id' => 1,
 			)
 		);
+		$this->controller->viewVars = array(
+			'contentCommentPublishable' => true,
+			'contentCommentEditable' => true,
+			'contentCommentCreatable' => true,
+		);
 		$this->contentComments->initialize($this->controller);
 
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
-		$this->assertTrue($this->contentComments->comment($pluginKey, $contentKey));
+		$this->assertTrue($this->contentComments->comment($pluginKey, $contentKey, $isCommentApproved));
 	}
 
 /**
@@ -150,11 +199,17 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAppTes
 				'id' => '',
 			)
 		);
+		$this->controller->viewVars = array(
+			'contentCommentPublishable' => true,
+			'contentCommentEditable' => true,
+			'contentCommentCreatable' => true,
+		);
 		$this->contentComments->initialize($this->controller);
 
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
-		$this->assertFalse($this->contentComments->comment($pluginKey, $contentKey));
+		$this->assertFalse($this->contentComments->comment($pluginKey, $contentKey, $isCommentApproved));
 	}
 }

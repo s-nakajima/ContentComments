@@ -67,23 +67,6 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 	//	}
 
 /**
- * コメントの処理名をパースして取得 例外テスト
- *
- * @return void
- */
-	public function testParseProcessException() {
-		$this->setExpectedException('BadRequestException');
-
-		$this->contentComments->initialize($this->controller);
-
-		// privateメソッド呼び出し
-		$privateMethod = new ReflectionMethod($this->contentComments, '__parseProcess');
-		$privateMethod->setAccessible(true);
-		//$process = $this->contentComments->__parseProcess();
-		$privateMethod->invoke($this->contentComments);
-	}
-
-/**
  * dataの準備 登録時テスト
  *
  * @return void
@@ -97,20 +80,80 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		$this->controller->viewVars = array(
 			'blockKey' => 'block_1',
 		);
-
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_ADD; // 登録
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
 		$privateMethod->setAccessible(true);
 		//$data = $this->contentComments->__readyData();
-		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey);
+		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
 
 		$this->assertCount(1, $data);
+	}
+
+/**
+ * dataの準備 登録時テスト 自動承認する
+ *
+ * @return void
+ */
+	public function testReadyDataAddCommentApproved() {
+		$this->controller->data = array(
+			'contentComment' => array(
+				'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+			)
+		);
+		$this->controller->viewVars = array(
+			'blockKey' => 'block_1',
+		);
+		$this->contentComments->initialize($this->controller);
+
+		$process = ContentCommentsComponent::PROCESS_ADD; // 登録
+		$pluginKey = 'plugin_1';
+		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
+
+		// privateメソッド呼び出し
+		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
+		$privateMethod->setAccessible(true);
+		//$data = $this->contentComments->__readyData();
+		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
+
+		$this->assertEqual(ContentComment::STATUS_PUBLISHED, $data['ContentComment']['status']);
+	}
+
+/**
+ * dataの準備 登録時テスト 自動承認しない
+ *
+ * @return void
+ */
+	public function testReadyDataAddNotCommentApproved() {
+		$this->controller->data = array(
+			'contentComment' => array(
+				'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+			)
+		);
+		$this->controller->viewVars = array(
+			'blockKey' => 'block_1',
+		);
+		$this->contentComments->initialize($this->controller);
+
+		$process = ContentCommentsComponent::PROCESS_ADD; // 登録
+		$pluginKey = 'plugin_1';
+		$contentKey = 'content_1';
+		$isCommentApproved = false; // 自動承認しない
+
+		// privateメソッド呼び出し
+		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
+		$privateMethod->setAccessible(true);
+		//$data = $this->contentComments->__readyData();
+		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
+
+		$this->assertEqual(ContentComment::STATUS_APPROVED, $data['ContentComment']['status']);
 	}
 
 /**
@@ -128,18 +171,18 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		$this->controller->viewVars = array(
 			'blockKey' => 'block_1',
 		);
-
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_EDIT; // 編集
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
 		$privateMethod->setAccessible(true);
 		//$data = $this->contentComments->__readyData();
-		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey);
+		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
 
 		$this->assertCount(1, $data);
 	}
@@ -159,18 +202,18 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		$this->controller->viewVars = array(
 			'blockKey' => 'block_1',
 		);
-
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_APPROVED; // 承認
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
 		$privateMethod->setAccessible(true);
 		//$data = $this->contentComments->__readyData();
-		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey);
+		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
 
 		$this->assertCount(1, $data);
 	}
@@ -186,12 +229,13 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		$process = ContentCommentsComponent::PROCESS_DELETE; // 削除は対応してない
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__readyData');
 		$privateMethod->setAccessible(true);
 		//$data = $this->contentComments->__readyData();
-		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey);
+		$data = $privateMethod->invoke($this->contentComments, $process, $pluginKey, $contentKey, $isCommentApproved);
 
 		$this->assertNull($data);
 	}

@@ -22,7 +22,7 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 
 			<?php // ・未承認のコメントは表示しない。
 				// ・自分のコメントは表示する。
-				// ・承認権限ありの場合、表示する。
+				// ・承認許可ありの場合、表示する。
 				if ($contentCommentPublishable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')) {
 					// 表示
 				} elseif ($contentComment['contentComment']['status'] == ContentComment::STATUS_APPROVED) {
@@ -31,7 +31,7 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 				}
 			?>
 
-			<?php /* visitar対応 1件目 and 投稿権限なしで border-top 表示しない */ ?>
+			<?php /* visitar対応 1件目 and 投稿許可なしで border-top 表示しない */ ?>
 			<div class="comment <?php echo $i >= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>
 						 <?php echo $i == 0 && !$contentCommentCreatable ? 'comment-no-form' : ''; ?>">
 				<div class="row">
@@ -64,7 +64,7 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 							<?php echo nl2br($contentComment['contentComment']['comment']) ?>
 						</div>
 
-						<?php /* コンテンツコメント編集権限あり or 自分で投稿したコメントなら、編集可能 */ ?>
+						<?php /* コンテンツコメント編集許可あり or 自分で投稿したコメントなら、編集可能 */ ?>
 						<?php if ($contentCommentEditable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')): ?>
 							<?php /* 編集フォーム 非表示 */ ?>
 							<div ng-show="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>">
@@ -133,7 +133,7 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 					</div>
 				</div>
 				<div class="text-right" ng-hide="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>">
-					<?php /* 承認権限あり and 未承認のコメント  */ ?>
+					<?php /* 承認許可あり and 未承認のコメント  */ ?>
 					<?php if ($contentCommentPublishable && $contentComment['contentComment']['status'] == ContentComment::STATUS_APPROVED): ?>
 						<?php /* 承認 */ ?>
 						<?php echo $this->Form->create($formName, array(
@@ -153,7 +153,7 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 						<?php echo $this->Form->end(); ?>
 					<?php endif; ?>
 
-					<?php /* 編集権限あり or 自分で投稿したコメントなら、編集・削除可能 */ ?>
+					<?php /* 編集許可あり or 自分で投稿したコメントなら、編集・削除可能 */ ?>
 					<?php if ($contentCommentEditable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')): ?>
 						<?php /* 編集 */ ?>
 						<?php /* 編集の表示・非表示フラグ 非表示 */ ?>

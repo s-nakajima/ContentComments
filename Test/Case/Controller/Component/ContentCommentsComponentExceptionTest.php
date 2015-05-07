@@ -35,11 +35,35 @@ class ContentCommentsComponentExceptionTest extends ContentCommentsComponentAppT
 				'id' => -1,
 			)
 		);
+		$this->controller->viewVars = array(
+			'contentCommentPublishable' => true,
+			'contentCommentEditable' => true,
+			'contentCommentCreatable' => true,
+		);
+
 		$this->contentComments->initialize($this->controller);
 
 		$pluginKey = 'plugin_1';
 		$contentKey = 'content_1';
+		$isCommentApproved = true; // 自動承認する
 
-		$this->contentComments->comment($pluginKey, $contentKey);
+		$this->contentComments->comment($pluginKey, $contentKey, $isCommentApproved);
+	}
+
+/**
+ * コメントの処理名をパースして取得 例外テスト
+ *
+ * @return void
+ */
+	public function testParseProcessException() {
+		$this->setExpectedException('BadRequestException');
+
+		$this->contentComments->initialize($this->controller);
+
+		// privateメソッド呼び出し
+		$privateMethod = new ReflectionMethod($this->contentComments, '__parseProcess');
+		$privateMethod->setAccessible(true);
+		//$process = $this->contentComments->__parseProcess();
+		$privateMethod->invoke($this->contentComments);
 	}
 }

@@ -66,7 +66,7 @@ class ContentComments extends CakeMigration {
  */
 	public $records = array(
 		'default_role_permission' => array(
-			//コンテンツコメント投稿権限
+			//コンテンツコメント投稿許可
 			array(
 				'role_key' => 'room_administrator',
 				'type' => 'content_comment_role',
@@ -102,7 +102,7 @@ class ContentComments extends CakeMigration {
 				'value' => 0,
 				'fixed' => 1,
 			),
-			//コンテンツコメント編集権限
+			//コンテンツコメント編集許可
 			array(
 				'role_key' => 'room_administrator',
 				'type' => 'content_comment_role',
@@ -138,7 +138,7 @@ class ContentComments extends CakeMigration {
 				'value' => 0,
 				'fixed' => 1,
 			),
-			//コンテンツコメント公開権限
+			//コンテンツコメント公開許可
 			array(
 				'role_key' => 'room_administrator',
 				'type' => 'content_comment_role',
