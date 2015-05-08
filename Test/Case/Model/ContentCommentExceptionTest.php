@@ -26,7 +26,7 @@ class ContentCommentExceptionTest extends ContentCommentAppTest {
  * @return void
  */
 	public function testSaveContentCommentException() {
-		//$this->setExpectedException('InternalErrorException');
+		$this->setExpectedException('InternalErrorException');
 
 		$data = array(
 			'ContentComment' => array(
@@ -38,9 +38,14 @@ class ContentCommentExceptionTest extends ContentCommentAppTest {
 				'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 			),
 		);
-		$this->ContentComment->saveContentComment($data);
-		//$rtn = $this->ContentComment->saveContentComment($data);
-		//var_dump($rtn);
+
+		// 例外を発生させるためのモック
+		$contentCommentMock = $this->getMockForModel('ContentComments.ContentComment', ['save']);
+		$contentCommentMock->expects($this->any())
+			->method('save')
+			->will($this->returnValue(false));
+
+		$contentCommentMock->saveContentComment($data);
 	}
 
 /**
