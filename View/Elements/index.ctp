@@ -34,18 +34,19 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 			<?php /* visitar対応 1件目 and 投稿許可なしで border-top 表示しない */ ?>
 			<div class="comment <?php echo $i >= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>
 						 <?php echo $i == 0 && !$contentCommentCreatable ? 'comment-no-form' : ''; ?>">
-				<div class="row">
-					<div class="col-xs-2">
+				<div class="media">
+					<div class="media-left">
 						<?php /* アバター 暫定対応(;'∀') */ ?>
 						<a href="" ng-click="user.showUser(<?php echo $contentComment['trackableCreator']['id'] ?>)">
 							<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
+								'class' => 'media-object',
 								'alt' => $video['userAttributesUser']['value'],
 								'width' => '60',
 								'height' => '60',
 							)); ?>
 						</a>
 					</div>
-					<div class="col-xs-10">
+					<div class="media-body">
 						<div class="row">
 							<div class="col-xs-6">
 								<a href="" ng-click="user.showUser(<?php echo $contentComment['trackableCreator']['id'] ?>)">

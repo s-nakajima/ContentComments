@@ -27,16 +27,17 @@
 				</label>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-2">
+			<div class="media">
+				<div class="media-left">
 					<?php /* アバター 暫定対応(;'∀') */ ?>
 					<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
+						'class' => 'media-object',
 						'alt' => $video['userAttributesUser']['value'],
 						'width' => '60',
 						'height' => '60',
 					)); ?>
 				</div>
-				<div class="col-xs-10">
+				<div class="media-body">
 					<?php echo $this->Form->create($formName, array(
 						'name' => 'form',
 					)); ?>
