@@ -84,12 +84,14 @@ class ContentComment extends ContentCommentsAppModel {
 				'numeric' => array(
 					'rule' => array('numeric'),
 					'message' => __d('net_commons', 'Invalid request.'),
+					'required' => true,
 				),
 			),
 			'comment' => array(
 				'notEmpty' => array(
 					'rule' => array('notEmpty'),
 					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('content_comments', 'comment')),
+					'required' => true,
 				),
 			),
 		));
