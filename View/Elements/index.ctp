@@ -35,7 +35,7 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 			<div class="comment <?php echo $i >= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>
 						 <?php echo $i == 0 && !$contentCommentCreatable ? 'comment-no-form' : ''; ?>">
 				<div class="media">
-					<div class="media-left">
+					<div class="pull-left">
 						<?php /* アバター 暫定対応(;'∀') */ ?>
 						<a href="" ng-click="user.showUser(<?php echo $contentComment['trackableCreator']['id'] ?>)">
 							<?php echo $this->Html->image('/content_comments/img/avatar.png', array(

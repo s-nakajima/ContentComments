@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			<div class="media">
-				<div class="media-left">
+				<div class="pull-left">
 					<?php /* アバター 暫定対応(;'∀') */ ?>
 					<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
 						'class' => 'media-object',
