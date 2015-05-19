@@ -49,7 +49,7 @@
 									array(
 										'class' => 'form-control nc-noresize',
 										'rows' => 2,
-										'value' => '',
+										'default' => '',
 								)); ?>
 							</div>
 						</div>

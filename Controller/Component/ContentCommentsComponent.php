@@ -101,6 +101,15 @@ class ContentCommentsComponent extends Component {
 			// コンテンツコメントのデータ保存
 			if (!$this->controller->ContentComment->saveContentComment($data)) {
 				$this->controller->handleValidationError($this->controller->ContentComment->validationErrors);
+
+				// 正常
+			} else {
+				// 下記は悪さをしないため、if文 で分岐しない
+				// 登録用：入力欄のコメントを空にする
+				unset($this->controller->request->data['contentComment']['comment']);
+
+				// 編集用：編集処理を取り除く（編集後は、対象コメントの入力欄を開けないため）
+				unset($this->controller->request->data['process_' . ContentCommentsComponent::PROCESS_EDIT]);
 			}
 
 			// 削除
