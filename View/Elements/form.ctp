@@ -40,6 +40,7 @@
 				<div class="media-body">
 					<?php echo $this->Form->create($formName, array(
 						'name' => 'form',
+						'novalidate' => true,
 					)); ?>
 						<div class="form-group">
 							<div class="input textarea">
@@ -48,7 +49,7 @@
 									array(
 										'class' => 'form-control nc-noresize',
 										'rows' => 2,
-										'default' => '',
+										'value' => '',
 								)); ?>
 							</div>
 						</div>
