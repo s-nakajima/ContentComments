@@ -40,7 +40,7 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 						<a href="" ng-click="user.showUser(<?php echo $contentComment['trackableCreator']['id'] ?>)">
 							<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
 								'class' => 'media-object',
-								'alt' => $video['userAttributesUser']['value'],
+								'alt' => $contentComment['trackableCreator']['username'],
 								'width' => '60',
 								'height' => '60',
 							)); ?>

@@ -32,7 +32,7 @@
 					<?php /* アバター 暫定対応(;'∀') */ ?>
 					<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
 						'class' => 'media-object',
-						'alt' => $video['userAttributesUser']['value'],
+						'alt' => $this->Session->read('Auth')['User']['username'],
 						'width' => '60',
 						'height' => '60',
 					)); ?>
