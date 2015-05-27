@@ -42,9 +42,10 @@ class ContentCommentBehavior extends ModelBehavior {
 		if ($query['fields'] !== null && strpos( $query['fields'], 'ContentCommentCnt.cnt')) {
 			$query['joins'][] = array(
 				'type' => 'LEFT',
-				'table' => '( SELECT c.content_key, COUNT(*) as cnt' .
-					' FROM content_comments c' .
-					' GROUP BY c.block_key, c.plugin_key, c.content_key )',
+				'table' => '( SELECT content_key, COUNT(*) as cnt' .
+					' FROM content_comments' .
+					' WHERE status = ' . ContentComment::STATUS_PUBLISHED .
+					' GROUP BY block_key, plugin_key, content_key )',
 				'alias' => 'ContentCommentCnt',
 				'conditions' => $Model->alias . '.key = ContentCommentCnt.content_key',
 			);

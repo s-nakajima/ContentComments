@@ -42,7 +42,7 @@ class ContentCommentTest extends ContentCommentAppTest {
 			'plugin_key' => 'plugin_1',
 			'content_key' => 'content_1',
 		));
-		$this->assertCount(1, $contentComments);
+		$this->assertCount(2, $contentComments);
 	}
 
 /**
