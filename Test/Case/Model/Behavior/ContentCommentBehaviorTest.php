@@ -74,7 +74,7 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 	}
 
 /**
- * コンテントコメント数なし = NULL
+ * コンテントコメント数なし = 0
  *
  * @return void
  */
@@ -88,7 +88,7 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 			'conditions' => $conditions,
 		));
 
-		$this->assertNull($fake[0]['ContentCommentCnt']['cnt']);
+		$this->assertEqual($fake[0]['ContentCommentCnt']['cnt'], 0);
 	}
 
 /**

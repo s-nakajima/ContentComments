@@ -53,4 +53,24 @@ class ContentCommentBehavior extends ModelBehavior {
 
 		return $query;
 	}
+
+/**
+ * コンテンツコメント数、NULLなら0をセット
+ *
+ * @param Model $Model モデル
+ * @param mixed $results Find結果
+ * @param bool $primary primary
+ * @return array $results
+ */
+	public function afterFind(Model $Model, $results, $primary = false) {
+		if (isset($results[0]['ContentCommentCnt'])) {
+			foreach ($results as $key => $target) {
+				// NULLなら0をセット
+				if (!isset($target['ContentCommentCnt']['cnt'])) {
+					$results[$key]['ContentCommentCnt']['cnt'] = 0;
+				}
+			}
+		}
+		return $results;
+	}
 }
