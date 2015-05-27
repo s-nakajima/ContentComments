@@ -62,6 +62,7 @@ class ContentCommentBehavior extends ModelBehavior {
  * @param mixed $results Find結果
  * @param bool $primary primary
  * @return array $results
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function afterFind(Model $Model, $results, $primary = false) {
 		if (isset($results[0]['ContentCommentCnt'])) {
