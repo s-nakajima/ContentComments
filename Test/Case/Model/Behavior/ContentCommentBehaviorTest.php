@@ -38,7 +38,7 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 	}
 
 /**
- * コンテントコメント数あり 公開のみ
+ * コンテントコメント数あり 公開のみ fields = string
  *
  * @return void
  */
@@ -49,6 +49,27 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 		$fake = $this->FakeModel->find('all', array(
 			'recursive' => 1,
 			'fields' => '*, ContentCommentCnt.cnt',	// Behaviorでコンテンツコメント数取得
+			'conditions' => $conditions,
+		));
+
+		$this->assertEqual($fake[0]['ContentCommentCnt']['cnt'], 2);
+	}
+
+/**
+ * コンテントコメント数あり 公開のみ fields = array
+ *
+ * @return void
+ */
+	public function testContentCommentCntFieldsArray() {
+		$conditions = array(
+			'key' => 'content_1'
+		);
+		$fake = $this->FakeModel->find('all', array(
+			'recursive' => 1,
+			'fields' => array(
+				'*',
+				'ContentCommentCnt.cnt',	// Behaviorでコンテンツコメント数取得
+			),
 			'conditions' => $conditions,
 		));
 

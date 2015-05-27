@@ -39,7 +39,8 @@ class ContentCommentBehavior extends ModelBehavior {
  */
 	public function beforeFind(Model $Model, $query) {
 		// フィールドにコンテンツコメント数があったらJOINする
-		if ($query['fields'] !== null && strpos( $query['fields'], 'ContentCommentCnt.cnt')) {
+		if ((gettype($query['fields']) == 'string' && strpos($query['fields'], 'ContentCommentCnt.cnt')) ||
+			(gettype($query['fields']) == 'array' && array_search('ContentCommentCnt.cnt', $query['fields']))) {
 			$query['joins'][] = array(
 				'type' => 'LEFT',
 				'table' => '( SELECT content_key, COUNT(*) as cnt' .
