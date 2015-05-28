@@ -14,25 +14,38 @@ echo $this->Html->css('/content_comments/css/style.css', false);
 echo $this->Html->script('/content_comments/js/content_comments.js', false);
 ?>
 
-<?php if ($contentComments): ?>
-	<article>
-		<div id="nc-content-comments-<?php echo (int)$frameId; ?>" ng-controller="ContentComments">
-			<div class="content-comments">
-				<?php $i = 0; ?>
-				<?php foreach ($contentComments as $contentComment): ?>
-					<?php // ・未承認のコメントは表示しない。
-						// ・自分のコメントは表示する。
-						// ・承認許可ありの場合、表示する。
-						if ($contentCommentPublishable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')) {
-							// 表示
-						} elseif ($contentComment['contentComment']['status'] == ContentComment::STATUS_APPROVED) {
-							// 非表示
-							continue;
-						}
-					?>
-					<article>
+<?php
+foreach ($contentComments as $idx => $contentComment) {
+	// ・未承認のコメントは表示しない。
+	// ・自分のコメントは表示する。
+	// ・承認許可ありの場合、表示する。
+	if ($contentCommentPublishable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')) {
+		// 表示 => なにもしない
+	} elseif ($contentComment['contentComment']['status'] == ContentComment::STATUS_APPROVED) {
+		// 非表示 => 配列から取り除く
+		unset($contentComments[$idx]);
+	}
+} ?>
+
+<?php /* コメントを利用しない or (コメント0件 and コメント投稿できない) */ ?>
+<?php if (!$useComment || (!$contentComments && !$contentCommentCreatable)): ?>
+	<?php /* 表示しない */ ?>
+
+<?php else : ?>
+    <article>
+		<div class="panel panel-default">
+
+			<?php /* 入力欄 */ ?>
+			<?php echo $this->element('ContentComments.form', array(
+				'formName' => $formName,
+			)); ?>
+
+			<div id="nc-content-comments-<?php echo (int)$frameId; ?>" ng-controller="ContentComments">
+				<div class="content-comments">
+					<?php $i = 0; ?>
+					<?php foreach ($contentComments as $contentComment): ?>
 						<?php /* visitar対応 1件目 and 投稿許可なしで border-top 表示しない */ ?>
-						<div class="comment <?php echo $i >= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>
+						<article class="comment <?php echo $i >= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>
 									 <?php echo $i == 0 && !$contentCommentCreatable ? 'comment-no-form' : ''; ?>">
 							<div class="media">
 								<div class="pull-left">
@@ -81,19 +94,23 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 												<div class="form-group">
 													<div class="input textarea">
 														<?php
-															$contentCommentComment = array(
-																'class' => 'form-control nc-noresize',
-																'rows' => 2,
-																'default' => nl2br($contentComment['contentComment']['comment']),
-															);
-															/* 編集時入力エラー対応 編集処理で、idが同じのみvalueをセットしない */
-															if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-																$this->request->data('contentComment.id') == $contentComment['contentComment']['id']) {
-																// 何もしない
-															} else {
-																$contentCommentComment['value'] = nl2br($contentComment['contentComment']['comment']);
-															}
-															echo $this->Form->textarea('contentComment.comment', $contentCommentComment);
+														$contentCommentComment = array(
+															'class' => 'form-control nc-noresize',
+															'rows' => 2,
+															'default' => nl2br($contentComment['contentComment']['comment']),
+														);
+
+														/* 編集時入力エラー対応 編集処理で、idが同じのみvalueをセットしない */
+														$isCommentValueSet = true;
+														if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
+															$this->request->data('contentComment.id') == $contentComment['contentComment']['id']) {
+															$isCommentValueSet = false;
+														}
+														if ($isCommentValueSet) {
+															$contentCommentComment['value'] = nl2br($contentComment['contentComment']['comment']);
+														}
+
+														echo $this->Form->textarea('contentComment.comment', $contentCommentComment);
 														?>
 													</div>
 												</div>
@@ -189,19 +206,19 @@ echo $this->Html->script('/content_comments/js/content_comments.js', false);
 									<?php echo $this->Form->end(); ?>
 								<?php endif; ?>
 							</div>
-						</div>
-					</article>
-					<?php $i++; ?>
-				<?php endforeach ?>
+						</article>
+						<?php $i++; ?>
+					<?php endforeach ?>
 
-				<?php /* もっと見る */ ?>
-				<div class="comment-more">
-					<button type="button" class="btn btn-info btn-block more <?php echo $i <= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>"
-							ng-click="more();">
-						<?php echo h(__d('net_commons', 'More')); ?>
-					</button>
+					<?php /* もっと見る */ ?>
+					<div class="comment-more">
+						<button type="button" class="btn btn-info btn-block more <?php echo $i <= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>"
+								ng-click="more();">
+							<?php echo h(__d('net_commons', 'More')); ?>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</article>
+    </article>
 <?php endif;
