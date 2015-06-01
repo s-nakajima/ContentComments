@@ -21,7 +21,7 @@ App::uses('ContentCommentAppTest', 'ContentComments.Test/Case/Model');
 class ContentCommentExceptionTest extends ContentCommentAppTest {
 
 /**
- * データ保存 例外テスト 未完成(;'∀')
+ * データ保存 例外テスト
  *
  * @return void
  */
