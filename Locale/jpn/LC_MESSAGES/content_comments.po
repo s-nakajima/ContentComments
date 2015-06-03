@@ -37,10 +37,6 @@ msgstr "キャンセル"
 msgid "Approving the %s. Are you sure to proceed?"
 msgstr "%s を承認します。本当によろしいですか。"
 
-#: Plugin/ContentComments/View/Elements/index.ctp:142
-msgid "Deleting the %s. Are you sure to proceed?"
-msgstr "%s を削除します。本当によろしいですか。"
-
 #: Plugin/ContentComments/View/Elements/status_label.ctp:16
 msgid "Approving"
 msgstr "未承認"

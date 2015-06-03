@@ -36,10 +36,6 @@ msgstr ""
 msgid "Approving the %s. Are you sure to proceed?"
 msgstr ""
 
-#: Plugin/ContentComments/View/Elements/index.ctp:142
-msgid "Deleting the %s. Are you sure to proceed?"
-msgstr ""
-
 #: Plugin/ContentComments/View/Elements/status_label.ctp:16
 msgid "Approving"
 msgstr ""

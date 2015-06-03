@@ -201,7 +201,7 @@ foreach ($contentComments as $idx => $contentComment) {
 											array(
 												'class' => 'btn btn-danger btn-sm',
 												'name' => 'process_' . ContentCommentsComponent::PROCESS_DELETE,
-												'onclick' => 'return confirm(\'' . sprintf(__d('content_comments', 'Deleting the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')'
+												'onclick' => 'return confirm(\'' . sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')'
 										)); ?>
 									<?php echo $this->Form->end(); ?>
 								<?php endif; ?>
