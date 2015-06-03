@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2015-05-05 02:43+0000\n"
-"PO-Revision-Date: 2015-05-05 11:51+0900\n"
+"PO-Revision-Date: 2015-06-03 10:56+0900\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language: ja_JP\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.1\n"
 
 #: Plugin/ContentComments/Model/ContentComment.php:92
 #: Plugin/ContentComments/View/Elements/index.ctp:117;142
@@ -29,10 +29,6 @@ msgstr "%s コメント"
 msgid "Comment"
 msgstr "コメントする"
 
-#: Plugin/ContentComments/View/Elements/index.ctp:87
-msgid "Cancel"
-msgstr "キャンセル"
-
 #: Plugin/ContentComments/View/Elements/index.ctp:117
 msgid "Approving the %s. Are you sure to proceed?"
 msgstr "%s を承認します。本当によろしいですか。"
@@ -40,3 +36,7 @@ msgstr "%s を承認します。本当によろしいですか。"
 #: Plugin/ContentComments/View/Elements/status_label.ctp:16
 msgid "Approving"
 msgstr "未承認"
+
+#: Videos/View/Elements/VideoBlockSettings/edit_form.ctp:73
+msgid "Use comment"
+msgstr "コメントを利用する"

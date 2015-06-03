@@ -5,7 +5,6 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-05-05 02:43+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,29 +13,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Plugin/ContentComments/Model/ContentComment.php:92
-#: Plugin/ContentComments/View/Elements/index.ctp:117;142
+#: ContentComments/Model/ContentComment.php:92
+#: ContentComments/View/Elements/index.ctp:169;204
 msgid "comment"
 msgstr ""
 
-#: Plugin/ContentComments/View/Elements/form.ctp:25
+#: ContentComments/View/Elements/form.ctp:26
 msgid "%s comments"
 msgstr ""
 
-#: Plugin/ContentComments/View/Elements/form.ctp:68
-#: Plugin/ContentComments/View/Elements/index.ctp:90
+#: ContentComments/View/Elements/form.ctp:75
+#: ContentComments/View/Elements/index.ctp:140
 msgid "Comment"
 msgstr ""
 
-#: Plugin/ContentComments/View/Elements/index.ctp:87
-msgid "Cancel"
-msgstr ""
-
-#: Plugin/ContentComments/View/Elements/index.ctp:117
+#: ContentComments/View/Elements/index.ctp:169
 msgid "Approving the %s. Are you sure to proceed?"
 msgstr ""
 
-#: Plugin/ContentComments/View/Elements/status_label.ctp:16
+#: ContentComments/View/Elements/status_label.ctp:16
 msgid "Approving"
+msgstr ""
+
+#: Videos/View/Elements/VideoBlockSettings/edit_form.ctp:73
+msgid "Use comment"
 msgstr ""
 

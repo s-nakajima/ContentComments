@@ -134,7 +134,7 @@ foreach ($contentComments as $idx => $contentComment) {
 												<div class="row">
 													<div class="col-xs-12 text-center">
 														<button type="button" class="btn btn-default btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?> = false;">
-															<?php echo __d('content_comments', 'Cancel') ?>
+															<?php echo __d('net_commons', 'Cancel') ?>
 														</button>
 														<?php echo $this->Form->button(
 															__d('content_comments', 'Comment'),
