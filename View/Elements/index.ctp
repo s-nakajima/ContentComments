@@ -115,21 +115,16 @@ foreach ($contentComments as $idx => $contentComment) {
 													</div>
 												</div>
 
-												<div class="has-error">
-													<?php /* 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置 */ ?>
-													<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-														$this->request->data('contentComment.id') == $contentComment['contentComment']['id']): ?>
-														<?php if ($this->validationErrors['contentComment']): ?>
-															<?php foreach ($this->validationErrors['contentComment'] as $validationErrors): ?>
-																<?php foreach ($validationErrors as $message): ?>
-																	<div class="help-block">
-																		<?php echo $message ?>
-																	</div>
-																<?php endforeach ?>
-															<?php endforeach ?>
-														<?php endif ?>
-													<?php endif; ?>
-												</div>
+												<?php /* 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置 */ ?>
+												<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
+													$this->request->data('contentComment.id') == $contentComment['contentComment']['id']): ?>
+														<?php echo $this->element(
+															'NetCommons.errors', [
+															'errors' => $this->validationErrors,
+															'model' => 'ContentComment',
+															'field' => 'comment',
+														]); ?>
+												<?php endif ?>
 
 												<div class="row">
 													<div class="col-xs-12 text-center">
