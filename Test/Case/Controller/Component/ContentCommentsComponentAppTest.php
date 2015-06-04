@@ -10,11 +10,12 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
+App::uses('AppController', 'Controller');
 App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
 App::uses('ComponentCollection', 'Controller');
 App::uses('ContentCommentsComponent', 'ContentComments.Controller/Component');
-App::uses('AppController', 'Controller');
+App::uses('YAControllerTestCase', 'NetCommons.TestSuite');
 
 /**
  * ContentCommentsComponentApp Test Case
@@ -40,7 +41,7 @@ class TestContentCommentsController extends AppController {
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\NetCommons\Test\Case\Controller
  */
-class ContentCommentsComponentAppTest extends CakeTestCase {
+class ContentCommentsComponentAppTest extends YAControllerTestCase {
 
 /**
  * Fixtures
@@ -61,13 +62,6 @@ class ContentCommentsComponentAppTest extends CakeTestCase {
 	public $contentComments = null;
 
 /**
- * Controller for ContentComments component test
- *
- * @var Controller Controller for ContentComments component test
- */
-	public $controller = null;
-
-/**
  * setUp
  *
  * @return void
@@ -75,12 +69,26 @@ class ContentCommentsComponentAppTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		// PageLayout対応
+		YACakeTestCase::loadTestPlugin($this, 'NetCommons', 'TestPlugin');
+
 		Configure::write('Config.language', 'ja');
 
 		//テストコントローラ読み込み
-		$cakeRequest = new CakeRequest();
-		$cakeResponse = new CakeResponse();
-		$this->controller = new TestContentCommentsController($cakeRequest, $cakeResponse);
+		$this->generate(
+			'ContentComments.TestContentComments',
+			array(
+				'components' => array(
+					'Auth' => array('user'),
+					'Session',
+					'Security',
+				)
+			)
+		);
+		// $this->controller->request->is('ajax') を成功させるために必要
+		$this->controller->request = new CakeRequest();
+		$this->controller->response = new CakeResponse();
+
 		//コンポーネント読み込み
 		$collection = new ComponentCollection();
 		$this->contentComments = new ContentCommentsComponent($collection);

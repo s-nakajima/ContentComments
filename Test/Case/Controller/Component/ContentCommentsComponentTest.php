@@ -59,7 +59,6 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAppTest {
 		$this->controller->data = array(
 			'process_xxx' => ''
 		);
-		$this->controller->viewClass = 'Json';
 		$this->contentComments->initialize($this->controller);
 
 		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'; // ajax通信
