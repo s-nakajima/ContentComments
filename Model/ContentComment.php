@@ -106,10 +106,9 @@ class ContentComment extends ContentCommentsAppModel {
  */
 	public function getContentComments($conditions) {
 		return $this->find('all', array(
-				'conditions' => $conditions,
-				'order' => $this->alias . '.created DESC',
-			)
-		);
+			'conditions' => $conditions,
+			'order' => $this->alias . '.created DESC',
+		));
 	}
 
 /**

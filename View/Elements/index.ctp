@@ -38,6 +38,7 @@ foreach ($contentComments as $idx => $contentComment) {
 			<?php /* 入力欄 */ ?>
 			<?php echo $this->element('ContentComments.form', array(
 				'formName' => $formName,
+				'contentCommentCnt' => $contentCommentCnt,
 			)); ?>
 
 			<div id="nc-content-comments-<?php echo (int)$frameId; ?>" ng-controller="ContentComments">
