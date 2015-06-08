@@ -12,6 +12,8 @@
 
 echo $this->Html->css('/content_comments/css/style.css', false);
 echo $this->Html->script('/content_comments/js/content_comments.js', false);
+
+$contentComments = isset($contentComments) ? $contentComments : array();
 ?>
 
 <?php
