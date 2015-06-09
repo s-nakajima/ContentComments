@@ -101,12 +101,11 @@ class ContentCommentsComponentAppTest extends YAControllerTestCase {
  * @return void
  */
 	public function tearDown() {
-		parent::tearDown();
-
 		unset($this->contentComments);
 		unset($this->controller);
 
 		Configure::write('Config.language', null);
+		parent::tearDown();
 	}
 
 /**
