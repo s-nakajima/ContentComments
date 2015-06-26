@@ -69,7 +69,15 @@ foreach ($contentComments as $idx => $contentComment) {
 												<b><?php echo $contentComment['trackableCreator']['username'] ?></b>
 											</a>
 											<?php /* 公開状況ラベル */ ?>
-											<?php echo $this->element('ContentComments.status_label', array('status' => $contentComment['contentComment']['status'])); ?>
+											<?php echo $this->element('NetCommons.status_label', array(
+												'labels' => [
+													ContentComment::STATUS_APPROVED => [
+														'class' => 'label-warning',
+														'message' => __d('content_comments', 'Approving'),
+													],
+												],
+												'status' => $contentComment['contentComment']['status']
+											)); ?>
 										</div>
 										<div class="col-xs-6 text-right">
 											<small class="text-muted"><?php echo $this->Date->dateFormat($contentComment['contentComment']['created']); ?></small>
