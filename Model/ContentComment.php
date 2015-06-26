@@ -81,7 +81,6 @@ class ContentComment extends ContentCommentsAppModel {
 				'notEmpty' => array(
 					'rule' => array('notEmpty'),
 					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('content_comments', 'comment')),
-					'required' => true,
 				),
 			),
 		));

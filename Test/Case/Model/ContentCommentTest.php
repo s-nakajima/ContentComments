@@ -81,6 +81,27 @@ class ContentCommentTest extends ContentCommentAppTest {
 	}
 
 /**
+ * コンテンツコメントのデータ保存 承認テスト
+ * コメントを含まないで登録
+ *
+ * @return void
+ */
+	public function testSaveContentCommentApproved() {
+		$data = array('ContentComment' => array(
+			'id' => 3,
+			'block_key' => 'block_2',
+			'plugin_key' => 'plugin_2',
+			'content_key' => 'content_2',
+			'status' => ContentComment::STATUS_PUBLISHED, // 公開
+		));
+		$contentComment = $this->ContentComment->saveContentComment($data);
+		//var_dump($this->ContentComment->validationErrors);
+		//var_dump($contentComment);
+
+		$this->assertCount(1, $contentComment);
+	}
+
+/**
  * コンテンツコメント データ削除テスト
  *
  * @return void
