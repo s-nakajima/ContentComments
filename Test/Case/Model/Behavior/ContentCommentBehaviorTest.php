@@ -38,6 +38,16 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 	}
 
 /**
+ * tearDown method
+ *
+ * @return void
+ */
+	public function tearDown() {
+		unset($this->FakeModel);
+		parent::tearDown();
+	}
+
+/**
  * コンテントコメント数あり 公開のみ fields = string
  *
  * @return void
@@ -52,7 +62,7 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 			'conditions' => $conditions,
 		));
 
-		$this->assertEqual($fake[0]['ContentCommentCnt']['cnt'], 2);
+		$this->assertEquals($fake[0]['ContentCommentCnt']['cnt'], 2);
 	}
 
 /**
@@ -73,7 +83,7 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 			'conditions' => $conditions,
 		));
 
-		$this->assertEqual($fake[0]['ContentCommentCnt']['cnt'], 2);
+		$this->assertEquals($fake[0]['ContentCommentCnt']['cnt'], 2);
 	}
 
 /**
@@ -91,7 +101,7 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 			'conditions' => $conditions,
 		));
 
-		$this->assertEqual($fake[0]['ContentCommentCnt']['cnt'], 1);
+		$this->assertEquals($fake[0]['ContentCommentCnt']['cnt'], 1);
 	}
 
 /**
@@ -109,7 +119,7 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 			'conditions' => $conditions,
 		));
 
-		$this->assertEqual($fake[0]['ContentCommentCnt']['cnt'], 0);
+		$this->assertEquals($fake[0]['ContentCommentCnt']['cnt'], 0);
 	}
 
 /**
