@@ -11,7 +11,10 @@
  */
 
 /**
- * @param string $formName フォーム名
+ * @param string $pluginKey プラグインキー
+ * @param string $contentKey コンテントキー
+ * @param bool $isCommentApproved コンテントコメント承認利用フラグ
+ * @param string $redirectUrl 操作後の遷移URL
  */
 $this->Html->css(
 	array('/content_comments/css/style.css'),
@@ -41,10 +44,16 @@ $this->Html->css(
 					)); ?>
 				</div>
 				<div class="media-body">
-					<?php echo $this->Form->create($formName, array(
+					<?php echo $this->Form->create('ContentComment', array(
 						'name' => 'form',
+						'url' => '/content_comments/content_comments/edit/' . $frameId,
 						'novalidate' => true,
 					)); ?>
+						<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
+						<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
+						<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
+						<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
+
 						<div class="form-group">
 							<div class="input textarea">
 								<?php echo $this->Form->textarea(

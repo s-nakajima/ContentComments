@@ -10,6 +10,14 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
+/**
+ * @param string $pluginKey プラグインキー
+ * @param string $contentKey コンテントキー
+ * @param bool $isCommentApproved コンテントコメント承認利用フラグ
+ * @param bool $useComment コンテンツコメント利用フラグ
+ * @param int $contentCommentCnt コンテンツコメント件数
+ * @param string $redirectUrl 操作後の遷移URL
+ */
 $this->Html->css(
 	array('/content_comments/css/style.css'),
 	array('plugin' => false, 'once' => true, 'inline' => false)
@@ -45,8 +53,11 @@ foreach ($contentComments as $idx => $contentComment) {
 
 			<?php /* 入力欄 */ ?>
 			<?php echo $this->element('ContentComments.form', array(
-				'formName' => $formName,
+				'pluginKey' => $pluginKey,
+				'contentKey' => $contentKey,
+				'isCommentApproved' => $isCommentApproved,
 				'contentCommentCnt' => $contentCommentCnt,
+				'redirectUrl' => $redirectUrl,
 			)); ?>
 
 			<div id="nc-content-comments-<?php echo (int)$frameId; ?>" ng-controller="ContentComments">
@@ -99,15 +110,18 @@ foreach ($contentComments as $idx => $contentComment) {
 									<?php if ($contentCommentEditable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')): ?>
 										<?php /* 編集フォーム 非表示 */ ?>
 										<div ng-show="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>">
-											<?php echo $this->Form->create($formName, array(
+											<?php echo $this->Form->create('ContentComment', array(
 												'name' => 'form',
+												'url' => '/content_comments/content_comments/edit/' . $frameId,
+												'novalidate' => true,
 											)); ?>
-												<?php echo $this->Form->hidden('contentComment.id', array(
-													'value' => $contentComment['contentComment']['id'],
-												)); ?>
-												<?php echo $this->Form->hidden('contentComment.createdUser', array(
-													'value' => $contentComment['contentComment']['createdUser'],
-												)); ?>
+												<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
+												<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
+												<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
+												<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
+												<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['contentComment']['id'])); ?>
+												<?php echo $this->Form->hidden('contentComment.createdUser', array('value' => $contentComment['contentComment']['createdUser'])); ?>
+
 												<div class="form-group">
 													<div class="input textarea">
 														<?php
@@ -166,13 +180,18 @@ foreach ($contentComments as $idx => $contentComment) {
 								<?php /* 承認許可あり and 未承認のコメント  */ ?>
 								<?php if ($contentCommentPublishable && $contentComment['contentComment']['status'] == ContentComment::STATUS_APPROVED): ?>
 									<?php /* 承認 */ ?>
-									<?php echo $this->Form->create($formName, array(
+									<?php echo $this->Form->create('ContentComment', array(
 										'name' => 'form',
 										'style' => 'display: inline;',
+										'url' => '/content_comments/content_comments/edit/' . $frameId,
+										'novalidate' => true,
 									)); ?>
-										<?php echo $this->Form->hidden('contentComment.id', array(
-											'value' => $contentComment['contentComment']['id'],
-										)); ?>
+										<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
+										<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
+										<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
+										<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
+										<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['contentComment']['id'])); ?>
+
 										<?php echo $this->Form->button(
 											"<span class='glyphicon glyphicon-ok'></span>",
 											array(
@@ -198,16 +217,19 @@ foreach ($contentComments as $idx => $contentComment) {
 									</button>
 
 									<?php /* 削除 */ ?>
-									<?php echo $this->Form->create($formName, array(
+									<?php echo $this->Form->create('ContentComment', array(
 										'name' => 'form',
 										'style' => 'display: inline;',
+										'url' => '/content_comments/content_comments/edit/' . $frameId,
+										'novalidate' => true,
 									)); ?>
-										<?php echo $this->Form->hidden('contentComment.id', array(
-											'value' => $contentComment['contentComment']['id'],
-										)); ?>
-										<?php echo $this->Form->hidden('contentComment.createdUser', array(
-											'value' => $contentComment['contentComment']['createdUser'],
-										)); ?>
+										<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['contentComment']['id'])); ?>
+										<?php echo $this->Form->hidden('contentComment.createdUser', array('value' => $contentComment['contentComment']['createdUser'])); ?>
+										<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
+										<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
+										<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
+										<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
+
 										<?php echo $this->Form->button(
 											"<span class='glyphicon glyphicon-trash'></span>",
 											array(
