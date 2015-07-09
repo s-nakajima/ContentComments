@@ -10,8 +10,14 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-echo $this->Html->css('/content_comments/css/style.css', false);
-echo $this->Html->script('/content_comments/js/content_comments.js', false);
+$this->Html->css(
+	array('/content_comments/css/style.css'),
+	array('plugin' => false, 'once' => true, 'inline' => false)
+);
+$this->Html->script(
+	array('/content_comments/js/content_comments.js'),
+	array('plugin' => false, 'once' => true, 'inline' => false)
+);
 
 $contentComments = isset($contentComments) ? $contentComments : array();
 ?>

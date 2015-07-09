@@ -13,8 +13,11 @@
 /**
  * @param string $formName フォーム名
  */
+$this->Html->css(
+	array('/content_comments/css/style.css'),
+	array('plugin' => false, 'once' => true, 'inline' => false)
+);
 ?>
-<?php echo $this->Html->css('/content_comments/css/style.css', false); ?>
 
 <?php if ($contentCommentCreatable): ?>
 	<div class="content-comments">
