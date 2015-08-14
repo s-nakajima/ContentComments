@@ -50,8 +50,6 @@ class ContentCommentsComponentAppTest extends YAControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.content_comments.content_comment',
-		'plugin.blocks.block',
-		'plugin.users.user',
 	);
 
 /**
