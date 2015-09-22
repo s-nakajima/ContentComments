@@ -9,6 +9,8 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
+App::uses('ContentComment', 'ContentComments.Model');
+
 /**
  * Summary for ContentComment Behavior
  */
