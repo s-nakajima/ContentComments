@@ -35,16 +35,16 @@ foreach ($contentComments as $idx => $contentComment) {
 	// ・未承認のコメントは表示しない。
 	// ・自分のコメントは表示する。
 	// ・承認許可ありの場合、表示する。
-	if ($contentCommentPublishable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')) {
+	if ($contentCommentPublishable || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')) {
 		// 表示 => なにもしない
-	} elseif ($contentComment['contentComment']['status'] == ContentComment::STATUS_APPROVED) {
+	} elseif ($contentComment['ContentComment']['status'] == ContentComment::STATUS_APPROVED) {
 		// 非表示 => 配列から取り除く
 		unset($contentComments[$idx]);
 	}
 } ?>
 
 <?php /* コメントを利用しない or (コメント0件 and コメント投稿できない) */ ?>
-<?php if (!$useComment || (!$contentComments && !$contentCommentCreatable)): ?>
+<?php if (!$useComment || (!$contentComments && !Current::permission('content_comment_creatable'))): ?>
 	<?php /* 表示しない */ ?>
 
 <?php else : ?>
@@ -66,7 +66,7 @@ foreach ($contentComments as $idx => $contentComment) {
 					<?php foreach ($contentComments as $contentComment): ?>
 						<?php /* visitar対応 1件目 and 投稿許可なしで border-top 表示しない */ ?>
 						<article class="comment <?php echo $i >= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>
-									 <?php echo $i == 0 && !$contentCommentCreatable ? 'comment-no-form' : ''; ?>">
+									 <?php echo $i == 0 && !Current::permission('content_comment_creatable') ? 'comment-no-form' : ''; ?>">
 							<div class="media">
 								<div class="pull-left">
 									<?php /* アバター 暫定対応(;'∀') */ ?>
@@ -93,23 +93,23 @@ foreach ($contentComments as $idx => $contentComment) {
 														'message' => __d('content_comments', 'Approving'),
 													],
 												],
-												'status' => $contentComment['contentComment']['status']
+												'status' => $contentComment['ContentComment']['status']
 											)); ?>
 										</div>
 										<div class="col-xs-6 text-right">
-											<small class="text-muted"><?php echo $this->Date->dateFormat($contentComment['contentComment']['created']); ?></small>
+											<small class="text-muted"><?php echo $this->Date->dateFormat($contentComment['ContentComment']['created']); ?></small>
 										</div>
 									</div>
 
 									<?php /* コメント表示 */ ?>
-									<div ng-hide="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>">
-										<?php echo nl2br($contentComment['contentComment']['comment']) ?>
+									<div ng-hide="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
+										<?php echo nl2br($contentComment['ContentComment']['comment']) ?>
 									</div>
 
 									<?php /* コンテンツコメント編集許可あり or 自分で投稿したコメントなら、編集可能 */ ?>
-									<?php if ($contentCommentEditable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')): ?>
+									<?php if ($contentCommentEditable || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')): ?>
 										<?php /* 編集フォーム 非表示 */ ?>
-										<div ng-show="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>">
+										<div ng-show="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
 											<?php echo $this->Form->create('ContentComment', array(
 												'name' => 'form',
 												'url' => '/content_comments/content_comments/edit/' . $frameId,
@@ -119,8 +119,8 @@ foreach ($contentComments as $idx => $contentComment) {
 												<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
 												<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
 												<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
-												<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['contentComment']['id'])); ?>
-												<?php echo $this->Form->hidden('contentComment.createdUser', array('value' => $contentComment['contentComment']['createdUser'])); ?>
+												<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
+												<?php echo $this->Form->hidden('contentComment.createdUser', array('value' => $contentComment['ContentComment']['created_user'])); ?>
 
 												<div class="form-group">
 													<div class="input textarea">
@@ -128,17 +128,17 @@ foreach ($contentComments as $idx => $contentComment) {
 														$contentCommentComment = array(
 															'class' => 'form-control nc-noresize',
 															'rows' => 2,
-															'default' => nl2br($contentComment['contentComment']['comment']),
+															'default' => nl2br($contentComment['ContentComment']['comment']),
 														);
 
 														/* 編集時入力エラー対応 編集処理で、idが同じのみvalueをセットしない */
 														$isCommentValueSet = true;
 														if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-															$this->request->data('contentComment.id') == $contentComment['contentComment']['id']) {
+															$this->request->data('contentComment.id') == $contentComment['ContentComment']['id']) {
 															$isCommentValueSet = false;
 														}
 														if ($isCommentValueSet) {
-															$contentCommentComment['value'] = nl2br($contentComment['contentComment']['comment']);
+															$contentCommentComment['value'] = nl2br($contentComment['ContentComment']['comment']);
 														}
 
 														echo $this->Form->textarea('contentComment.comment', $contentCommentComment);
@@ -148,7 +148,7 @@ foreach ($contentComments as $idx => $contentComment) {
 
 												<?php /* 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置 */ ?>
 												<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-													$this->request->data('contentComment.id') == $contentComment['contentComment']['id']): ?>
+													$this->request->data('contentComment.id') == $contentComment['ContentComment']['id']): ?>
 														<?php echo $this->element(
 															'NetCommons.errors', [
 															'errors' => $this->validationErrors,
@@ -159,7 +159,7 @@ foreach ($contentComments as $idx => $contentComment) {
 
 												<div class="row">
 													<div class="col-xs-12 text-center">
-														<button type="button" class="btn btn-default btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?> = false;">
+														<button type="button" class="btn btn-default btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = false;">
 															<?php echo __d('net_commons', 'Cancel') ?>
 														</button>
 														<?php echo $this->Form->button(
@@ -176,9 +176,9 @@ foreach ($contentComments as $idx => $contentComment) {
 
 								</div>
 							</div>
-							<div class="text-right" ng-hide="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>">
+							<div class="text-right" ng-hide="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
 								<?php /* 承認許可あり and 未承認のコメント  */ ?>
-								<?php if ($contentCommentPublishable && $contentComment['contentComment']['status'] == ContentComment::STATUS_APPROVED): ?>
+								<?php if ($contentCommentPublishable && $contentComment['ContentComment']['status'] == ContentComment::STATUS_APPROVED): ?>
 									<?php /* 承認 */ ?>
 									<?php echo $this->Form->create('ContentComment', array(
 										'name' => 'form',
@@ -190,7 +190,7 @@ foreach ($contentComments as $idx => $contentComment) {
 										<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
 										<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
 										<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
-										<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['contentComment']['id'])); ?>
+										<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
 
 										<?php echo $this->Form->button(
 											"<span class='glyphicon glyphicon-ok'></span>",
@@ -203,16 +203,16 @@ foreach ($contentComments as $idx => $contentComment) {
 								<?php endif; ?>
 
 								<?php /* 編集許可あり or 自分で投稿したコメントなら、編集・削除可能 */ ?>
-								<?php if ($contentCommentEditable || $contentComment['contentComment']['createdUser'] == (int)AuthComponent::user('id')): ?>
+								<?php if ($contentCommentEditable || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')): ?>
 									<?php /* 編集 */ ?>
 									<?php /* 編集の表示・非表示フラグ 非表示 */ ?>
-									<input class="hide" type="checkbox" ng-model="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?>"
+									<input class="hide" type="checkbox" ng-model="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>"
 										<?php /* 編集時入力エラー対応　編集処理で、idが同じなら編集画面を開く */ ?>
 										<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-											$this->request->data('contentComment.id') == $contentComment['contentComment']['id']): ?>
-											ng-init="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?> = true;"
+											$this->request->data('contentComment.id') == $contentComment['ContentComment']['id']): ?>
+											ng-init="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;"
 										<?php endif; ?>>
-									<button type="button" class="btn btn-primary btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['contentComment']['id']; ?> = true;">
+									<button type="button" class="btn btn-primary btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;">
 										<span class='glyphicon glyphicon-edit'></span>
 									</button>
 
@@ -223,8 +223,8 @@ foreach ($contentComments as $idx => $contentComment) {
 										'url' => '/content_comments/content_comments/edit/' . $frameId,
 										'novalidate' => true,
 									)); ?>
-										<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['contentComment']['id'])); ?>
-										<?php echo $this->Form->hidden('contentComment.createdUser', array('value' => $contentComment['contentComment']['createdUser'])); ?>
+										<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
+										<?php echo $this->Form->hidden('contentComment.createdUser', array('value' => $contentComment['ContentComment']['created_user'])); ?>
 										<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
 										<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
 										<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
