@@ -60,7 +60,7 @@ foreach ($contentComments as $idx => $contentComment) {
 				'redirectUrl' => $redirectUrl,
 			)); ?>
 
-			<div id="nc-content-comments-<?php echo (int)$frameId; ?>" ng-controller="ContentComments">
+			<div id="nc-content-comments-<?php echo Current::read('Frame.id'); ?>" ng-controller="ContentComments">
 				<div class="content-comments">
 					<?php $i = 0; ?>
 					<?php foreach ($contentComments as $contentComment): ?>
@@ -70,10 +70,10 @@ foreach ($contentComments as $idx => $contentComment) {
 							<div class="media">
 								<div class="pull-left">
 									<?php /* アバター 暫定対応(;'∀') */ ?>
-									<a href="" ng-click="user.showUser(<?php echo $contentComment['trackableCreator']['id'] ?>)">
+									<a href="" ng-click="user.showUser(<?php echo $contentComment['TrackableCreator']['id'] ?>)">
 										<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
 											'class' => 'media-object',
-											'alt' => $contentComment['trackableCreator']['username'],
+											'alt' => $contentComment['TrackableCreator']['username'],
 											'width' => '60',
 											'height' => '60',
 										)); ?>
@@ -82,8 +82,8 @@ foreach ($contentComments as $idx => $contentComment) {
 								<div class="media-body">
 									<div class="row">
 										<div class="col-xs-6">
-											<a href="" ng-click="user.showUser(<?php echo $contentComment['trackableCreator']['id'] ?>)">
-												<b><?php echo $contentComment['trackableCreator']['username'] ?></b>
+											<a href="" ng-click="user.showUser(<?php echo $contentComment['TrackableCreator']['id'] ?>)">
+												<b><?php echo $contentComment['TrackableCreator']['username'] ?></b>
 											</a>
 											<?php /* 公開状況ラベル */ ?>
 											<?php echo $this->element('NetCommons.status_label', array(

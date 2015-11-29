@@ -22,7 +22,7 @@ $this->Html->css(
 );
 ?>
 
-<?php if ($contentCommentCreatable): ?>
+<?php if (Current::permission('content_comment_creatable')): ?>
 	<div class="content-comments">
 		<div class="comment-form">
 			<div class="row">
@@ -46,7 +46,7 @@ $this->Html->css(
 				<div class="media-body">
 					<?php echo $this->Form->create('ContentComment', array(
 						'name' => 'form',
-						'url' => '/content_comments/content_comments/edit/' . $frameId,
+						'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
 						'novalidate' => true,
 					)); ?>
 						<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
