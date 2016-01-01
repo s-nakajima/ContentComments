@@ -127,8 +127,8 @@ foreach ($contentComments as $idx => $contentComment) {
 												<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
 												<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
 												<?php //echo $this->Form->hidden('frame_id', array('value' => Current::read('Frame.id'))); ?>
-												<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
-												<?php echo $this->Form->hidden('contentComment.createdUser', array('value' => $contentComment['ContentComment']['created_user'])); ?>
+												<?php echo $this->Form->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
+												<?php echo $this->Form->hidden('ContentComment.createdUser', array('value' => $contentComment['ContentComment']['created_user'])); ?>
 												<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 												<?php //echo $this->NetCommonsForm->hidden('ContentComment.id'); ?>
 												<?php //echo $this->NetCommonsForm->hidden('ContentComment.created_user'); ?>
@@ -145,21 +145,21 @@ foreach ($contentComments as $idx => $contentComment) {
 														/* 編集時入力エラー対応 編集処理で、idが同じのみvalueをセットしない */
 														$isCommentValueSet = true;
 														if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-															$this->request->data('contentComment.id') == $contentComment['ContentComment']['id']) {
+															$this->request->data('ContentComment.id') == $contentComment['ContentComment']['id']) {
 															$isCommentValueSet = false;
 														}
 														if ($isCommentValueSet) {
 															$contentCommentComment['value'] = nl2br($contentComment['ContentComment']['comment']);
 														}
 
-														echo $this->Form->textarea('contentComment.comment', $contentCommentComment);
+														echo $this->Form->textarea('ContentComment.comment', $contentCommentComment);
 														?>
 													</div>
 												</div>
 
 												<?php /* 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置 */ ?>
 												<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-													$this->request->data('contentComment.id') == $contentComment['ContentComment']['id']): ?>
+													$this->request->data('ContentComment.id') == $contentComment['ContentComment']['id']): ?>
 														<?php echo $this->element(
 															'NetCommons.errors', [
 															'errors' => $this->validationErrors,
@@ -201,7 +201,7 @@ foreach ($contentComments as $idx => $contentComment) {
 										<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
 										<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
 										<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
-										<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
+										<?php echo $this->Form->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
 										<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 										<?php echo $this->Form->button(
@@ -221,7 +221,7 @@ foreach ($contentComments as $idx => $contentComment) {
 									<input class="hide" type="checkbox" ng-model="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>"
 										<?php /* 編集時入力エラー対応　編集処理で、idが同じなら編集画面を開く */ ?>
 										<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-											$this->request->data('contentComment.id') == $contentComment['ContentComment']['id']): ?>
+											$this->request->data('ContentComment.id') == $contentComment['ContentComment']['id']): ?>
 											ng-init="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;"
 										<?php endif; ?>>
 									<button type="button" class="btn btn-primary btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;">
