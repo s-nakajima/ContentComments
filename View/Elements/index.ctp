@@ -35,7 +35,7 @@ foreach ($contentComments as $idx => $contentComment) {
 	// ・未承認のコメントは表示しない。
 	// ・自分のコメントは表示する。
 	// ・承認許可ありの場合、表示する。
-	if ($contentCommentPublishable || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')) {
+	if (Current::permission('content_comment_publishable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')) {
 		// 表示 => なにもしない
 	} elseif ($contentComment['ContentComment']['status'] == ContentComment::STATUS_APPROVED) {
 		// 非表示 => 配列から取り除く
@@ -182,7 +182,7 @@ foreach ($contentComments as $idx => $contentComment) {
 							</div>
 							<div class="text-right" ng-hide="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
 								<?php /* 承認許可あり and 未承認のコメント  */ ?>
-								<?php if ($contentCommentPublishable && $contentComment['ContentComment']['status'] == ContentComment::STATUS_APPROVED): ?>
+								<?php if (Current::permission('content_comment_publishable') && $contentComment['ContentComment']['status'] == ContentComment::STATUS_APPROVED): ?>
 									<?php /* 承認 */ ?>
 									<?php echo $this->Form->create('ContentComment', array(
 										'name' => 'form',

@@ -86,10 +86,10 @@ class ContentCommentsComponent extends Component {
 		if (!$process = $this->__parseProcess()) {
 			return false;
 		}
-//		// パーミッションがあるかチェック
-//		if (!$this->__checkPermission($process)) {
-//			return false;
-//		}
+		// パーミッションがあるかチェック
+		if (!$this->__checkPermission($process)) {
+			return false;
+		}
 
 		// 登録・編集・承認
 		if ($process == $this::PROCESS_ADD ||
@@ -99,7 +99,7 @@ class ContentCommentsComponent extends Component {
 			// dataの準備
 			$data = $this->__readyData($process, $pluginKey, $contentKey, $isCommentApproved);
 
-var_dump(Current::read('Block.key'));
+//var_dump(Current::read('Block.key'));
 //var_dump(Current::read());
 //var_dump($data);
 //var_dump($this->request);
@@ -161,18 +161,18 @@ var_dump(Current::read('Block.key'));
  */
 	private function __checkPermission($process) {
 		// 登録処理 and 投稿許可あり
-		if ($process == $this::PROCESS_ADD && $this->controller->viewVars['content_comment_creatable']) {
+		if ($process == $this::PROCESS_ADD && Current::permission('content_comment_creatable')) {
 			return true;
 
 			// (編集処理 or 削除処理) and (編集許可あり or 自分で投稿したコメントなら、編集・削除可能)
 		} elseif (($process == $this::PROCESS_EDIT || $process == $this::PROCESS_DELETE) && (
-				$this->controller->viewVars['contentCommentEditable'] ||
+				Current::permission('content_comment_editable') ||
 				$this->controller->data['ContentComment']['createdUser'] == (int)AuthComponent::user('id')
 		)) {
 			return true;
 
 			// 承認処理 and 承認許可あり
-		} elseif ($process == $this::PROCESS_APPROVED && $this->controller->viewVars['contentCommentPublishable']) {
+		} elseif ($process == $this::PROCESS_APPROVED && Current::permission('content_comment_publishable')) {
 			return true;
 
 		}
