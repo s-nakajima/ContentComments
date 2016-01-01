@@ -85,15 +85,22 @@ foreach ($contentComments as $idx => $contentComment) {
 											<a href="" ng-click="user.showUser(<?php echo $contentComment['TrackableCreator']['id'] ?>)">
 												<b><?php echo $contentComment['TrackableCreator']['username'] ?></b>
 											</a>
-											<?php /* 公開状況ラベル */ ?>
-											<?php echo $this->element('NetCommons.status_label', array(
+											<?php /* ステータス */ ?>
+											<?php echo $this->Workflow->label($contentComment['ContentComment']['status'], array(
 												'labels' => [
-													ContentComment::STATUS_APPROVED => [
+													WorkflowComponent::STATUS_IN_DRAFT => array(
+														'class' => 'label-info',
+														'message' => __d('net_commons', 'Temporary'),
+													),
+													ContentComment::STATUS_APPROVED => array(
 														'class' => 'label-warning',
 														'message' => __d('content_comments', 'Approving'),
-													],
-												],
-												'status' => $contentComment['ContentComment']['status']
+													),
+													WorkflowComponent::STATUS_DISAPPROVED => array(
+														'class' => 'label-warning',
+														'message' => __d('net_commons', 'Disapproving'),
+													),
+												]
 											)); ?>
 										</div>
 										<div class="col-xs-6 text-right">
@@ -107,7 +114,7 @@ foreach ($contentComments as $idx => $contentComment) {
 									</div>
 
 									<?php /* コンテンツコメント編集許可あり or 自分で投稿したコメントなら、編集可能 */ ?>
-									<?php if ($contentCommentEditable || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')): ?>
+									<?php if (Current::permission('content_comment_editable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')): ?>
 										<?php /* 編集フォーム 非表示 */ ?>
 										<div ng-show="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
 											<?php echo $this->Form->create('ContentComment', array(
@@ -195,6 +202,7 @@ foreach ($contentComments as $idx => $contentComment) {
 										<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
 										<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
 										<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
+										<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 										<?php echo $this->Form->button(
 											"<span class='glyphicon glyphicon-ok'></span>",
@@ -207,7 +215,7 @@ foreach ($contentComments as $idx => $contentComment) {
 								<?php endif; ?>
 
 								<?php /* 編集許可あり or 自分で投稿したコメントなら、編集・削除可能 */ ?>
-								<?php if ($contentCommentEditable || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')): ?>
+								<?php if (Current::permission('content_comment_editable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')): ?>
 									<?php /* 編集 */ ?>
 									<?php /* 編集の表示・非表示フラグ 非表示 */ ?>
 									<input class="hide" type="checkbox" ng-model="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>"
@@ -233,6 +241,7 @@ foreach ($contentComments as $idx => $contentComment) {
 										<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
 										<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
 										<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
+										<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 										<?php echo $this->Form->button(
 											"<span class='glyphicon glyphicon-trash'></span>",
