@@ -146,26 +146,23 @@ class ContentComment extends ContentCommentsAppModel {
 		if (empty($id)) {
 			return false;
 		}
-//		$this->loadModels(array(
-//			'ContentComment' => 'ContentComments.ContentComment',
-//		));
 
 		//トランザクションBegin
-		$dataSource = $this->getDataSource();
-		$dataSource->begin();
+		$this->begin();
 
 		try {
 			if (! $this->delete($id, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
-			$dataSource->commit();
+			//トランザクションCommit
+			$this->commit();
 
-		} catch (InternalErrorException $ex) {
-			$dataSource->rollback();
-			CakeLog::write(LOG_ERR, $ex);
-			throw $ex;
+		} catch (Exception $ex) {
+			//トランザクションRollback
+			$this->rollback($ex);
 		}
+
 		return true;
 	}
 }
