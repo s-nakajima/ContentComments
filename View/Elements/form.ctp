@@ -53,11 +53,12 @@ $this->Html->css(
 						<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
 						<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
 						<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
+						<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 						<div class="form-group">
 							<div class="input textarea">
 								<?php echo $this->Form->textarea(
-									'contentComment.comment',
+									'ContentComment.comment',
 									array(
 										'class' => 'form-control nc-noresize',
 										'rows' => 2,

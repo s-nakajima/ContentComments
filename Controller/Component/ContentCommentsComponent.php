@@ -11,6 +11,7 @@
  */
 
 App::uses('Component', 'Controller');
+App::uses('ContentComment', 'ContentComments.Model');
 
 /**
  * ContentComments Component
@@ -85,10 +86,10 @@ class ContentCommentsComponent extends Component {
 		if (!$process = $this->__parseProcess()) {
 			return false;
 		}
-		// パーミッションがあるかチェック
-		if (!$this->__checkPermission($process)) {
-			return false;
-		}
+//		// パーミッションがあるかチェック
+//		if (!$this->__checkPermission($process)) {
+//			return false;
+//		}
 
 		// 登録・編集・承認
 		if ($process == $this::PROCESS_ADD ||
@@ -98,15 +99,21 @@ class ContentCommentsComponent extends Component {
 			// dataの準備
 			$data = $this->__readyData($process, $pluginKey, $contentKey, $isCommentApproved);
 
+var_dump(Current::read('Block.key'));
+//var_dump(Current::read());
+//var_dump($data);
+//var_dump($this->request);
+//var_dump($this->controller);
 			// コンテンツコメントのデータ保存
 			if (!$this->controller->ContentComment->saveContentComment($data)) {
-				$this->controller->handleValidationError($this->controller->ContentComment->validationErrors);
+//var_dump($this->controller->ContentComment->validationErrors);
+				$this->controller->NetCommons->handleValidationError($this->controller->ContentComment->validationErrors);
 
 				// 正常
 			} else {
 				// 下記は悪さをしないため、if文 で分岐しない
 				// 登録用：入力欄のコメントを空にする
-				unset($this->controller->request->data['contentComment']['comment']);
+				unset($this->controller->request->data['ContentComment']['comment']);
 
 				// 編集用：編集処理を取り除く（編集後は、対象コメントの入力欄を開けないため）
 				unset($this->controller->request->data['process_' . ContentCommentsComponent::PROCESS_EDIT]);
@@ -115,7 +122,7 @@ class ContentCommentsComponent extends Component {
 			// 削除
 		} elseif ($process == $this::PROCESS_DELETE) {
 			// コンテンツコメントの削除
-			if (!$this->controller->ContentComment->deleteContentComment($this->controller->data['contentComment']['id'])) {
+			if (!$this->controller->ContentComment->deleteContentComment($this->controller->data['ContentComment']['id'])) {
 				return false;
 			}
 		}
@@ -154,13 +161,13 @@ class ContentCommentsComponent extends Component {
  */
 	private function __checkPermission($process) {
 		// 登録処理 and 投稿許可あり
-		if ($process == $this::PROCESS_ADD && $this->controller->viewVars['contentCommentCreatable']) {
+		if ($process == $this::PROCESS_ADD && $this->controller->viewVars['content_comment_creatable']) {
 			return true;
 
 			// (編集処理 or 削除処理) and (編集許可あり or 自分で投稿したコメントなら、編集・削除可能)
 		} elseif (($process == $this::PROCESS_EDIT || $process == $this::PROCESS_DELETE) && (
 				$this->controller->viewVars['contentCommentEditable'] ||
-				$this->controller->data['contentComment']['createdUser'] == (int)AuthComponent::user('id')
+				$this->controller->data['ContentComment']['createdUser'] == (int)AuthComponent::user('id')
 		)) {
 			return true;
 
@@ -190,28 +197,28 @@ class ContentCommentsComponent extends Component {
 			$status = $isCommentApproved ? ContentComment::STATUS_PUBLISHED : ContentComment::STATUS_APPROVED;
 
 			$data = array('ContentComment' => array(
-				'block_key' => $this->controller->viewVars['blockKey'],
+				'block_key' => Current::read('Block.key'),
 				'plugin_key' => $pluginKey,
 				'content_key' => $contentKey,
 				'status' => $status,
-				'comment' => $this->controller->data['contentComment']['comment'],
+				'comment' => $this->controller->data['ContentComment']['comment'],
 			));
 
 			// 編集処理
 		} elseif ($process == $this::PROCESS_EDIT) {
 			$data = array('ContentComment' => array(
-				'id' => $this->controller->data['contentComment']['id'],
-				'block_key' => $this->controller->viewVars['blockKey'],
+				'id' => $this->controller->data['ContentComment']['id'],
+				'block_key' => Current::read('Block.key'),
 				'plugin_key' => $pluginKey,
 				'content_key' => $contentKey,
-				'comment' => $this->controller->data['contentComment']['comment'],
+				'comment' => $this->controller->data['ContentComment']['comment'],
 			));
 
 			// 承認処理
 		} elseif ($process == $this::PROCESS_APPROVED) {
 			$data = array('ContentComment' => array(
-				'id' => $this->controller->data['contentComment']['id'],
-				'block_key' => $this->controller->viewVars['blockKey'],
+				'id' => $this->controller->data['ContentComment']['id'],
+				'block_key' => Current::read('Block.key'),
 				'plugin_key' => $pluginKey,
 				'content_key' => $contentKey,
 				'status' => ContentComment::STATUS_PUBLISHED, // 公開

@@ -35,29 +35,13 @@ class ContentCommentsController extends ContentCommentsAppController {
  */
 	public $components = array(
 		'ContentComments.ContentComments',
-//		'NetCommons.Permission' => array(
-//			//アクセスの権限
-//			'allow' => array(
-//				'edit' => 'content_comment_creatable',
-//			),
-//		),
-//		'NetCommons.NetCommonsRoomRole' => array(
-//			//コンテンツの権限設定
-//			'allowedActions' => array(
-//				'contentEditable' => array('edit'),
-//				'contentCreatable' => array('edit'),
-//			),
-//		),
+		'NetCommons.Permission' => array(
+			//アクセスの権限
+			'allow' => array(
+				'edit' => 'content_comment_creatable',
+			),
+		),
 	);
-
-/**
- * beforeFilter
- *
- * @return void
- */
-//	public function beforeFilter() {
-//		parent::beforeFilter();
-//	}
 
 /**
  * 編集（登録・編集・削除・承認）
@@ -71,6 +55,9 @@ class ContentCommentsController extends ContentCommentsAppController {
 				$this->throwBadRequest();
 				return;
 			}
+
+			// 一覧へ
+			$this->redirect($this->data['ContentComment']['redirectUrl']);
 		}
 	}
 

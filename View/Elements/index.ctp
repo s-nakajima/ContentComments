@@ -112,7 +112,7 @@ foreach ($contentComments as $idx => $contentComment) {
 										<div ng-show="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
 											<?php echo $this->Form->create('ContentComment', array(
 												'name' => 'form',
-												'url' => '/content_comments/content_comments/edit/' . $frameId,
+												'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
 												'novalidate' => true,
 											)); ?>
 												<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
@@ -122,6 +122,7 @@ foreach ($contentComments as $idx => $contentComment) {
 												<?php //echo $this->Form->hidden('frame_id', array('value' => Current::read('Frame.id'))); ?>
 												<?php //echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
 												<?php //echo $this->Form->hidden('contentComment.createdUser', array('value' => $contentComment['ContentComment']['created_user'])); ?>
+												<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 												<?php echo $this->NetCommonsForm->hidden('ContentComment.id'); ?>
 												<?php echo $this->NetCommonsForm->hidden('ContentComment.created_user'); ?>
 
@@ -186,7 +187,7 @@ foreach ($contentComments as $idx => $contentComment) {
 									<?php echo $this->Form->create('ContentComment', array(
 										'name' => 'form',
 										'style' => 'display: inline;',
-										'url' => '/content_comments/content_comments/edit/' . $frameId,
+										'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
 										'novalidate' => true,
 									)); ?>
 										<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
@@ -223,7 +224,7 @@ foreach ($contentComments as $idx => $contentComment) {
 									<?php echo $this->Form->create('ContentComment', array(
 										'name' => 'form',
 										'style' => 'display: inline;',
-										'url' => '/content_comments/content_comments/edit/' . $frameId,
+										'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
 										'novalidate' => true,
 									)); ?>
 										<?php echo $this->Form->hidden('contentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>

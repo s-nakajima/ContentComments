@@ -51,22 +51,22 @@ class ContentComment extends ContentCommentsAppModel {
 	public function beforeValidate($options = array()) {
 		$this->validate = Hash::merge($this->validate, array(
 			'block_key' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'required' => true,
 				),
 			),
 			'plugin_key' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'required' => true,
 				),
 			),
 			'content_key' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => __d('net_commons', 'Invalid request.'),
 					'required' => true,
 				),
@@ -78,8 +78,8 @@ class ContentComment extends ContentCommentsAppModel {
 				),
 			),
 			'comment' => array(
-				'notEmpty' => array(
-					'rule' => array('notEmpty'),
+				'notBlank' => array(
+					'rule' => array('notBlank'),
 					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('content_comments', 'comment')),
 				),
 			),
