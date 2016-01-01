@@ -109,36 +109,29 @@ class ContentComment extends ContentCommentsAppModel {
  * @throws InternalErrorException
  */
 	public function saveContentComment($data) {
-		$this->loadModels(array(
-			'ContentComment' => 'ContentComments.ContentComment',
-		));
-
 		//トランザクションBegin
-		$dataSource = $this->getDataSource();
-		$dataSource->begin();
+		$this->begin();
+
+		//バリデーション
+		$this->set($data);
+		if (! $this->validates()) {
+			$this->rollback();
+			return false;
+		}
 
 		try {
-			// 値をセット
-			$this->set($data);
-
-			// 入力チェック
-			$this->validates();
-			if ($this->validationErrors) {
-				return false;
-			}
-
-			$contentComment = $this->save(null, false);
-			if (!$contentComment) {
+			if (! $contentComment = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 
-			$dataSource->commit();
+			//トランザクションCommit
+			$this->commit();
 
-		} catch (InternalErrorException $ex) {
-			$dataSource->rollback();
-			CakeLog::write(LOG_ERR, $ex);
-			throw $ex;
+		} catch (Exception $ex) {
+			//トランザクションRollback
+			$this->rollback($ex);
 		}
+
 		return $contentComment;
 	}
 
@@ -153,9 +146,9 @@ class ContentComment extends ContentCommentsAppModel {
 		if (empty($id)) {
 			return false;
 		}
-		$this->loadModels(array(
-			'ContentComment' => 'ContentComments.ContentComment',
-		));
+//		$this->loadModels(array(
+//			'ContentComment' => 'ContentComments.ContentComment',
+//		));
 
 		//トランザクションBegin
 		$dataSource = $this->getDataSource();
