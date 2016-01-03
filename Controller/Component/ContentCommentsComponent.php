@@ -104,10 +104,15 @@ class ContentCommentsComponent extends Component {
 //var_dump($data);
 //var_dump($this->request);
 //var_dump($this->controller);
+//$this->log('hoge-debug', 'debug');
 			// コンテンツコメントのデータ保存
 			if (!$this->controller->ContentComment->saveContentComment($data)) {
+//$this->log($this->controller->ContentComment->validationErrors, 'debug');
 //var_dump($this->controller->ContentComment->validationErrors);
 				$this->controller->NetCommons->handleValidationError($this->controller->ContentComment->validationErrors);
+//$this->log($this->controller->validationErrors, 'debug');
+				// 別プラグインにエラーメッセージを送るため  http://skgckj.hateblo.jp/entry/2014/02/09/005111
+				$this->controller->Session->write('errors.ContentComment', $this->controller->ContentComment->validationErrors);
 
 				// 正常
 			} else {

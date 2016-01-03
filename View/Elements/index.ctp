@@ -160,13 +160,16 @@ foreach ($contentComments as $idx => $contentComment) {
 												<?php /* 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置 */ ?>
 												<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
 													$this->request->data('ContentComment.id') == $contentComment['ContentComment']['id']): ?>
-														<?php echo $this->element(
-															'NetCommons.errors', [
-															'errors' => $this->validationErrors,
-															'model' => 'ContentComment',
-															'field' => 'comment',
-														]); ?>
+<!--													--><?php //echo $this->element(
+//														'NetCommons.errors', [
+//														'errors' => $this->validationErrors,
+//														'model' => 'ContentComment',
+//														'field' => 'comment',
+//													]); ?>
 												<?php endif ?>
+												<div class="has-error">
+													<?php echo $this->Form->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
+												</div>
 
 												<div class="row">
 													<div class="col-xs-12 text-center">

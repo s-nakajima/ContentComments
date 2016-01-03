@@ -41,6 +41,7 @@ class ContentCommentsController extends ContentCommentsAppController {
 				'edit' => 'content_comment_creatable',
 			),
 		),
+		'Session',
 	);
 
 /**

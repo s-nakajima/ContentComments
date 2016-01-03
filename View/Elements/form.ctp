@@ -69,13 +69,16 @@ $this->Html->css(
 
 						<?php /* 登録時入力エラー対応 登録処理のみエラー表示エリア配置 */ ?>
 						<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_ADD, $this->request->data)): ?>
-							<?php echo $this->element(
-								'NetCommons.errors', [
-								'errors' => $this->validationErrors,
-								'model' => 'ContentComment',
-								'field' => 'comment',
-							]); ?>
+<!--							--><?php //echo $this->element(
+//								'NetCommons.errors', [
+//								'errors' => $this->validationErrors,
+//								'model' => 'ContentComment',
+//								'field' => 'comment',
+//							]); ?>
 						<?php endif ?>
+						<div class="has-error">
+							<?php echo $this->Form->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
+						</div>
 
 						<div class="row">
 							<div class="col-xs-12 text-center">
