@@ -44,15 +44,14 @@ $this->Html->css(
 					)); ?>
 				</div>
 				<div class="media-body">
-					<?php echo $this->Form->create('ContentComment', array(
+					<?php echo $this->NetCommonsForm->create('ContentComment', array(
 						'name' => 'form',
 						'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
-						'novalidate' => true,
 					)); ?>
-						<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
-						<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
-						<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
-						<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
+						<?php echo $this->Form->hidden('redirect_url', array('value' => $redirectUrl)); ?>
+						<?php echo $this->Form->hidden('plugin_key', array('value' => $pluginKey)); ?>
+						<?php echo $this->Form->hidden('content_key', array('value' => $contentKey)); ?>
+						<?php echo $this->Form->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
 						<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 						<div class="form-group">
@@ -90,7 +89,7 @@ $this->Html->css(
 								)); ?>
 							</div>
 						</div>
-					<?php echo $this->Form->end(); ?>
+					<?php echo $this->NetCommonsForm->end(); ?>
 				</div>
 			</div>
 		</div>

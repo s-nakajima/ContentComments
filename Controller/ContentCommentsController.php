@@ -52,13 +52,13 @@ class ContentCommentsController extends ContentCommentsAppController {
 	public function edit() {
 		if ($this->request->isPost()) {
 			// コメントする
-			if (!$this->ContentComments->comment($this->data['ContentComment']['pluginKey'], $this->data['ContentComment']['contentKey'], $this->data['ContentComment']['isCommentApproved'])) {
+			if (!$this->ContentComments->comment($this->data['ContentComment']['plugin_key'], $this->data['ContentComment']['content_key'], $this->data['ContentComment']['is_comment_approved'])) {
 				$this->throwBadRequest();
 				return;
 			}
 
 			// 一覧へ
-			$this->redirect($this->data['ContentComment']['redirectUrl']);
+			$this->redirect($this->data['ContentComment']['redirect_url']);
 		}
 	}
 

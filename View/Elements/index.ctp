@@ -117,15 +117,14 @@ foreach ($contentComments as $idx => $contentComment) {
 									<?php if (Current::permission('content_comment_editable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')): ?>
 										<?php /* 編集フォーム 非表示 */ ?>
 										<div ng-show="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
-											<?php echo $this->Form->create('ContentComment', array(
+											<?php echo $this->NetCommonsForm->create('ContentComment', array(
 												'name' => 'form',
 												'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
-												'novalidate' => true,
 											)); ?>
-												<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
-												<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
-												<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
-												<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
+												<?php echo $this->Form->hidden('redirect_url', array('value' => $redirectUrl)); ?>
+												<?php echo $this->Form->hidden('plugin_key', array('value' => $pluginKey)); ?>
+												<?php echo $this->Form->hidden('content_key', array('value' => $contentKey)); ?>
+												<?php echo $this->Form->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
 												<?php //echo $this->Form->hidden('frame_id', array('value' => Current::read('Frame.id'))); ?>
 												<?php echo $this->Form->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
 												<?php echo $this->Form->hidden('ContentComment.createdUser', array('value' => $contentComment['ContentComment']['created_user'])); ?>
@@ -184,7 +183,7 @@ foreach ($contentComments as $idx => $contentComment) {
 														)); ?>
 													</div>
 												</div>
-											<?php echo $this->Form->end(); ?>
+											<?php echo $this->NetCommonsForm->end(); ?>
 										</div>
 									<?php endif; ?>
 
@@ -194,16 +193,15 @@ foreach ($contentComments as $idx => $contentComment) {
 								<?php /* 承認許可あり and 未承認のコメント  */ ?>
 								<?php if (Current::permission('content_comment_publishable') && $contentComment['ContentComment']['status'] == ContentComment::STATUS_APPROVED): ?>
 									<?php /* 承認 */ ?>
-									<?php echo $this->Form->create('ContentComment', array(
+									<?php echo $this->NetCommonsForm->create('ContentComment', array(
 										'name' => 'form',
 										'style' => 'display: inline;',
 										'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
-										'novalidate' => true,
 									)); ?>
-										<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
-										<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
-										<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
-										<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
+										<?php echo $this->Form->hidden('redirect_url', array('value' => $redirectUrl)); ?>
+										<?php echo $this->Form->hidden('plugin_key', array('value' => $pluginKey)); ?>
+										<?php echo $this->Form->hidden('content_key', array('value' => $contentKey)); ?>
+										<?php echo $this->Form->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
 										<?php echo $this->Form->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
 										<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
@@ -214,7 +212,7 @@ foreach ($contentComments as $idx => $contentComment) {
 												'name' => 'process_' . ContentCommentsComponent::PROCESS_APPROVED,
 												'onclick' => 'return confirm(\'' . sprintf(__d('content_comments', 'Approving the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')'
 										)); ?>
-									<?php echo $this->Form->end(); ?>
+									<?php echo $this->NetCommonsForm->end(); ?>
 								<?php endif; ?>
 
 								<?php /* 編集許可あり or 自分で投稿したコメントなら、編集・削除可能 */ ?>
@@ -232,18 +230,17 @@ foreach ($contentComments as $idx => $contentComment) {
 									</button>
 
 									<?php /* 削除 */ ?>
-									<?php echo $this->Form->create('ContentComment', array(
+									<?php echo $this->NetCommonsForm->create('ContentComment', array(
 										'name' => 'form',
 										'style' => 'display: inline;',
 										'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
-										'novalidate' => true,
 									)); ?>
 										<?php echo $this->Form->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
 										<?php echo $this->Form->hidden('ContentComment.createdUser', array('value' => $contentComment['ContentComment']['created_user'])); ?>
-										<?php echo $this->Form->hidden('redirectUrl', array('value' => $redirectUrl)); ?>
-										<?php echo $this->Form->hidden('pluginKey', array('value' => $pluginKey)); ?>
-										<?php echo $this->Form->hidden('contentKey', array('value' => $contentKey)); ?>
-										<?php echo $this->Form->hidden('isCommentApproved', array('value' => $isCommentApproved)); ?>
+										<?php echo $this->Form->hidden('redirect_url', array('value' => $redirectUrl)); ?>
+										<?php echo $this->Form->hidden('plugin_key', array('value' => $pluginKey)); ?>
+										<?php echo $this->Form->hidden('content_key', array('value' => $contentKey)); ?>
+										<?php echo $this->Form->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
 										<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 										<?php //echo $this->NetCommonsForm->hidden('ContentComment.id'); ?>
 										<?php //echo $this->NetCommonsForm->hidden('ContentComment.created_user'); ?>
@@ -255,7 +252,7 @@ foreach ($contentComments as $idx => $contentComment) {
 												'name' => 'process_' . ContentCommentsComponent::PROCESS_DELETE,
 												'onclick' => 'return confirm(\'' . sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')'
 										)); ?>
-									<?php echo $this->Form->end(); ?>
+									<?php echo $this->NetCommonsForm->end(); ?>
 								<?php endif; ?>
 							</div>
 						</article>
