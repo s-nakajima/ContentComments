@@ -87,20 +87,10 @@ foreach ($contentComments as $idx => $contentComment) {
 											</a>
 											<?php /* ステータス */ ?>
 											<?php echo $this->Workflow->label($contentComment['ContentComment']['status'], array(
-												'labels' => [
-													WorkflowComponent::STATUS_IN_DRAFT => array(
-														'class' => 'label-info',
-														'message' => __d('net_commons', 'Temporary'),
-													),
-													ContentComment::STATUS_APPROVED => array(
-														'class' => 'label-warning',
-														'message' => __d('content_comments', 'Approving'),
-													),
-													WorkflowComponent::STATUS_DISAPPROVED => array(
-														'class' => 'label-warning',
-														'message' => __d('net_commons', 'Disapproving'),
-													),
-												]
+												ContentComment::STATUS_APPROVED => array(
+													'class' => 'label-warning',
+													'message' => __d('content_comments', 'Approving'),
+												),
 											)); ?>
 										</div>
 										<div class="col-xs-6 text-right">
