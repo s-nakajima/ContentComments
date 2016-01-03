@@ -172,7 +172,7 @@ class ContentCommentsComponent extends Component {
 			// (編集処理 or 削除処理) and (編集許可あり or 自分で投稿したコメントなら、編集・削除可能)
 		} elseif (($process == $this::PROCESS_EDIT || $process == $this::PROCESS_DELETE) && (
 				Current::permission('content_comment_editable') ||
-				$this->controller->data['ContentComment']['createdUser'] == (int)AuthComponent::user('id')
+				$this->controller->data['ContentComment']['created_user'] == (int)AuthComponent::user('id')
 		)) {
 			return true;
 
