@@ -48,10 +48,12 @@ $this->Html->css(
 						'name' => 'form',
 						'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
 					)); ?>
-						<?php echo $this->NetCommonsForm->hidden('redirect_url', array('value' => $redirectUrl)); ?>
 						<?php echo $this->NetCommonsForm->hidden('plugin_key', array('value' => $pluginKey)); ?>
 						<?php echo $this->NetCommonsForm->hidden('content_key', array('value' => $contentKey)); ?>
+						<?php echo $this->NetCommonsForm->hidden('redirect_url', array('value' => $redirectUrl)); ?>
 						<?php echo $this->NetCommonsForm->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
+						<?php // Block.idのみセットするのは、Controller::beforeFilter() => NetCommonsAppController::beforeFilter() => Current::initialize() => CurrentFrame::initialize() => CurrentFrame::setBlock()
+								// でBlock.idないとBlockをfindしてくれないため ?>
 						<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 						<div class="form-group">

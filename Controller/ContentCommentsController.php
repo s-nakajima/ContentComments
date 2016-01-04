@@ -41,7 +41,6 @@ class ContentCommentsController extends ContentCommentsAppController {
 				'edit' => 'content_comment_creatable',
 			),
 		),
-		'Session',
 	);
 
 /**
@@ -52,7 +51,7 @@ class ContentCommentsController extends ContentCommentsAppController {
 	public function edit() {
 		if ($this->request->isPost()) {
 			// コメントする
-			if (!$this->ContentComments->comment($this->data['ContentComment']['plugin_key'], $this->data['ContentComment']['content_key'], $this->data['ContentComment']['is_comment_approved'])) {
+			if (!$this->ContentComments->comment()) {
 				$this->throwBadRequest();
 				return;
 			}

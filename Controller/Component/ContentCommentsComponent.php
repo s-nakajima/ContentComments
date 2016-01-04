@@ -96,12 +96,9 @@ class ContentCommentsComponent extends Component {
 /**
  * コメントする
  *
- * @param string $pluginKey プラグインキー
- * @param string $contentKey コンテンツキー
- * @param bool $isCommentApproved コメントの自動承認
  * @return bool 成功 or 失敗
  */
-	public function comment($pluginKey, $contentKey, $isCommentApproved) {
+	public function comment() {
 		// コンテンツコメントの処理名をパースして取得
 		if (!$process = $this->__parseProcess()) {
 			return false;
@@ -117,18 +114,13 @@ class ContentCommentsComponent extends Component {
 			$process == $this::PROCESS_APPROVED) {
 
 			// dataの準備
-			$data = $this->__readyData($process, $pluginKey, $contentKey, $isCommentApproved);
+			$data = $this->__readyData($process);
 
-//var_dump(Current::read('Block.key'));
-//var_dump(Current::read());
-//var_dump($data);
-//var_dump($this->request);
-//var_dump($this->controller);
-//$this->log('hoge-debug', 'debug');
+//$this->log($this->controller->request->data, 'debug');
+//$this->log($this->controller->data, 'debug');
 			// コンテンツコメントのデータ保存
 			if (!$this->controller->ContentComment->saveContentComment($data)) {
 //$this->log($this->controller->ContentComment->validationErrors, 'debug');
-//var_dump($this->controller->ContentComment->validationErrors);
 				$this->controller->NetCommons->handleValidationError($this->controller->ContentComment->validationErrors);
 //$this->log($this->controller->validationErrors, 'debug');
 				// 別プラグインにエラーメッセージを送るため  http://skgckj.hateblo.jp/entry/2014/02/09/005111
@@ -208,47 +200,28 @@ class ContentCommentsComponent extends Component {
  * dataの準備
  *
  * @param int $process どの処理
- * @param string $pluginKey プラグインキー
- * @param string $contentKey コンテンツキー
- * @param bool $isCommentApproved コメントの自動承認
  * @return array data
  */
-	private function __readyData($process, $pluginKey, $contentKey, $isCommentApproved) {
-		$data = null;
+	private function __readyData($process) {
+		$data['ContentComment'] = $this->controller->request->data('ContentComment');
+		$data['ContentComment']['block_key'] = Current::read('Block.key');
+
+		// DBのcontent_commentsテーブルにはない項目なので取り除く
+		unset($data['ContentComment']['is_comment_approved']);
+		unset($data['ContentComment']['redirect_url']);
 
 		// 登録処理
 		if ($process == $this::PROCESS_ADD) {
 			// 公開 or 未承認
-			$status = $isCommentApproved ? ContentComment::STATUS_PUBLISHED : ContentComment::STATUS_APPROVED;
+			$status = $this->controller->request->data('ContentComment.is_comment_approved') ? ContentComment::STATUS_PUBLISHED : ContentComment::STATUS_APPROVED;
 
-			$data = array('ContentComment' => array(
-				'block_key' => Current::read('Block.key'),
-				'plugin_key' => $pluginKey,
-				'content_key' => $contentKey,
-				'status' => $status,
-				'comment' => $this->controller->data['ContentComment']['comment'],
-			));
-
-			// 編集処理
-		} elseif ($process == $this::PROCESS_EDIT) {
-			$data = array('ContentComment' => array(
-				'id' => $this->controller->data['ContentComment']['id'],
-				'block_key' => Current::read('Block.key'),
-				'plugin_key' => $pluginKey,
-				'content_key' => $contentKey,
-				'comment' => $this->controller->data['ContentComment']['comment'],
-			));
+			$data['ContentComment']['status'] = $status;
 
 			// 承認処理
 		} elseif ($process == $this::PROCESS_APPROVED) {
-			$data = array('ContentComment' => array(
-				'id' => $this->controller->data['ContentComment']['id'],
-				'block_key' => Current::read('Block.key'),
-				'plugin_key' => $pluginKey,
-				'content_key' => $contentKey,
-				'status' => ContentComment::STATUS_PUBLISHED, // 公開
-			));
+			$data['ContentComment']['status'] = ContentComment::STATUS_PUBLISHED; // 公開
 		}
+		// 編集処理は何もしない
 
 		return $data;
 	}
