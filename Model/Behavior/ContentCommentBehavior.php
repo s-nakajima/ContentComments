@@ -24,22 +24,22 @@ class ContentCommentBehavior extends ModelBehavior {
 /**
  * setup
  *
- * @param Model $Model モデル
+ * @param Model $model モデル
  * @param array $settings 設定値
  * @return void
  */
-	public function setup(Model $Model, $settings = array()) {
-		$this->settings[$Model->alias] = $settings;
+	public function setup(Model $model, $settings = array()) {
+		$this->settings[$model->alias] = $settings;
 	}
 
 /**
  * 検索時のフィールドにコンテンツコメント数があったらJOINする
  *
- * @param Model $Model タグ使用モデル
+ * @param Model $model タグ使用モデル
  * @param array $query find条件
  * @return array タグ検索条件を加えたfind条件
  */
-	public function beforeFind(Model $Model, $query) {
+	public function beforeFind(Model $model, $query) {
 		// フィールドにコンテンツコメント数があったらJOINする
 		if ((gettype($query['fields']) == 'string' && strpos($query['fields'], 'ContentCommentCnt.cnt')) ||
 			(gettype($query['fields']) == 'array' && array_search('ContentCommentCnt.cnt', $query['fields']))) {
@@ -50,7 +50,7 @@ class ContentCommentBehavior extends ModelBehavior {
 					' WHERE status = ' . ContentComment::STATUS_PUBLISHED .
 					' GROUP BY block_key, plugin_key, content_key )',
 				'alias' => 'ContentCommentCnt',
-				'conditions' => $Model->alias . '.key = ContentCommentCnt.content_key',
+				'conditions' => $model->alias . '.key = ContentCommentCnt.content_key',
 			);
 		}
 
@@ -60,13 +60,13 @@ class ContentCommentBehavior extends ModelBehavior {
 /**
  * コンテンツコメント数、NULLなら0をセット
  *
- * @param Model $Model モデル
+ * @param Model $model モデル
  * @param mixed $results Find結果
  * @param bool $primary primary
  * @return array $results
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-	public function afterFind(Model $Model, $results, $primary = false) {
+	public function afterFind(Model $model, $results, $primary = false) {
 		if (isset($results[0]['ContentCommentCnt'])) {
 			foreach ($results as $key => $target) {
 				// NULLなら0をセット

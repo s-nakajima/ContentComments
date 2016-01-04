@@ -25,51 +25,37 @@ App::uses('SessionComponent', 'Controller/Component');
 class ContentCommentsComponent extends Component {
 
 /**
- * SessionComponent
- *
- * @var object
+ * @var SessionComponent
  */
 	public $Session = null;
 
 /**
- * start limit
- *
- * @var int
+ * @var int start limit
  */
 	const START_LIMIT = 5;
 
 /**
- * max limit
- *
- * @var int
+ * @var int max limit
  */
 	const MAX_LIMIT = 100;
 
 /**
- * 登録処理
- *
- * @var string
+ * @var string 登録処理
  */
 	const PROCESS_ADD = '1';
 
 /**
- * 編集処理
- *
- * @var string
+ * @var string 編集処理
  */
 	const PROCESS_EDIT = '2';
 
 /**
- * 削除処理
- *
- * @var string
+ * @var string 削除処理
  */
 	const PROCESS_DELETE = '3';
 
 /**
- * 承認処理
- *
- * @var string
+ * @var string 承認処理
  */
 	const PROCESS_APPROVED = '4';
 
