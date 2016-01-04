@@ -111,16 +111,13 @@ foreach ($contentComments as $idx => $contentComment) {
 												'name' => 'form',
 												'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
 											)); ?>
-												<?php echo $this->Form->hidden('redirect_url', array('value' => $redirectUrl)); ?>
-												<?php echo $this->Form->hidden('plugin_key', array('value' => $pluginKey)); ?>
-												<?php echo $this->Form->hidden('content_key', array('value' => $contentKey)); ?>
-												<?php echo $this->Form->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
-												<?php //echo $this->Form->hidden('frame_id', array('value' => Current::read('Frame.id'))); ?>
-												<?php echo $this->Form->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
-												<?php echo $this->Form->hidden('ContentComment.createdUser', array('value' => $contentComment['ContentComment']['created_user'])); ?>
-												<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
-												<?php //echo $this->NetCommonsForm->hidden('ContentComment.id'); ?>
-												<?php //echo $this->NetCommonsForm->hidden('ContentComment.created_user'); ?>
+												<?php echo $this->NetCommonsForm->hidden('redirect_url', array('value' => $redirectUrl)); ?>
+												<?php echo $this->NetCommonsForm->hidden('plugin_key', array('value' => $pluginKey)); ?>
+												<?php echo $this->NetCommonsForm->hidden('content_key', array('value' => $contentKey)); ?>
+												<?php echo $this->NetCommonsForm->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
+												<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
+												<?php echo $this->NetCommonsForm->hidden('ContentComment.created_user', array('value' => $contentComment['ContentComment']['created_user'])); ?>
+												<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 												<div class="form-group">
 													<div class="input textarea">
@@ -188,12 +185,12 @@ foreach ($contentComments as $idx => $contentComment) {
 										'style' => 'display: inline;',
 										'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
 									)); ?>
-										<?php echo $this->Form->hidden('redirect_url', array('value' => $redirectUrl)); ?>
-										<?php echo $this->Form->hidden('plugin_key', array('value' => $pluginKey)); ?>
-										<?php echo $this->Form->hidden('content_key', array('value' => $contentKey)); ?>
-										<?php echo $this->Form->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
-										<?php echo $this->Form->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
-										<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
+										<?php echo $this->NetCommonsForm->hidden('redirect_url', array('value' => $redirectUrl)); ?>
+										<?php echo $this->NetCommonsForm->hidden('plugin_key', array('value' => $pluginKey)); ?>
+										<?php echo $this->NetCommonsForm->hidden('content_key', array('value' => $contentKey)); ?>
+										<?php echo $this->NetCommonsForm->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
+										<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
+										<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 										<?php echo $this->Form->button(
 											"<span class='glyphicon glyphicon-ok'></span>",
@@ -225,15 +222,13 @@ foreach ($contentComments as $idx => $contentComment) {
 										'style' => 'display: inline;',
 										'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
 									)); ?>
-										<?php echo $this->Form->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
-										<?php echo $this->Form->hidden('ContentComment.createdUser', array('value' => $contentComment['ContentComment']['created_user'])); ?>
-										<?php echo $this->Form->hidden('redirect_url', array('value' => $redirectUrl)); ?>
-										<?php echo $this->Form->hidden('plugin_key', array('value' => $pluginKey)); ?>
-										<?php echo $this->Form->hidden('content_key', array('value' => $contentKey)); ?>
-										<?php echo $this->Form->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
-										<?php echo $this->Form->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
-										<?php //echo $this->NetCommonsForm->hidden('ContentComment.id'); ?>
-										<?php //echo $this->NetCommonsForm->hidden('ContentComment.created_user'); ?>
+										<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
+										<?php echo $this->NetCommonsForm->hidden('ContentComment.created_user', array('value' => $contentComment['ContentComment']['created_user'])); ?>
+										<?php echo $this->NetCommonsForm->hidden('redirect_url', array('value' => $redirectUrl)); ?>
+										<?php echo $this->NetCommonsForm->hidden('plugin_key', array('value' => $pluginKey)); ?>
+										<?php echo $this->NetCommonsForm->hidden('content_key', array('value' => $contentKey)); ?>
+										<?php echo $this->NetCommonsForm->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
+										<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 										<?php echo $this->Form->button(
 											"<span class='glyphicon glyphicon-trash'></span>",
