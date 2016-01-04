@@ -56,7 +56,7 @@ $this->Html->css(
 
 						<div class="form-group">
 							<div class="input textarea">
-								<?php echo $this->Form->textarea(
+								<?php echo $this->NetCommonsForm->textarea(
 									'ContentComment.comment',
 									array(
 										'class' => 'form-control nc-noresize',
@@ -76,12 +76,12 @@ $this->Html->css(
 //							]); ?>
 						<?php endif ?>
 						<div class="has-error">
-							<?php echo $this->Form->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
+							<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
 						</div>
 
 						<div class="row">
 							<div class="col-xs-12 text-center">
-								<?php echo $this->Form->button(
+								<?php echo $this->NetCommonsForm->button(
 									__d('content_comments', 'Comment'),
 									array(
 										'class' => 'btn btn-success btn-sm',

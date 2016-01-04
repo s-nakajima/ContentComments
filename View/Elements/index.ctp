@@ -138,7 +138,7 @@ foreach ($contentComments as $idx => $contentComment) {
 															$contentCommentComment['value'] = nl2br($contentComment['ContentComment']['comment']);
 														}
 
-														echo $this->Form->textarea('ContentComment.comment', $contentCommentComment);
+														echo $this->NetCommonsForm->textarea('ContentComment.comment', $contentCommentComment);
 														?>
 													</div>
 												</div>
@@ -154,7 +154,7 @@ foreach ($contentComments as $idx => $contentComment) {
 //													]); ?>
 												<?php endif ?>
 												<div class="has-error">
-													<?php echo $this->Form->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
+													<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
 												</div>
 
 												<div class="row">
@@ -162,7 +162,7 @@ foreach ($contentComments as $idx => $contentComment) {
 														<button type="button" class="btn btn-default btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = false;">
 															<?php echo __d('net_commons', 'Cancel') ?>
 														</button>
-														<?php echo $this->Form->button(
+														<?php echo $this->NetCommonsForm->button(
 															__d('content_comments', 'Comment'),
 															array(
 																'class' => 'btn btn-success btn-sm',
@@ -192,7 +192,7 @@ foreach ($contentComments as $idx => $contentComment) {
 										<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
 										<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
-										<?php echo $this->Form->button(
+										<?php echo $this->NetCommonsForm->button(
 											"<span class='glyphicon glyphicon-ok'></span>",
 											array(
 												'class' => 'btn btn-warning btn-sm',
@@ -230,7 +230,7 @@ foreach ($contentComments as $idx => $contentComment) {
 										<?php echo $this->NetCommonsForm->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
 										<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
-										<?php echo $this->Form->button(
+										<?php echo $this->NetCommonsForm->button(
 											"<span class='glyphicon glyphicon-trash'></span>",
 											array(
 												'class' => 'btn btn-danger btn-sm',
