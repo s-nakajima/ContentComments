@@ -117,7 +117,6 @@ class ContentCommentsComponent extends Component {
 			$data = $this->__readyData($process);
 
 //$this->log($this->controller->request->data, 'debug');
-//$this->log($this->controller->data, 'debug');
 			// コンテンツコメントのデータ保存
 			if (!$this->controller->ContentComment->saveContentComment($data)) {
 //$this->log($this->controller->ContentComment->validationErrors, 'debug');
@@ -207,14 +206,18 @@ class ContentCommentsComponent extends Component {
 		$data['ContentComment']['block_key'] = Current::read('Block.key');
 
 		// DBのcontent_commentsテーブルにはない項目なので取り除く
-		unset($data['ContentComment']['is_comment_approved']);
+		unset($data['ContentComment']['use_comment_approval']);
 		unset($data['ContentComment']['redirect_url']);
 
 		// 登録処理
 		if ($process == $this::PROCESS_ADD) {
-			// 公開 or 未承認
-			$status = $this->controller->request->data('ContentComment.is_comment_approved') ? ContentComment::STATUS_PUBLISHED : ContentComment::STATUS_APPROVED;
-
+			if (Current::permission('content_comment_publishable')) {
+				// 公開
+				$status = ContentComment::STATUS_PUBLISHED;
+			} else {
+				// コメント承認機能 0:使わない=>公開 1:使う=>未承認
+				$status = $this->controller->request->data('ContentComment.use_comment_approval') ? ContentComment::STATUS_APPROVED: ContentComment::STATUS_PUBLISHED;
+			}
 			$data['ContentComment']['status'] = $status;
 
 			// 承認処理

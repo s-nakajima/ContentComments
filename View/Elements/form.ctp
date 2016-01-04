@@ -13,7 +13,7 @@
 /**
  * @param string $pluginKey プラグインキー
  * @param string $contentKey コンテントキー
- * @param bool $isCommentApproved コンテントコメント承認利用フラグ
+ * @param bool $useCommentApproval コンテントコメント承認利用フラグ
  * @param string $redirectUrl 操作後の遷移URL
  */
 $this->Html->css(
@@ -51,7 +51,7 @@ $this->Html->css(
 						<?php echo $this->NetCommonsForm->hidden('plugin_key', array('value' => $pluginKey)); ?>
 						<?php echo $this->NetCommonsForm->hidden('content_key', array('value' => $contentKey)); ?>
 						<?php echo $this->NetCommonsForm->hidden('redirect_url', array('value' => $redirectUrl)); ?>
-						<?php echo $this->NetCommonsForm->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
+						<?php echo $this->NetCommonsForm->hidden('use_comment_approval', array('value' => $useCommentApproval)); ?>
 						<?php // Block.idのみセットするのは、Controller::beforeFilter() => NetCommonsAppController::beforeFilter() => Current::initialize() => CurrentFrame::initialize() => CurrentFrame::setBlock()
 								// でBlock.idないとBlockをfindしてくれないため ?>
 						<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>

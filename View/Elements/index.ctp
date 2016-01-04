@@ -28,6 +28,7 @@ $this->Html->script(
 );
 
 $contentComments = isset($contentComments) ? $contentComments : array();
+$useCommentApproval = $isCommentApproved;
 ?>
 
 <?php
@@ -55,7 +56,7 @@ foreach ($contentComments as $idx => $contentComment) {
 			<?php echo $this->element('ContentComments.form', array(
 				'pluginKey' => $pluginKey,
 				'contentKey' => $contentKey,
-				'isCommentApproved' => $isCommentApproved,
+				'useCommentApproval' => $useCommentApproval,
 				'contentCommentCnt' => $contentCommentCnt,
 				'redirectUrl' => $redirectUrl,
 			)); ?>
@@ -116,7 +117,7 @@ foreach ($contentComments as $idx => $contentComment) {
 												<?php echo $this->NetCommonsForm->hidden('plugin_key', array('value' => $pluginKey)); ?>
 												<?php echo $this->NetCommonsForm->hidden('content_key', array('value' => $contentKey)); ?>
 												<?php echo $this->NetCommonsForm->hidden('redirect_url', array('value' => $redirectUrl)); ?>
-												<?php echo $this->NetCommonsForm->hidden('is_comment_approved', array('value' => $isCommentApproved)); ?>
+												<?php echo $this->NetCommonsForm->hidden('use_comment_approval', array('value' => $useCommentApproval)); ?>
 												<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 												<div class="form-group">
