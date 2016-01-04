@@ -13,6 +13,9 @@
 App::uses('Component', 'Controller');
 App::uses('ContentComment', 'ContentComments.Model');
 
+App::uses('ComponentCollection', 'Controller');
+App::uses('SessionComponent', 'Controller/Component');
+
 /**
  * ContentComments Component
  *
@@ -20,6 +23,13 @@ App::uses('ContentComment', 'ContentComments.Model');
  * @package NetCommons\NetCommons\Controller\Component
  */
 class ContentCommentsComponent extends Component {
+
+/**
+ * SessionComponent
+ *
+ * @var object
+ */
+	public $Session = null;
 
 /**
  * start limit
@@ -68,9 +78,33 @@ class ContentCommentsComponent extends Component {
  *
  * @param Controller $controller Instantiating controller
  * @return void
+ * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::initialize
  */
 	public function initialize(Controller $controller) {
 		$this->controller = $controller;
+	}
+
+/**
+ * Called after the Controller::beforeFilter() and before the controller action
+ *
+ * @param Controller $controller Controller with components to startup
+ * @return void
+ * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::startup
+ */
+	public function startup(Controller $controller) {
+
+		// コンポーネントから他のコンポーネントを使用する
+		$collection = new ComponentCollection();
+		$this->Session = new SessionComponent($collection);
+
+		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
+		if ($this->Session->read('errors')) {
+			foreach ($this->Session->read('errors') as $model => $errors) {
+				$controller->$model->validationErrors = $errors;
+			}
+			// 表示は遷移・リロードまでの1回っきりなので消す
+			$this->Session->delete('errors');
+		}
 	}
 
 /**
