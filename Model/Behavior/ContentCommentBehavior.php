@@ -12,6 +12,7 @@
 App::uses('ContentComment', 'ContentComments.Model');
 
 /**
+ * @deprecated 2016.1.6 ContentCommentBehavior => ContentCommentCountBehavior にリネーム＆処理見直し
  * Summary for ContentComment Behavior
  */
 class ContentCommentBehavior extends ModelBehavior {

@@ -27,38 +27,15 @@ class ContentCommentCountBehavior extends ModelBehavior {
  * @param Model $model モデル
  * @param array $settings 設定値
  * @return void
+ * @link http://book.cakephp.org/2.0/ja/models/behaviors.html#ModelBehavior::setup
  */
 	public function setup(Model $model, $settings = array()) {
 		$this->settings[$model->alias] = $settings;
 	}
 
 /**
- * 検索時のフィールドにコンテンツコメント数があったらJOINする
- *
- * @param Model $model タグ使用モデル
- * @param array $query find条件
- * @return array タグ検索条件を加えたfind条件
- */
-	public function beforeFind(Model $model, $query) {
-		// フィールドにコンテンツコメント数があったらJOINする
-		if ((gettype($query['fields']) == 'string' && strpos($query['fields'], 'ContentCommentCnt.cnt')) ||
-			(gettype($query['fields']) == 'array' && array_search('ContentCommentCnt.cnt', $query['fields']))) {
-			$query['joins'][] = array(
-				'type' => 'LEFT',
-				'table' => '( SELECT content_key, COUNT(*) as cnt' .
-					' FROM content_comments' .
-					' WHERE status = ' . ContentComment::STATUS_PUBLISHED .
-					' GROUP BY block_key, plugin_key, content_key )',
-				'alias' => 'ContentCommentCnt',
-				'conditions' => $model->alias . '.key = ContentCommentCnt.content_key',
-			);
-		}
-
-		return $query;
-	}
-
-/**
- * コンテンツコメント数、NULLなら0をセット
+ * afterFind
+ * コンテンツコメント件数をセット
  *
  * @param Model $model モデル
  * @param mixed $results Find結果
@@ -67,14 +44,37 @@ class ContentCommentCountBehavior extends ModelBehavior {
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function afterFind(Model $model, $results, $primary = false) {
-		if (isset($results[0]['ContentCommentCnt'])) {
-			foreach ($results as $key => $target) {
-				// NULLなら0をセット
-				if (!isset($target['ContentCommentCnt']['cnt'])) {
-					$results[$key]['ContentCommentCnt']['cnt'] = 0;
+		// コンテンツコメント件数をセット
+		$contentKeys = array();
+		foreach ($results as $key => &$target) {
+			$contentKeys[] = $target[$model->alias]['key'];
+			$target['ContentCommentCnt']['content_key'] = $target[$model->alias]['key'];
+		}
+
+		$ContentComment = ClassRegistry::init('ContentComments.ContentComment');
+
+		// バーチャルフィールドを追加  http://book.cakephp.org/2.0/ja/models/virtual-fields.html#sql
+		$ContentComment->virtualFields['cnt'] = 0;
+
+		$contentCommentCnts = $ContentComment->find('all', array(
+			'recursive' => -1,
+			'fields' => array('content_key', 'count(content_key) as ContentComment__cnt'),	// Model__エイリアスにする
+			'conditions' => array(
+				'plugin_key' => Current::read('Plugin.key'),
+				'status' => ContentComment::STATUS_PUBLISHED,
+			),
+			'group' => array('block_key', 'plugin_key', 'content_key'),
+		));
+
+		foreach ($results as $key => &$target) {
+			foreach ($contentCommentCnts as $contentCommentCnt) {
+				if ($target['ContentCommentCnt']['content_key'] == $contentCommentCnt['ContentComment']['content_key']) {
+					$target['ContentCommentCnt']['cnt'] = $contentCommentCnt['ContentComment']['cnt'];
+					break;
 				}
 			}
 		}
+
 		return $results;
 	}
 }
