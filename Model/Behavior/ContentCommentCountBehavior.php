@@ -1,6 +1,6 @@
 <?php
 /**
- * コンテンツコメント Behavior
+ * コンテンツコメント件数 Behavior
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>

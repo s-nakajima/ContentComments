@@ -28,7 +28,7 @@ NetCommonsApp.controller('ContentComments',
        * @return {void}
        */
       $scope.more = function() {
-        $('div.comment:hidden').removeClass('hidden');
+        $('article.comment:hidden').removeClass('hidden');
         $('button.more').hide(0);
       };
     });
