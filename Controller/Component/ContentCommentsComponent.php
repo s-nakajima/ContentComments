@@ -96,6 +96,16 @@ class ContentCommentsComponent extends Component {
 			// 表示は遷移・リロードまでの1回っきりなので消す
 			$this->Session->delete('errors');
 		}
+
+		if ($this->Session->read('_tmp')) {
+			if ($this->_controller->request->data('_tmp')) {
+				$this->_controller->request->data['_tmp'] = Hash::merge($this->_controller->request->data('_tmp'), $this->Session->read('_tmp'));
+			} else {
+				$this->_controller->request->data['_tmp'] = $this->Session->read('_tmp');
+			}
+			// 表示は遷移・リロードまでの1回っきりなので消す
+			$this->Session->delete('_tmp');
+		}
 	}
 
 /**
@@ -147,8 +157,10 @@ class ContentCommentsComponent extends Component {
 //$this->log($this->controller->ContentComment->validationErrors, 'debug');
 				$this->_controller->NetCommons->handleValidationError($this->_controller->ContentComment->validationErrors);
 //$this->log($this->controller->validationErrors, 'debug');
-				// 別プラグインにエラーメッセージを送るため  http://skgckj.hateblo.jp/entry/2014/02/09/005111
-				$this->_controller->Session->write('errors.ContentComment', $this->_controller->ContentComment->validationErrors);
+				// 別プラグインにエラーメッセージとどの処理を送るため  http://skgckj.hateblo.jp/entry/2014/02/09/005111
+				$this->Session->write('errors.ContentComment', $this->_controller->ContentComment->validationErrors);
+				$this->Session->write('_tmp.process', $process);
+				$this->Session->write('_tmp.ContentComment.id', $this->_controller->request->data('ContentComment.id'));
 
 				// 正常
 			} else {

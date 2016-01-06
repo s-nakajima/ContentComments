@@ -149,12 +149,10 @@ foreach ($contentComments as $idx => $contentComment) {
 																);
 
 																/* 編集時入力エラー対応 編集処理で、idが同じのみvalueをセットしない */
-																$isCommentValueSet = true;
-																if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-																	$this->request->data('ContentComment.id') == $contentComment['ContentComment']['id']) {
-																	$isCommentValueSet = false;
-																}
-																if ($isCommentValueSet) {
+																if ($this->request->data('_tmp.process') == ContentCommentsComponent::PROCESS_EDIT &&
+																	$this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']) {
+																	$contentCommentComment['value'] = '';
+																} else {
 																	$contentCommentComment['value'] = nl2br($contentComment['ContentComment']['comment']);
 																}
 
@@ -164,18 +162,12 @@ foreach ($contentComments as $idx => $contentComment) {
 														</div>
 
 														<?php /* 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置 */ ?>
-														<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-															$this->request->data('ContentComment.id') == $contentComment['ContentComment']['id']): ?>
-		<!--													--><?php //echo $this->element(
-		//														'NetCommons.errors', [
-		//														'errors' => $this->validationErrors,
-		//														'model' => 'ContentComment',
-		//														'field' => 'comment',
-		//													]); ?>
+														<?php if ($this->request->data('_tmp.process') == ContentCommentsComponent::PROCESS_EDIT &&
+															$this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']): ?>
+															<div class="has-error">
+																<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
+															</div>
 														<?php endif ?>
-														<div class="has-error">
-															<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
-														</div>
 
 														<div class="row">
 															<div class="col-xs-12 text-center">
@@ -186,7 +178,6 @@ foreach ($contentComments as $idx => $contentComment) {
 																	__d('content_comments', 'Comment'),
 																	array(
 																		'class' => 'btn btn-success btn-sm',
-																		'name' => 'process_' . ContentCommentsComponent::PROCESS_EDIT,
 																)); ?>
 															</div>
 														</div>
@@ -218,7 +209,6 @@ foreach ($contentComments as $idx => $contentComment) {
 													"<span class='glyphicon glyphicon-ok'></span>",
 													array(
 														'class' => 'btn btn-warning btn-sm',
-														'name' => 'process_' . ContentCommentsComponent::PROCESS_APPROVED,
 														'onclick' => 'return confirm(\'' . sprintf(__d('content_comments', 'Approving the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')'
 												)); ?>
 											<?php echo $this->NetCommonsForm->end(); ?>
@@ -230,8 +220,8 @@ foreach ($contentComments as $idx => $contentComment) {
 											<?php /* 編集の表示・非表示フラグ 非表示 */ ?>
 											<input class="hide" type="checkbox" ng-model="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>"
 												<?php /* 編集時入力エラー対応　編集処理で、idが同じなら編集画面を開く */ ?>
-												<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_EDIT, $this->request->data) &&
-													$this->request->data('ContentComment.id') == $contentComment['ContentComment']['id']): ?>
+												<?php if ($this->request->data('_tmp.process') == ContentCommentsComponent::PROCESS_EDIT &&
+													$this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']): ?>
 													ng-init="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;"
 												<?php endif; ?>>
 											<button type="button" class="btn btn-primary btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;">
@@ -257,7 +247,6 @@ foreach ($contentComments as $idx => $contentComment) {
 													"<span class='glyphicon glyphicon-trash'></span>",
 													array(
 														'class' => 'btn btn-danger btn-sm',
-														'name' => 'process_' . ContentCommentsComponent::PROCESS_DELETE,
 														'onclick' => 'return confirm(\'' . sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')'
 												)); ?>
 											<?php echo $this->NetCommonsForm->end(); ?>

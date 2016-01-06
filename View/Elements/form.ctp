@@ -80,17 +80,11 @@ $this->Html->css(
 						</div>
 
 						<?php /* 登録時入力エラー対応 登録処理のみエラー表示エリア配置 */ ?>
-						<?php if (array_key_exists('process_' . ContentCommentsComponent::PROCESS_ADD, $this->request->data)): ?>
-<!--							--><?php //echo $this->element(
-//								'NetCommons.errors', [
-//								'errors' => $this->validationErrors,
-//								'model' => 'ContentComment',
-//								'field' => 'comment',
-//							]); ?>
+						<?php if ($this->request->data('_tmp.process') == ContentCommentsComponent::PROCESS_ADD): ?>
+							<div class="has-error">
+								<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
+							</div>
 						<?php endif ?>
-						<div class="has-error">
-							<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
-						</div>
 
 						<div class="row">
 							<div class="col-xs-12 text-center">
@@ -98,7 +92,6 @@ $this->Html->css(
 									__d('content_comments', 'Comment'),
 									array(
 										'class' => 'btn btn-success btn-sm',
-										'name' => 'process_' . ContentCommentsComponent::PROCESS_ADD,
 								)); ?>
 							</div>
 						</div>
