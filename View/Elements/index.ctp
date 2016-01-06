@@ -17,14 +17,8 @@
  * @param int $contentCommentCnt コンテンツコメント件数
  * @param string $redirectUrl 操作後の遷移URL
  */
-$this->Html->css(
-	array('/content_comments/css/style.css'),
-	array('plugin' => false, 'once' => true, 'inline' => false)
-);
-$this->Html->script(
-	array('/content_comments/js/content_comments.js'),
-	array('plugin' => false, 'once' => true, 'inline' => false)
-);
+$this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
+$this->NetCommonsHtml->script(array('/content_comments/js/content_comments.js'));
 
 // プラグインキー
 $pluginKey = $this->request->params['plugin'];
@@ -38,7 +32,6 @@ if (empty($contentComments)) {
 	// 2016.1.6 $this->request->dataから取得するように修正
 	$contentComments = $this->request->data('ContentComments') ? $this->request->data('ContentComments') : array();
 }
-//var_dump($contentComments);
 
 // 2016.1.6 isCommentApproved -> useCommentApprovalにリネーム
 $useCommentApproval = isset($useCommentApproval) ? $useCommentApproval : null;

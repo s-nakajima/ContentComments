@@ -16,10 +16,7 @@
  * @param bool $useCommentApproval コンテントコメント承認利用フラグ
  * @param string $redirectUrl 操作後の遷移URL
  */
-$this->Html->css(
-	array('/content_comments/css/style.css'),
-	array('plugin' => false, 'once' => true, 'inline' => false)
-);
+$this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
 
 <?php if (Current::permission('content_comment_creatable')): ?>
