@@ -49,7 +49,7 @@ class ContentCommentsController extends ContentCommentsAppController {
  * @return CakeResponse
  */
 	public function edit() {
-		if ($this->request->isPost()) {
+		if ($this->request->is('post')) {
 			// コメントする
 			if (!$this->ContentComments->comment()) {
 				$this->throwBadRequest();

@@ -116,7 +116,7 @@ class ContentCommentsComponent extends Component {
 			// dataの準備
 			$data = $this->__readyData();
 
-$this->log($this->controller->request->data, 'debug');
+//$this->log($this->controller->request->data, 'debug');
 			// コンテンツコメントのデータ保存
 			if (!$this->controller->ContentComment->saveContentComment($data)) {
 //$this->log($this->controller->ContentComment->validationErrors, 'debug');
