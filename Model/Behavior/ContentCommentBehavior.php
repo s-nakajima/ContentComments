@@ -14,7 +14,7 @@ App::uses('ContentComment', 'ContentComments.Model');
 /**
  * Summary for ContentComment Behavior
  */
-class ContentCommentCountBehavior extends ModelBehavior {
+class ContentCommentBehavior extends ModelBehavior {
 
 /**
  * @var array 設定
