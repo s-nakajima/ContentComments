@@ -30,6 +30,11 @@ class ContentCommentsComponent extends Component {
 	public $Session = null;
 
 /**
+ * @var Controller
+ */
+	protected $_controller = null;
+
+/**
  * @var int start limit
  */
 	const START_LIMIT = 5;
@@ -67,7 +72,7 @@ class ContentCommentsComponent extends Component {
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::initialize
  */
 	public function initialize(Controller $controller) {
-		$this->controller = $controller;
+		$this->_controller = $controller;
 	}
 
 /**
@@ -86,11 +91,33 @@ class ContentCommentsComponent extends Component {
 		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
 		if ($this->Session->read('errors')) {
 			foreach ($this->Session->read('errors') as $model => $errors) {
-				$controller->$model->validationErrors = $errors;
+				$this->_controller->$model->validationErrors = $errors;
 			}
 			// 表示は遷移・リロードまでの1回っきりなので消す
 			$this->Session->delete('errors');
 		}
+	}
+
+/**
+ * Called before the Controller::beforeRender(), and before
+ * the view class is loaded, and before Controller::render()
+ *
+ * @param Controller $controller Controller with components to beforeRender
+ * @return void
+ * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::beforeRender
+ */
+	public function beforeRender(Controller $controller) {
+//		// コメントを利用する
+//		if ($videoBlockSetting['VideoBlockSetting']['use_comment']) {
+//			// コンテンツコメントの取得
+//			$contentComments = $this->_controller->ContentComment->getContentComments(array(
+//				'block_key' => Current::read('Block.key'),
+//				'plugin_key' => $this->request->params['plugin'],
+//				'content_key' => $video['Video']['key'],
+//			));
+//
+//			$this->_controller->request->data['ContentComments'] = $contentComments;
+//		}
 	}
 
 /**
@@ -118,27 +145,27 @@ class ContentCommentsComponent extends Component {
 
 //$this->log($this->controller->request->data, 'debug');
 			// コンテンツコメントのデータ保存
-			if (!$this->controller->ContentComment->saveContentComment($data)) {
+			if (!$this->_controller->ContentComment->saveContentComment($data)) {
 //$this->log($this->controller->ContentComment->validationErrors, 'debug');
-				$this->controller->NetCommons->handleValidationError($this->controller->ContentComment->validationErrors);
+				$this->_controller->NetCommons->handleValidationError($this->_controller->ContentComment->validationErrors);
 //$this->log($this->controller->validationErrors, 'debug');
 				// 別プラグインにエラーメッセージを送るため  http://skgckj.hateblo.jp/entry/2014/02/09/005111
-				$this->controller->Session->write('errors.ContentComment', $this->controller->ContentComment->validationErrors);
+				$this->_controller->Session->write('errors.ContentComment', $this->_controller->ContentComment->validationErrors);
 
 				// 正常
 			} else {
 				// 下記は悪さをしないため、if文 で分岐しない
 				// 登録用：入力欄のコメントを空にする
-				unset($this->controller->request->data['ContentComment']['comment']);
+				unset($this->_controller->request->data['ContentComment']['comment']);
 
 				// 編集用：編集処理を取り除く（編集後は、対象コメントの入力欄を開けないため）
-				unset($this->controller->request->data['process_' . ContentCommentsComponent::PROCESS_EDIT]);
+				unset($this->_controller->request->data['process_' . ContentCommentsComponent::PROCESS_EDIT]);
 			}
 
 			// 削除
 		} elseif ($process == $this::PROCESS_DELETE) {
 			// コンテンツコメントの削除
-			if (!$this->controller->ContentComment->deleteContentComment($this->controller->request->data('ContentComment.id'))) {
+			if (!$this->_controller->ContentComment->deleteContentComment($this->_controller->request->data('ContentComment.id'))) {
 				return false;
 			}
 		}
@@ -152,11 +179,11 @@ class ContentCommentsComponent extends Component {
  * @return int どの処理
  */
 	private function __parseProcess() {
-		if ($matches = preg_grep('/^process_\d/', array_keys($this->controller->data))) {
+		if ($matches = preg_grep('/^process_\d/', array_keys($this->_controller->data))) {
 			list(, $process) = explode('_', array_shift($matches));
 		} else {
-			if ($this->controller->request->is('ajax')) {
-				$this->controller->renderJson(
+			if ($this->_controller->request->is('ajax')) {
+				$this->_controller->renderJson(
 					['error' => ['validationErrors' => ['status' => __d('net_commons', 'Invalid request.')]]],
 					__d('net_commons', 'Bad Request'), 400
 				);
@@ -201,7 +228,7 @@ class ContentCommentsComponent extends Component {
  * @return array data
  */
 	private function __readyData() {
-		$data['ContentComment'] = $this->controller->request->data('ContentComment');
+		$data['ContentComment'] = $this->_controller->request->data('ContentComment');
 		$data['ContentComment']['block_key'] = Current::read('Block.key');
 
 		return $data;

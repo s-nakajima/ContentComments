@@ -40,7 +40,10 @@ if (empty($contentComments)) {
 }
 
 // 2016.1.6 isCommentApproved -> useCommentApprovalにリネーム
-$useCommentApproval = isset($isCommentApproved) ? $isCommentApproved : null;
+$useCommentApproval = isset($useCommentApproval) ? $useCommentApproval : null;
+if (isset($isCommentApproved)) {
+	$useCommentApproval = $isCommentApproved;
+}
 ?>
 
 <?php
