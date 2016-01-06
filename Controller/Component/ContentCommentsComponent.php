@@ -114,7 +114,7 @@ class ContentCommentsComponent extends Component {
 			$process == $this::PROCESS_APPROVED) {
 
 			// dataの準備
-			$data = $this->__readyData($process);
+			$data = $this->__readyData();
 
 //$this->log($this->controller->request->data, 'debug');
 			// コンテンツコメントのデータ保存
@@ -138,7 +138,7 @@ class ContentCommentsComponent extends Component {
 			// 削除
 		} elseif ($process == $this::PROCESS_DELETE) {
 			// コンテンツコメントの削除
-			if (!$this->controller->ContentComment->deleteContentComment($this->controller->data['ContentComment']['id'])) {
+			if (!$this->controller->ContentComment->deleteContentComment($this->controller->request->data('ContentComment.id'))) {
 				return false;
 			}
 		}
@@ -198,33 +198,11 @@ class ContentCommentsComponent extends Component {
 /**
  * dataの準備
  *
- * @param int $process どの処理
  * @return array data
  */
-	private function __readyData($process) {
+	private function __readyData() {
 		$data['ContentComment'] = $this->controller->request->data('ContentComment');
 		$data['ContentComment']['block_key'] = Current::read('Block.key');
-
-		// DBのcontent_commentsテーブルにはない項目なので取り除く
-		unset($data['ContentComment']['use_comment_approval']);
-		unset($data['ContentComment']['redirect_url']);
-
-		// 登録処理
-		if ($process == $this::PROCESS_ADD) {
-			if (Current::permission('content_comment_publishable')) {
-				// 公開
-				$status = ContentComment::STATUS_PUBLISHED;
-			} else {
-				// コメント承認機能 0:使わない=>公開 1:使う=>未承認
-				$status = $this->controller->request->data('ContentComment.use_comment_approval') ? ContentComment::STATUS_APPROVED: ContentComment::STATUS_PUBLISHED;
-			}
-			$data['ContentComment']['status'] = $status;
-
-			// 承認処理
-		} elseif ($process == $this::PROCESS_APPROVED) {
-			$data['ContentComment']['status'] = ContentComment::STATUS_PUBLISHED; // 公開
-		}
-		// 編集処理は何もしない
 
 		return $data;
 	}

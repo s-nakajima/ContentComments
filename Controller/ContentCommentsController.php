@@ -57,7 +57,7 @@ class ContentCommentsController extends ContentCommentsAppController {
 			}
 
 			// 一覧へ
-			$this->redirect($this->data['ContentComment']['redirect_url']);
+			$this->redirect($this->request->data('_tmp.redirect_url'));
 		}
 	}
 
