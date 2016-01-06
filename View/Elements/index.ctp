@@ -129,12 +129,14 @@ foreach ($contentComments as $idx => $contentComment) {
 													<?php echo $this->NetCommonsForm->create('ContentComment', array(
 														'name' => 'form',
 														'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
+														'type' => 'put',
 													)); ?>
 														<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
 														<?php echo $this->NetCommonsForm->hidden('ContentComment.created_user', array('value' => $contentComment['ContentComment']['created_user'])); ?>
 														<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 														<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
 														<?php echo $this->NetCommonsForm->hidden('_tmp.redirect_url', array('value' => $redirectUrl)); ?>
+														<?php echo $this->NetCommonsForm->hidden('_tmp.process', array('value' => ContentCommentsComponent::PROCESS_EDIT)); ?>
 														<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 														<div class="form-group">
@@ -202,12 +204,14 @@ foreach ($contentComments as $idx => $contentComment) {
 												'name' => 'form',
 												'style' => 'display: inline;',
 												'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
+												'type' => 'put',
 											)); ?>
 												<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
 												<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 												<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
 												<?php echo $this->NetCommonsForm->hidden('ContentComment.status', array('value' => ContentComment::STATUS_PUBLISHED)); //公開 ?>
 												<?php echo $this->NetCommonsForm->hidden('_tmp.redirect_url', array('value' => $redirectUrl)); ?>
+												<?php echo $this->NetCommonsForm->hidden('_tmp.process', array('value' => ContentCommentsComponent::PROCESS_APPROVED)); ?>
 												<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 												<?php echo $this->NetCommonsForm->button(
@@ -239,12 +243,14 @@ foreach ($contentComments as $idx => $contentComment) {
 												'name' => 'form',
 												'style' => 'display: inline;',
 												'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
+												'type' => 'delete',
 											)); ?>
 												<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
 												<?php echo $this->NetCommonsForm->hidden('ContentComment.created_user', array('value' => $contentComment['ContentComment']['created_user'])); ?>
 												<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 												<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
 												<?php echo $this->NetCommonsForm->hidden('_tmp.redirect_url', array('value' => $redirectUrl)); ?>
+												<?php echo $this->NetCommonsForm->hidden('_tmp.process', array('value' => ContentCommentsComponent::PROCESS_DELETE)); ?>
 												<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 												<?php echo $this->NetCommonsForm->button(

@@ -47,10 +47,12 @@ $this->Html->css(
 					<?php echo $this->NetCommonsForm->create('ContentComment', array(
 						'name' => 'form',
 						'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
+						'type' => 'post',
 					)); ?>
 						<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 						<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
 						<?php echo $this->NetCommonsForm->hidden('_tmp.redirect_url', array('value' => $redirectUrl)); ?>
+						<?php echo $this->NetCommonsForm->hidden('_tmp.process', array('value' => ContentCommentsComponent::PROCESS_ADD)); ?>
 						<?php
 						if (Current::permission('content_comment_publishable')) {
 							// 公開

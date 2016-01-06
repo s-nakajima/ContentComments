@@ -126,10 +126,8 @@ class ContentCommentsComponent extends Component {
  * @return bool 成功 or 失敗
  */
 	public function comment() {
-		// コンテンツコメントの処理名をパースして取得
-		if (!$process = $this->__parseProcess()) {
-			return false;
-		}
+		$process = $this->_controller->request->data('_tmp.process');
+
 		// パーミッションがあるかチェック
 		if (!$this->__checkPermission($process)) {
 			return false;
@@ -173,30 +171,6 @@ class ContentCommentsComponent extends Component {
 	}
 
 /**
- * コメントの処理名をパースして取得
- *
- * @throws BadRequestException
- * @return int どの処理
- */
-	private function __parseProcess() {
-		if ($matches = preg_grep('/^process_\d/', array_keys($this->_controller->data))) {
-			list(, $process) = explode('_', array_shift($matches));
-		} else {
-			if ($this->_controller->request->is('ajax')) {
-				$this->_controller->renderJson(
-					['error' => ['validationErrors' => ['status' => __d('net_commons', 'Invalid request.')]]],
-					__d('net_commons', 'Bad Request'), 400
-				);
-			} else {
-				throw new BadRequestException(__d('net_commons', 'Bad Request'));
-			}
-			return false;
-		}
-
-		return $process;
-	}
-
-/**
  * パーミッションがあるかチェック
  *
  * @param int $process どの処理
@@ -210,7 +184,7 @@ class ContentCommentsComponent extends Component {
 			// (編集処理 or 削除処理) and (編集許可あり or 自分で投稿したコメントなら、編集・削除可能)
 		} elseif (($process == $this::PROCESS_EDIT || $process == $this::PROCESS_DELETE) && (
 				Current::permission('content_comment_editable') ||
-				$this->controller->data['ContentComment']['created_user'] == (int)AuthComponent::user('id')
+				$this->_controller->data['ContentComment']['created_user'] == (int)AuthComponent::user('id')
 		)) {
 			return true;
 
