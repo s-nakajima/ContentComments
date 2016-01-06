@@ -18,5 +18,4 @@ App::uses('AppModel', 'Model');
  * @package NetCommons\ContentComments\Model
  */
 class ContentCommentsAppModel extends AppModel {
-
 }

@@ -25,7 +25,7 @@ class ContentCommentsController extends ContentCommentsAppController {
  * @var array
  */
 	public $uses = array(
-		'ContentComments.ContentComment',	// コンテンツコメント
+		'ContentComments.ContentComment',
 	);
 
 /**

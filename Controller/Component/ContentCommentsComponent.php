@@ -151,25 +151,14 @@ class ContentCommentsComponent extends Component {
 			// dataの準備
 			$data = $this->__readyData();
 
-//$this->log($this->controller->request->data, 'debug');
 			// コンテンツコメントのデータ保存
 			if (!$this->_controller->ContentComment->saveContentComment($data)) {
-//$this->log($this->controller->ContentComment->validationErrors, 'debug');
 				$this->_controller->NetCommons->handleValidationError($this->_controller->ContentComment->validationErrors);
-//$this->log($this->controller->validationErrors, 'debug');
+
 				// 別プラグインにエラーメッセージとどの処理を送るため  http://skgckj.hateblo.jp/entry/2014/02/09/005111
 				$this->Session->write('errors.ContentComment', $this->_controller->ContentComment->validationErrors);
 				$this->Session->write('_tmp.process', $process);
 				$this->Session->write('_tmp.ContentComment.id', $this->_controller->request->data('ContentComment.id'));
-
-				// 正常
-			} else {
-				// 下記は悪さをしないため、if文 で分岐しない
-				// 登録用：入力欄のコメントを空にする
-				unset($this->_controller->request->data['ContentComment']['comment']);
-
-				// 編集用：編集処理を取り除く（編集後は、対象コメントの入力欄を開けないため）
-				unset($this->_controller->request->data['process_' . ContentCommentsComponent::PROCESS_EDIT]);
 			}
 
 			// 削除
