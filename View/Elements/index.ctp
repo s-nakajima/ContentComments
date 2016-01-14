@@ -38,9 +38,7 @@ $useCommentApproval = isset($useCommentApproval) ? $useCommentApproval : null;
 if (isset($isCommentApproved)) {
 	$useCommentApproval = $isCommentApproved;
 }
-?>
 
-<?php
 foreach ($contentComments as $idx => $contentComment) {
 	// ・未承認のコメントは表示しない。
 	// ・自分のコメントは表示する。
@@ -51,7 +49,8 @@ foreach ($contentComments as $idx => $contentComment) {
 		// 非表示 => 配列から取り除く
 		unset($contentComments[$idx]);
 	}
-} ?>
+}
+?>
 
 <?php /* コメントを利用しない or (コメント0件 and コメント投稿できない) */ ?>
 <?php if (!$useComment || (!$contentComments && !Current::permission('content_comment_creatable'))): ?>
