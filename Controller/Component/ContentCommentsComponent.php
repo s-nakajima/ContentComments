@@ -25,12 +25,12 @@ App::uses('SessionComponent', 'Controller/Component');
 class ContentCommentsComponent extends Component {
 
 /**
- * @var SessionComponent
+ * @var SessionComponent セッションコンポーネント
  */
 	public $Session = null;
 
 /**
- * @var Controller
+ * @var Controller コントローラ
  */
 	protected $_controller = null;
 
