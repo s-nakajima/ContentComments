@@ -83,7 +83,6 @@ class ContentCommentsComponent extends Component {
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::startup
  */
 	public function startup(Controller $controller) {
-
 		// コンポーネントから他のコンポーネントを使用する
 		$collection = new ComponentCollection();
 		$this->Session = new SessionComponent($collection);
@@ -117,17 +116,17 @@ class ContentCommentsComponent extends Component {
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::beforeRender
  */
 	public function beforeRender(Controller $controller) {
-//		// コメントを利用する
-//		if ($videoBlockSetting['VideoBlockSetting']['use_comment']) {
-//			// コンテンツコメントの取得
-//			$contentComments = $this->_controller->ContentComment->getContentComments(array(
-//				'block_key' => Current::read('Block.key'),
-//				'plugin_key' => $this->request->params['plugin'],
-//				'content_key' => $video['Video']['key'],
-//			));
-//
-//			$this->_controller->request->data['ContentComments'] = $contentComments;
-//		}
+		//		// コメントを利用する
+		//		if ($videoBlockSetting['VideoBlockSetting']['use_comment']) {
+		//			// コンテンツコメントの取得
+		//			$contentComments = $this->_controller->ContentComment->getContentComments(array(
+		//				'block_key' => Current::read('Block.key'),
+		//				'plugin_key' => $this->request->params['plugin'],
+		//				'content_key' => $video['Video']['key'],
+		//			));
+		//
+		//			$this->_controller->request->data['ContentComments'] = $contentComments;
+		//		}
 	}
 
 /**

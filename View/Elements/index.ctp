@@ -58,7 +58,7 @@ foreach ($contentComments as $idx => $contentComment) {
 	<?php /* 表示しない */ ?>
 
 <?php else : ?>
-	<div class="row">
+		<div class="row">
 		<div class="col-xs-12">
 			<article>
 				<div class="panel panel-default">
@@ -138,15 +138,13 @@ foreach ($contentComments as $idx => $contentComment) {
 																$contentCommentComment = array(
 																	'class' => 'form-control nc-noresize',
 																	'rows' => 2,
-																	'default' => nl2br($contentComment['ContentComment']['comment']),
+																	'value' => nl2br($contentComment['ContentComment']['comment']),
 																);
 
 																/* 編集時入力エラー対応 編集処理で、idが同じのみvalueをセットしない */
 																if ($this->request->data('_tmp.process') == ContentCommentsComponent::PROCESS_EDIT &&
 																	$this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']) {
 																	$contentCommentComment['value'] = '';
-																} else {
-																	$contentCommentComment['value'] = nl2br($contentComment['ContentComment']['comment']);
 																}
 
 																echo $this->NetCommonsForm->textarea('ContentComment.comment', $contentCommentComment);
@@ -261,5 +259,5 @@ foreach ($contentComments as $idx => $contentComment) {
 				</div>
 			</article>
 		</div>
-	</div>
+		</div>
 <?php endif;
