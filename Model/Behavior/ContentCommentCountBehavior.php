@@ -67,6 +67,7 @@ class ContentCommentCountBehavior extends ModelBehavior {
 		));
 
 		foreach ($results as $key => &$target) {
+			$target['ContentCommentCnt']['cnt'] = 0;
 			foreach ($contentCommentCnts as $contentCommentCnt) {
 				if ($target['ContentCommentCnt']['content_key'] == $contentCommentCnt['ContentComment']['content_key']) {
 					$target['ContentCommentCnt']['cnt'] = $contentCommentCnt['ContentComment']['cnt'];
