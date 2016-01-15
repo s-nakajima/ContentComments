@@ -33,10 +33,10 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 			<div class="media">
 				<div class="pull-left">
 					<?php /* 自分のアバター */ ?>
-					<?php echo $this->DisplayUser->avatar(AuthComponent::user(), array(
+					<?php echo $this->DisplayUser->avatarLink(AuthComponent::user(), array(
 						'class' => '',
 						'alt' => AuthComponent::user('handlename'),
-					), 'id'); ?>
+					), [], 'id'); ?>
 
 				</div>
 				<div class="media-body">
