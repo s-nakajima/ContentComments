@@ -32,13 +32,12 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 			</div>
 			<div class="media">
 				<div class="pull-left">
-					<?php /* アバター 暫定対応(;'∀') */ ?>
-					<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
-						'class' => 'media-object',
-						'alt' => AuthComponent::user('username'),
-						'width' => '60',
-						'height' => '60',
-					)); ?>
+					<?php /* 自分のアバター */ ?>
+					<?php echo $this->DisplayUser->avatar(AuthComponent::user(), array(
+						'class' => '',
+						'alt' => AuthComponent::user('handlename'),
+					), 'id'); ?>
+
 				</div>
 				<div class="media-body">
 					<?php echo $this->NetCommonsForm->create('ContentComment', array(

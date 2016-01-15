@@ -80,22 +80,16 @@ foreach ($contentComments as $idx => $contentComment) {
 											 <?php echo $i == 0 && !Current::permission('content_comment_creatable') ? 'comment-no-form' : ''; ?>">
 									<div class="media">
 										<div class="pull-left">
-											<?php /* アバター 暫定対応(;'∀') */ ?>
-											<a href="" ng-click="user.showUser(<?php echo $contentComment['TrackableCreator']['id'] ?>)">
-												<?php echo $this->Html->image('/content_comments/img/avatar.png', array(
-													'class' => 'media-object',
-													'alt' => $contentComment['TrackableCreator']['username'],
-													'width' => '60',
-													'height' => '60',
-												)); ?>
-											</a>
+											<?php /* アバター */ ?>
+											<?php echo $this->DisplayUser->avatar($contentComment, array(
+												'class' => '',
+											)); ?>
 										</div>
 										<div class="media-body">
 											<div class="row">
 												<div class="col-xs-6">
-													<a href="" ng-click="user.showUser(<?php echo $contentComment['TrackableCreator']['id'] ?>)">
-														<b><?php echo $contentComment['TrackableCreator']['username'] ?></b>
-													</a>
+													<?php echo $this->DisplayUser->handleLink($contentComment); ?>
+
 													<?php /* ステータス */ ?>
 													<?php echo $this->Workflow->label($contentComment['ContentComment']['status'], array(
 														ContentComment::STATUS_APPROVED => array(
