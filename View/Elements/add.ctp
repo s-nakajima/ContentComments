@@ -24,7 +24,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 			<div class="col-xs-12">
 			<label class="control-label" for="CommentComment">
 				<span class="glyphicon glyphicon-comment"></span>
-				<?php echo sprintf(__d('content_comments', '%s comments'), isset($contentCommentCnt) ? $contentCommentCnt : 0) ?>
+				<?php echo sprintf(__d('content_comments', '%s comments'), $contentCommentCnt) ?>
 			</label>
 			</div>
 		</div>

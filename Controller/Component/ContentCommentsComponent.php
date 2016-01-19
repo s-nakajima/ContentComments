@@ -114,6 +114,7 @@ class ContentCommentsComponent extends Component {
  * @param Controller $controller Controller with components to beforeRender
  * @return void
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::beforeRender
+ * @throws Exception Paginatorによる例外
  */
 	public function beforeRender(Controller $controller) {
 		// コメント利用フラグのDB項目名, コンテンツキーのDB項目名, 許可アクション
@@ -124,19 +125,62 @@ class ContentCommentsComponent extends Component {
 		$useComment = Hash::get($this->_controller->viewVars, $this->settings['viewVarsUseComment'][0]);
 		$contentKey = Hash::get($this->_controller->viewVars, $this->settings['viewVarsContentKey'][0]);
 
-		//		var_dump($this->_controller->viewVars['video']);
-		//		var_dump($this->_controller->viewVars['videoBlockSetting']['use_comment']);
-		//		var_dump($this->_controller->request->params['plugin']);
 		// 許可アクションあり
 		if (in_array($this->_controller->request->params['action'], $this->settings['allow'])) {
 			// コメントを利用する
 			if ($useComment) {
-				// コンテンツコメントの取得
-				$contentComments = $this->_controller->ContentComment->getContentComments(array(
-					'block_key' => Current::read('Block.key'),
-					'plugin_key' => $this->_controller->request->params['plugin'],
-					'content_key' => $contentKey,
-				));
+				// 公開権限あり
+				if (Current::permission('content_comment_publishable')) {
+					// 全件表示
+					$query = array(
+						'conditions' => array(
+							'block_key' => Current::read('Block.key'),
+							'plugin_key' => $this->_controller->request->params['plugin'],
+							'content_key' => $contentKey,
+						),
+					);
+
+					// 公開権限なし、ログイン済み
+				} elseif ((bool)AuthComponent::user()) {
+					// 公開中のコメントと、自分のコメントを表示
+					$query = array(
+						'conditions' => array(
+							'block_key' => Current::read('Block.key'),
+							'plugin_key' => $this->_controller->request->params['plugin'],
+							'content_key' => $contentKey,
+							'OR' => array(
+								'ContentComment.status' => ContentComment::STATUS_PUBLISHED,
+								'ContentComment.created_user' => (int)AuthComponent::user('id'),
+							),
+						),
+					);
+
+					// 公開権限なし、ログインしていない
+				} else {
+					// 公開中のコメントのみ表示
+					$query = array(
+						'conditions' => array(
+							'block_key' => Current::read('Block.key'),
+							'plugin_key' => $this->_controller->request->params['plugin'],
+							'content_key' => $contentKey,
+							'ContentComment.status' => ContentComment::STATUS_PUBLISHED,
+						),
+					);
+				}
+
+				//ソート
+				$query['order'] = array('ContentComment.created' => 'desc');
+
+				//表示件数
+				$query['limit'] = $this::START_LIMIT;
+
+				$this->_controller->Paginator->settings = $query;
+				try {
+					$contentComments = $this->_controller->Paginator->paginate('ContentComment');
+				} catch (Exception $ex) {
+					CakeLog::error($ex);
+					throw $ex;
+				}
 
 				$this->_controller->request->data['ContentComments'] = $contentComments;
 			}

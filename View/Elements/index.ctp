@@ -41,13 +41,12 @@ $redirectUrl = Router::url();
 					)); ?>
 				<?php endif; ?>
 
-				<div id="nc-content-comments-<?php echo Current::read('Frame.id'); ?>" ng-controller="ContentComments">
+				<div id="nc-content-comments-<?php echo Current::read('Frame.id'); ?>">
 					<div class="content-comments">
 						<?php $i = 0; ?>
 						<?php foreach ($contentComments as $contentComment): ?>
 							<?php /* visitar対応 1件目 and 投稿許可なしで border-top 表示しない */ ?>
-							<article class="comment <?php echo $i >= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>
-										 <?php echo $i == 0 && !Current::permission('content_comment_creatable') ? 'comment-no-form' : ''; ?>">
+							<article class="comment <?php echo $i == 0 && !Current::permission('content_comment_creatable') ? 'comment-no-form' : ''; ?>">
 
 								<?php /* 1件データ表示＆編集 */ ?>
 								<?php echo $this->element('ContentComments.once', array(
@@ -84,12 +83,9 @@ $redirectUrl = Router::url();
 							<?php $i++; ?>
 						<?php endforeach ?>
 
-						<?php /* もっと見る */ ?>
-						<div class="comment-more">
-							<button type="button" class="btn btn-info btn-block more <?php echo $i <= ContentCommentsComponent::START_LIMIT ? 'hidden' : '' ?>"
-									ng-click="more();">
-								<?php echo h(__d('net_commons', 'More')); ?>
-							</button>
+						<?php /* ページャ */ ?>
+						<div class="<?php echo $this->Paginator->counter('{:pages}') > 1 ? 'paginator' : ''; ?>">
+							<?php echo $this->element('NetCommons.paginator'); ?>
 						</div>
 					</div>
 				</div>

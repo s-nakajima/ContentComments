@@ -89,19 +89,6 @@ class ContentComment extends ContentCommentsAppModel {
 	}
 
 /**
- * コンテンツコメント データ取得
- *
- * @param array $conditions conditions
- * @return array
- */
-	public function getContentComments($conditions) {
-		return $this->find('all', array(
-			'conditions' => $conditions,
-			'order' => $this->alias . '.created DESC',
-		));
-	}
-
-/**
  * コンテンツコメント データ保存
  *
  * @param array $data received post data
