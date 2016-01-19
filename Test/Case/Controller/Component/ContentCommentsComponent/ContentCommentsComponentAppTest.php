@@ -15,13 +15,13 @@ App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
 App::uses('ComponentCollection', 'Controller');
 App::uses('ContentCommentsComponent', 'ContentComments.Controller/Component');
-App::uses('YAControllerTestCase', 'NetCommons.TestSuite');
+App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
 
 /**
  * ContentCommentsComponentApp Test Case
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @package NetCommons\ContentComments\Test\Case\Controller\Component
+ * @package NetCommons\ContentComments\Test\Case\Controller\Component\ContentCommentsComponent
  */
 class TestContentCommentsController extends AppController {
 
@@ -41,20 +41,16 @@ class TestContentCommentsController extends AppController {
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\NetCommons\Test\Case\Controller
  */
-class ContentCommentsComponentAppTest extends YAControllerTestCase {
+class ContentCommentsComponentAppTest extends NetCommonsControllerTestCase {
 
 /**
- * Fixtures
- *
- * @var array
+ * @var array Fixtures
  */
 	public $fixtures = array(
 		'plugin.content_comments.content_comment',
 	);
 
 /**
- * ContentComments component
- *
  * @var Component ContentComments component
  */
 	public $contentComments = null;
@@ -68,7 +64,7 @@ class ContentCommentsComponentAppTest extends YAControllerTestCase {
 		parent::setUp();
 
 		// PageLayout対応
-		YACakeTestCase::loadTestPlugin($this, 'NetCommons', 'TestPlugin');
+		NetCommonsControllerTestCase::loadTestPlugin($this, 'NetCommons', 'TestPlugin');
 
 		Configure::write('Config.language', 'ja');
 
@@ -86,6 +82,9 @@ class ContentCommentsComponentAppTest extends YAControllerTestCase {
 		// $this->controller->request->is('ajax') を成功させるために必要
 		$this->controller->request = new CakeRequest();
 		$this->controller->response = new CakeResponse();
+
+		// $this->_controller->NetCommons->handleValidationError($this->_controller->ContentComment->validationErrors);対応
+		$this->controller->NetCommons->initialize($this->controller);
 
 		//コンポーネント読み込み
 		$collection = new ComponentCollection();

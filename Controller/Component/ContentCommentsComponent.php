@@ -73,6 +73,10 @@ class ContentCommentsComponent extends Component {
  */
 	public function initialize(Controller $controller) {
 		$this->_controller = $controller;
+
+		// コンポーネントから他のコンポーネントを使用する
+		$collection = new ComponentCollection();
+		$this->Session = new SessionComponent($collection);
 	}
 
 /**
@@ -83,10 +87,6 @@ class ContentCommentsComponent extends Component {
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::startup
  */
 	public function startup(Controller $controller) {
-		// コンポーネントから他のコンポーネントを使用する
-		$collection = new ComponentCollection();
-		$this->Session = new SessionComponent($collection);
-
 		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
 		if ($this->Session->read('errors')) {
 			foreach ($this->Session->read('errors') as $model => $errors) {

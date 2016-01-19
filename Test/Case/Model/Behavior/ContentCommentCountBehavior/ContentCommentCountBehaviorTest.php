@@ -9,9 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-//App::uses('ContentCommentAppTest', 'ContentComments.Test/Case/Model');
 App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
-//App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
 
 /**
  * テスト用Fake
