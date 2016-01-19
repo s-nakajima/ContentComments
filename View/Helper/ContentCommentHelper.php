@@ -127,7 +127,7 @@ class ContentCommentHelper extends AppHelper {
 			// ・未承認のコメントは表示しない。
 			// ・自分のコメントは表示する。
 			// ・承認許可ありの場合、表示する。
-			if (!Current::permission('content_comment_publishable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')) {
+			if (Current::permission('content_comment_publishable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')) {
 				// 表示 => なにもしない
 			} elseif ($contentComment['ContentComment']['status'] == ContentComment::STATUS_APPROVED) {
 				// 非表示 => 配列から取り除く
