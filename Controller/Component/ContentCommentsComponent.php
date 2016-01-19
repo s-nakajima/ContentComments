@@ -116,17 +116,31 @@ class ContentCommentsComponent extends Component {
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::beforeRender
  */
 	public function beforeRender(Controller $controller) {
-		//		// コメントを利用する
-		//		if ($videoBlockSetting['VideoBlockSetting']['use_comment']) {
-		//			// コンテンツコメントの取得
-		//			$contentComments = $this->_controller->ContentComment->getContentComments(array(
-		//				'block_key' => Current::read('Block.key'),
-		//				'plugin_key' => $this->request->params['plugin'],
-		//				'content_key' => $video['Video']['key'],
-		//			));
-		//
-		//			$this->_controller->request->data['ContentComments'] = $contentComments;
-		//		}
+		// コメント利用フラグのDB項目名, コンテンツキーのDB項目名, 許可アクション
+		if (! isset($this->settings['viewVarsUseComment']) || ! isset($this->settings['viewVarsContentKey']) || ! isset($this->settings['allow'])) {
+			return;
+		}
+
+		$useComment = Hash::get($this->_controller->viewVars, $this->settings['viewVarsUseComment'][0]);
+		$contentKey = Hash::get($this->_controller->viewVars, $this->settings['viewVarsContentKey'][0]);
+
+		//		var_dump($this->_controller->viewVars['video']);
+		//		var_dump($this->_controller->viewVars['videoBlockSetting']['use_comment']);
+		//		var_dump($this->_controller->request->params['plugin']);
+		// 許可アクションあり
+		if (in_array($this->_controller->request->params['action'], $this->settings['allow'])) {
+			// コメントを利用する
+			if ($useComment) {
+				// コンテンツコメントの取得
+				$contentComments = $this->_controller->ContentComment->getContentComments(array(
+					'block_key' => Current::read('Block.key'),
+					'plugin_key' => $this->_controller->request->params['plugin'],
+					'content_key' => $contentKey,
+				));
+
+				$this->_controller->request->data['ContentComments'] = $contentComments;
+			}
+		}
 	}
 
 /**
