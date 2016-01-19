@@ -26,7 +26,7 @@ $pluginKey = $this->request->params['plugin'];
 $redirectUrl = Router::url();
 
 ?>
-	<div class="row">
+<div class="row">
 	<div class="col-xs-12">
 		<article>
 			<div class="panel panel-default">
@@ -221,4 +221,4 @@ $redirectUrl = Router::url();
 			</div>
 		</article>
 	</div>
-	</div>
+</div>
