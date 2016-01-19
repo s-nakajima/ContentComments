@@ -94,13 +94,40 @@ class ContentCommentHelper extends AppHelper {
 			);
 		}
 		$output = '';
+		$contentComments = $this->request->data('ContentComments') ? $this->request->data('ContentComments') : array();
 
-		$output .= $this->_View->element('ContentComments.index', array(
-			'contentKey' => $content[$contentModelName]['key'],
-			'useCommentApproval' => Hash::get($setting, $settingNames['use_comment_approval']),
-			'useComment' => Hash::get($setting, $settingNames['use_comment']),
-			'contentCommentCnt' => Hash::get($content, 'ContentCommentCnt.cnt'),
-		));
+		foreach ($contentComments as $idx => $contentComment) {
+			// ・未承認のコメントは表示しない。
+			// ・自分のコメントは表示する。
+			// ・承認許可ありの場合、表示する。
+			if (Current::permission('content_comment_publishable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')) {
+				// 表示 => なにもしない
+			} else {
+
+				if ($contentComment['ContentComment']['status'] == ContentComment::STATUS_APPROVED) {
+					// 非表示 => 配列から取り除く
+					unset($contentComments[$idx]);
+				}
+			}
+
+			if ($contentComment['ContentComment']['status'] == ContentComment::STATUS_APPROVED) {
+				// 非表示 => 配列から取り除く
+				unset($contentComments[$idx]);
+			}
+		}
+
+		// コメント利用フラグ
+		$useComment = Hash::get($setting, $settingNames['use_comment']);
+
+		/* コメントを利用する or (コメント0件 and コメント投稿できる) */
+		if ($useComment || (count($contentComments) == 0 && Current::permission('content_comment_creatable'))) {
+			$output .= $this->_View->element('ContentComments.index', array(
+				'contentKey' => $content[$contentModelName]['key'],
+				'useCommentApproval' => Hash::get($setting, $settingNames['use_comment_approval']),
+				'contentCommentCnt' => Hash::get($content, 'ContentCommentCnt.cnt'),
+				'contentComments' => $contentComments,
+			));
+		}
 
 		return $output;
 	}
