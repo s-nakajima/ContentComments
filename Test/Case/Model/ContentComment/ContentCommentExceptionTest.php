@@ -9,16 +9,24 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('ContentComment', 'ContentComments.Model');
-App::uses('ContentCommentAppTest', 'ContentComments.Test/Case/Model');
+App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
 
 /**
  * ContentComment 例外 Test Case
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @package NetCommons\ContentComments\Test\Case\Model
+ * @package NetCommons\ContentComments\Test\Case\Model\ContentComment
  */
-class ContentCommentExceptionTest extends ContentCommentAppTest {
+class ContentCommentExceptionTest extends NetCommonsModelTestCase {
+
+/**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'plugin.content_comments.content_comment',
+	);
 
 /**
  * データ保存 例外テスト

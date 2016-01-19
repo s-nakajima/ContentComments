@@ -9,16 +9,24 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('ContentComment', 'ContentComments.Model');
-App::uses('ContentCommentAppTest', 'ContentComments.Test/Case/Model');
+App::uses('NetCommonsGetTest', 'NetCommons.TestSuite');
 
 /**
  * ContentComment Test Case
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @package NetCommons\ContentComments\Test\Case\Model
+ * @package NetCommons\ContentComments\Test\Case\Model\ContentComment
  */
-class ContentCommentTest extends ContentCommentAppTest {
+class ContentCommentTest extends NetCommonsGetTest {
+
+/**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'plugin.content_comments.content_comment',
+	);
 
 /**
  * testFindById
@@ -29,20 +37,6 @@ class ContentCommentTest extends ContentCommentAppTest {
 		$id = 1;
 		$rtn = $this->ContentComment->findById($id);
 		$this->assertTrue(is_array($rtn));
-	}
-
-/**
- * コンテンツコメント データ取得テスト 1件あり
- *
- * @return void
- */
-	public function testGetContentComments() {
-		$contentComments = $this->ContentComment->getContentComments(array(
-			'block_key' => 'block_1',
-			'plugin_key' => 'plugin_1',
-			'content_key' => 'content_1',
-		));
-		$this->assertCount(2, $contentComments);
 	}
 
 /**

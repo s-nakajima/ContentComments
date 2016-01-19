@@ -9,7 +9,9 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('ContentCommentAppTest', 'ContentComments.Test/Case/Model');
+//App::uses('ContentCommentAppTest', 'ContentComments.Test/Case/Model');
+App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+//App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
 
 /**
  * テスト用Fake
@@ -19,13 +21,30 @@ class FakeModel extends CakeTestModel {
 /**
  * @var array ビヘイビア
  */
-	public $actsAs = array('ContentComments.ContentComment');
+	public $actsAs = array('ContentComments.ContentCommentCount');
 }
 
 /**
  * Summary for ContentCommentBehavior Test Case
  */
-class ContentCommentBehaviorTest extends ContentCommentAppTest {
+class ContentCommentCountBehaviorTest extends NetCommonsModelTestCase {
+
+/**
+ * Plugin name
+ *
+ * @var array
+ */
+	public $plugin = 'contentComments';
+
+/**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'plugin.content_comments.content_comment',
+		'plugin.content_comments.fake_model',	// ContentCommentBehaviorTest.php用
+	);
 
 /**
  * setUp method
@@ -56,9 +75,11 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 		$conditions = array(
 			'key' => 'content_1'
 		);
+		Current::$current['Plugin']['key'] = 'plugin_1';
+
+		// BehaviorのafterFindでコンテンツコメント数取得
 		$fake = $this->FakeModel->find('all', array(
 			'recursive' => 1,
-			'fields' => '*, ContentCommentCnt.cnt',	// Behaviorでコンテンツコメント数取得
 			'conditions' => $conditions,
 		));
 
@@ -74,12 +95,11 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 		$conditions = array(
 			'key' => 'content_1'
 		);
+		Current::$current['Plugin']['key'] = 'plugin_1';
+
+		// BehaviorのafterFindでコンテンツコメント数取得
 		$fake = $this->FakeModel->find('all', array(
 			'recursive' => 1,
-			'fields' => array(
-				'*',
-				'ContentCommentCnt.cnt',	// Behaviorでコンテンツコメント数取得
-			),
 			'conditions' => $conditions,
 		));
 
@@ -95,9 +115,11 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 		$conditions = array(
 			'key' => 'content_2'
 		);
+		Current::$current['Plugin']['key'] = 'plugin_2';
+
+		// BehaviorのafterFindでコンテンツコメント数取得
 		$fake = $this->FakeModel->find('all', array(
 			'recursive' => 1,
-			'fields' => '*, ContentCommentCnt.cnt',	// Behaviorでコンテンツコメント数取得
 			'conditions' => $conditions,
 		));
 
@@ -113,29 +135,14 @@ class ContentCommentBehaviorTest extends ContentCommentAppTest {
 		$conditions = array(
 			'key' => 'content_3'
 		);
+		Current::$current['Plugin']['key'] = 'plugin_1';
+
+		// BehaviorのafterFindでコンテンツコメント数取得
 		$fake = $this->FakeModel->find('all', array(
 			'recursive' => 1,
-			'fields' => '*, ContentCommentCnt.cnt',	// Behaviorでコンテンツコメント数取得
 			'conditions' => $conditions,
 		));
 
 		$this->assertEquals($fake[0]['ContentCommentCnt']['cnt'], 0);
-	}
-
-/**
- * コンテントコメント数を取得しない
- *
- * @return void
- */
-	public function testContentCommentCntNoGet() {
-		$conditions = array(
-			'key' => 'content_1'
-		);
-		$fake = $this->FakeModel->find('all', array(
-			'recursive' => 1,
-			//'fields' => '*, ContentCommentCnt.cnt',	// Behaviorでコンテンツコメント数取得
-			'conditions' => $conditions,
-		));
-		$this->assertFalse(isset($fake[0]['ContentCommentCnt']));
 	}
 }

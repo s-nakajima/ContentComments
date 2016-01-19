@@ -9,16 +9,24 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('ContentComment', 'ContentComments.Model');
-App::uses('ContentCommentAppTest', 'ContentComments.Test/Case/Model');
+App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
 
 /**
  * ContentComment validateエラー Test Case
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @package NetCommons\ContentComments\Test\Case\Model
+ * @package NetCommons\ContentComments\Test\Case\Model\ContentComment
  */
-class ContentCommentValidateErrorTest extends ContentCommentAppTest {
+class ContentCommentValidateErrorTest extends NetCommonsModelTestCase {
+
+/**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'plugin.content_comments.content_comment',
+	);
 
 /**
  * debug用 全validateエラーを取得
