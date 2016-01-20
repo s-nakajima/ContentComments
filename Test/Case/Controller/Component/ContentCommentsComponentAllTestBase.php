@@ -41,7 +41,7 @@ class TestContentCommentsController extends AppController {
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\NetCommons\Test\Case\Controller
  */
-class ContentCommentsComponentAppTest extends NetCommonsControllerTestCase {
+class ContentCommentsComponentAllTestBase extends NetCommonsControllerTestCase {
 
 /**
  * @var array Fixtures
@@ -103,13 +103,5 @@ class ContentCommentsComponentAppTest extends NetCommonsControllerTestCase {
 
 		Configure::write('Config.language', null);
 		parent::tearDown();
-	}
-
-/**
- * testIndex method
- *
- * @return void
- */
-	public function testIndex() {
 	}
 }

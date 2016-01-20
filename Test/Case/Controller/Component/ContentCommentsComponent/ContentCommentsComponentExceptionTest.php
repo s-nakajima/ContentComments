@@ -10,7 +10,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('ContentCommentsComponentAppTest', 'ContentComments.Test/Case/Controller/Component');
+App::uses('ContentCommentsComponentAllTestBase', 'ContentComments.Test/Case/Controller/Component');
 
 /**
  * ContentCommentsComponent 例外エラー Test Case
@@ -18,7 +18,7 @@ App::uses('ContentCommentsComponentAppTest', 'ContentComments.Test/Case/Controll
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\NetCommons\Test\Case\Controller\Component\ContentCommentsComponent
  */
-class ContentCommentsComponentExceptionTest extends ContentCommentsComponentAppTest {
+class ContentCommentsComponentExceptionTest extends ContentCommentsComponentAllTestBase {
 
 /**
  * コメントする 削除例外テスト

@@ -11,7 +11,7 @@
  */
 
 App::uses('ContentComment', 'ContentComments.Model');
-App::uses('ContentCommentsComponentAppTest', 'ContentComments.Test/Case/Controller/Component');
+App::uses('ContentCommentsComponentAllTestBase', 'ContentComments.Test/Case/Controller/Component');
 App::uses('AuthComponent', 'Controller/Component');
 
 /**
@@ -20,7 +20,7 @@ App::uses('AuthComponent', 'Controller/Component');
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @package NetCommons\NetCommons\Test\Case\Controller
  */
-class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentCommentsComponentAppTest {
+class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentCommentsComponentAllTestBase {
 
 /**
  * パーミッションがあるかチェック 編集時テスト
