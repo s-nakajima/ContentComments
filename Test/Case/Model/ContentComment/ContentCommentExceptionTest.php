@@ -36,6 +36,26 @@ class ContentCommentExceptionTest extends NetCommonsModelTestCase {
 	);
 
 /**
+ * setUp method
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
+		$this->ContentComment = ClassRegistry::init('ContentComments.ContentComment');
+	}
+
+/**
+ * tearDown method
+ *
+ * @return void
+ */
+	public function tearDown() {
+		unset($this->ContentComment);
+		parent::tearDown();
+	}
+
+/**
  * データ保存 例外テスト
  *
  * @return void

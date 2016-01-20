@@ -44,6 +44,13 @@ class TestContentCommentsController extends AppController {
 class ContentCommentsComponentAllTestBase extends NetCommonsControllerTestCase {
 
 /**
+ * Plugin name
+ *
+ * @var array
+ */
+	public $plugin = 'contentComments';
+
+/**
  * @var array Fixtures
  */
 	public $fixtures = array(
