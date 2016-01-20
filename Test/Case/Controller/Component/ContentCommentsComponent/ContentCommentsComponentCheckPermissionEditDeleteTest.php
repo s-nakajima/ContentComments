@@ -28,16 +28,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
  * @return void
  */
 	public function testCheckPermissionEdit() {
-		$this->controller->data = array(
-			'contentComment' => array(
-				'createdUser' => 999,
+		$this->controller->request->data = array(
+			'ContentComment' => array(
+				'created_user' => 999,
 			)
 		);
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => true,
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '1';
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_EDIT; // 編集
@@ -56,16 +55,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
  * @return void
  */
 	public function testCheckPermissionEditNoPermission() {
-		$this->controller->data = array(
-			'contentComment' => array(
-				'createdUser' => 999,
+		$this->controller->request->data = array(
+			'ContentComment' => array(
+				'created_user' => 999,
 			)
 		);
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => false, // 編集許可なし
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '0'; // 編集許可なし
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_EDIT; // 編集
@@ -84,16 +82,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
  * @return void
  */
 	public function testCheckPermissionEditNoPermissionMyData() {
-		$this->controller->data = array(
-			'contentComment' => array(
-				'createdUser' => 1,
+		$this->controller->request->data = array(
+			'ContentComment' => array(
+				'created_user' => 1,
 			)
 		);
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => false, // 編集許可なし
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '0'; // 編集許可なし
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_EDIT; // 編集
@@ -116,16 +113,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
  * @return void
  */
 	public function testCheckPermissionEditNoPermissionOtherData() {
-		$this->controller->data = array(
-			'contentComment' => array(
-				'createdUser' => 999,
+		$this->controller->request->data = array(
+			'ContentComment' => array(
+				'created_user' => 999,
 			)
 		);
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => false, // 編集許可なし
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '0'; // 編集許可なし
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_EDIT; // 編集
@@ -148,16 +144,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
  * @return void
  */
 	public function testCheckPermissionDelete() {
-		$this->controller->data = array(
-			'contentComment' => array(
-				'createdUser' => 999,
+		$this->controller->request->data = array(
+			'ContentComment' => array(
+				'created_user' => 999,
 			)
 		);
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => true,
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '1';
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_DELETE; // 削除
@@ -176,16 +171,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
  * @return void
  */
 	public function testCheckPermissionDeleteNoPermission() {
-		$this->controller->data = array(
-			'contentComment' => array(
-				'createdUser' => 999,
+		$this->controller->request->data = array(
+			'ContentComment' => array(
+				'created_user' => 999,
 			)
 		);
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => false, // 編集権限なし
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '0'; // 編集許可なし
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_DELETE; // 削除
@@ -204,16 +198,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
  * @return void
  */
 	public function testCheckPermissionDeleteNoPermissionMyData() {
-		$this->controller->data = array(
-			'contentComment' => array(
-				'createdUser' => 1,
+		$this->controller->request->data = array(
+			'ContentComment' => array(
+				'created_user' => 1,
 			)
 		);
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => false, // 編集権限なし
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '0'; // 編集許可なし
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_DELETE; // 削除
@@ -236,16 +229,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
  * @return void
  */
 	public function testCheckPermissionDeleteNoPermissionOtherData() {
-		$this->controller->data = array(
-			'contentComment' => array(
-				'createdUser' => 999,
+		$this->controller->request->data = array(
+			'ContentComment' => array(
+				'created_user' => 999,
 			)
 		);
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => false, // 編集権限なし
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '0'; // 編集許可なし
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_DELETE; // 削除

@@ -10,9 +10,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('ContentComment', 'ContentComments.Model');
 App::uses('ContentCommentsComponentAllTestBase', 'ContentComments.Test/Case/Controller/Component');
-App::uses('AuthComponent', 'Controller/Component');
 
 /**
  * ContentCommentsComponent __checkPermission() 登録、承認 Test Case
@@ -28,11 +26,10 @@ class ContentCommentsComponentCheckPermissionTest extends ContentCommentsCompone
  * @return void
  */
 	public function testCheckPermissionAdd() {
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => true,
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '1';
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_ADD; // 登録
@@ -51,11 +48,10 @@ class ContentCommentsComponentCheckPermissionTest extends ContentCommentsCompone
  * @return void
  */
 	public function testCheckPermissionAddNoPermission() {
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => true,
-			'contentCommentCreatable' => false, // 投稿許可なし
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '1';
+		Current::$current['Permission']['content_comment_creatable']['value'] = '0'; // 投稿許可なし
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_ADD; // 登録
@@ -74,11 +70,10 @@ class ContentCommentsComponentCheckPermissionTest extends ContentCommentsCompone
  * @return void
  */
 	public function testCheckPermissionApproved() {
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => true,
-			'contentCommentEditable' => true,
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '1';
+		Current::$current['Permission']['content_comment_editable']['value'] = '1';
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_APPROVED; // 承認
@@ -97,11 +92,10 @@ class ContentCommentsComponentCheckPermissionTest extends ContentCommentsCompone
  * @return void
  */
 	public function testCheckPermissionApprovedNoPermission() {
-		$this->controller->viewVars = array(
-			'contentCommentPublishable' => false, // 承認許可なし
-			'contentCommentEditable' => true,
-			'contentCommentCreatable' => true,
-		);
+		Current::$current['Permission']['content_comment_publishable']['value'] = '0'; // 承認許可なし
+		Current::$current['Permission']['content_comment_editable']['value'] = '1';
+		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
+
 		$this->contentComments->initialize($this->controller);
 
 		$process = ContentCommentsComponent::PROCESS_APPROVED; // 承認

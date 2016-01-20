@@ -51,6 +51,6 @@ class ContentCommentsComponentExceptionTest extends ContentCommentsComponentAllT
 
 		$this->contentComments->initialize($this->controller);
 
-		var_dump($this->contentComments->comment());
+		$this->contentComments->comment();
 	}
 }
