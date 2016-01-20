@@ -10,7 +10,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('ContentCommentsComponentAppTest', 'ContentComments.Test/Case/Controller/Component/ContentCommentsComponent');
+App::uses('ContentCommentsComponentAppTest', 'ContentComments.Test/Case/Controller/Component');
 
 /**
  * ContentCommentsComponent Test Case

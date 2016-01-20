@@ -11,7 +11,7 @@
  */
 
 App::uses('ContentComment', 'ContentComments.Model');
-App::uses('ContentCommentsComponentAppTest', 'ContentComments.Test/Case/Controller/Component/ContentCommentsComponent');
+App::uses('ContentCommentsComponentAppTest', 'ContentComments.Test/Case/Controller/Component');
 App::uses('AuthComponent', 'Controller/Component');
 
 /**
