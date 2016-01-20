@@ -20,6 +20,13 @@ App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
 class ContentCommentExceptionTest extends NetCommonsModelTestCase {
 
 /**
+ * Plugin name
+ *
+ * @var array
+ */
+	public $plugin = 'contentComments';
+
+/**
  * Fixtures
  *
  * @var array

@@ -20,6 +20,13 @@ App::uses('NetCommonsGetTest', 'NetCommons.TestSuite');
 class ContentCommentTest extends NetCommonsGetTest {
 
 /**
+ * Plugin name
+ *
+ * @var string
+ */
+	public $plugin = 'contentComments';
+
+/**
  * Fixtures
  *
  * @var array
@@ -27,6 +34,26 @@ class ContentCommentTest extends NetCommonsGetTest {
 	public $fixtures = array(
 		'plugin.content_comments.content_comment',
 	);
+
+/**
+ * setUp method
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
+		$this->ContentComment = ClassRegistry::init('ContentComments.ContentComment');
+	}
+
+/**
+ * tearDown method
+ *
+ * @return void
+ */
+	public function tearDown() {
+		unset($this->ContentComment);
+		parent::tearDown();
+	}
 
 /**
  * testFindById

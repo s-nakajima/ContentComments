@@ -20,6 +20,13 @@ App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
 class ContentCommentValidateErrorTest extends NetCommonsModelTestCase {
 
 /**
+ * Plugin name
+ *
+ * @var string
+ */
+	public $plugin = 'contentComments';
+
+/**
  * Fixtures
  *
  * @var array
@@ -27,6 +34,26 @@ class ContentCommentValidateErrorTest extends NetCommonsModelTestCase {
 	public $fixtures = array(
 		'plugin.content_comments.content_comment',
 	);
+
+/**
+ * setUp method
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
+		$this->ContentComment = ClassRegistry::init('ContentComments.ContentComment');
+	}
+
+/**
+ * tearDown method
+ *
+ * @return void
+ */
+	public function tearDown() {
+		unset($this->ContentComment);
+		parent::tearDown();
+	}
 
 /**
  * debug用 全validateエラーを取得
