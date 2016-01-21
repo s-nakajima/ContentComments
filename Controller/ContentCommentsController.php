@@ -53,7 +53,7 @@ class ContentCommentsController extends ContentCommentsAppController {
 			// コメントする
 			if (!$this->ContentComments->comment()) {
 				$this->throwBadRequest();
-				return false;
+				return;
 			}
 			// 一覧へ
 			$this->redirect($this->request->data('_tmp.redirect_url'));
