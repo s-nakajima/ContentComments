@@ -44,6 +44,10 @@ class ContentCommentCountBehavior extends ModelBehavior {
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function afterFind(Model $model, $results, $primary = false) {
+		if (empty($results) || ! isset($results[0][$model->alias])) {
+			return $results;
+		}
+
 		// コンテンツコメント件数をセット
 		$contentKeys = array();
 		foreach ($results as $key => &$target) {
