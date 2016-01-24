@@ -44,7 +44,7 @@ class ContentCommentCountBehavior extends ModelBehavior {
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function afterFind(Model $model, $results, $primary = false) {
-		if (empty($results) || ! isset($results[0][$model->alias])) {
+		if (empty($results) || ! isset($results[0][$model->alias]['key'])) {
 			return $results;
 		}
 
