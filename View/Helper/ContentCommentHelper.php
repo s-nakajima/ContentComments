@@ -102,8 +102,8 @@ class ContentCommentHelper extends AppHelper {
 		// コメント利用フラグ
 		$useComment = Hash::get($setting, $settingNames['use_comment']);
 
-		/* コメントを利用する or (コメント0件 and コメント投稿できる) */
-		if ($useComment || (count($contentComments) == 0 && Current::permission('content_comment_creatable'))) {
+		/* コメントを利用する */
+		if ($useComment) {
 			$output .= $this->_View->element('ContentComments.index', array(
 				'contentKey' => $content[$contentModelName]['key'],
 				'useCommentApproval' => Hash::get($setting, $settingNames['use_comment_approval']),

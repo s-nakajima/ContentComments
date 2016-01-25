@@ -27,7 +27,11 @@ $redirectUrl = Router::url();
 <div class="row">
 	<div class="col-xs-12">
 		<article>
+			<?php if (count($contentComments) >= 1 || Current::permission('content_comment_creatable')): ?>
 			<div class="panel panel-default">
+			<?php else: ?>
+			<div>
+			<?php endif; ?>
 
 				<?php if (Current::permission('content_comment_creatable')): ?>
 					<?php /* 登録 */ ?>
