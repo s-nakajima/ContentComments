@@ -128,7 +128,7 @@ class ContentCommentsComponent extends Component {
 		}
 
 		// コメントを利用しない
-		if (!Hash::get($this->_controller->viewVars, $this->settings['viewVarsUseComment'][0])) {
+		if (!Hash::get($this->_controller->viewVars, $this->settings['viewVarsUseComment'])) {
 			return;
 		}
 
@@ -202,7 +202,7 @@ class ContentCommentsComponent extends Component {
 		$conditions = array(
 			'block_key' => Current::read('Block.key'),
 			'plugin_key' => $this->_controller->request->params['plugin'],
-			'content_key' => Hash::get($this->_controller->viewVars, $this->settings['viewVarsContentKey'][0])
+			'content_key' => Hash::get($this->_controller->viewVars, $this->settings['viewVarsContentKey'])
 		);
 
 		// 公開権限あり
