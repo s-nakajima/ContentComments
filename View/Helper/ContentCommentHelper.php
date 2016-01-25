@@ -96,9 +96,6 @@ class ContentCommentHelper extends AppHelper {
 		}
 		$output = '';
 
-		// 表示するコメント一覧
-		$contentComments = $this->__displayContentComments($this->request->data('ContentComments'));
-
 		// コメント利用フラグ
 		$useComment = Hash::get($setting, $settingNames['use_comment']);
 
@@ -108,34 +105,10 @@ class ContentCommentHelper extends AppHelper {
 				'contentKey' => $content[$contentModelName]['key'],
 				'useCommentApproval' => Hash::get($setting, $settingNames['use_comment_approval']),
 				'contentCommentCnt' => Hash::get($content, 'ContentCommentCnt.cnt'),
-				'contentComments' => $contentComments,
+				'contentComments' => $this->request->data('ContentComments'),
 			));
 		}
 
 		return $output;
-	}
-
-/**
- * 表示するコメント一覧
- *
- * @param array $contentComments コメント一覧
- * @return array 表示するコメント一覧
- */
-	private function __displayContentComments($contentComments) {
-		$contentComments = $contentComments ? $contentComments : array();
-
-		foreach ($contentComments as $idx => $contentComment) {
-			// ・未承認のコメントは表示しない。
-			// ・自分のコメントは表示する。
-			// ・承認許可ありの場合、表示する。
-			if (Current::permission('content_comment_publishable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')) {
-				// 表示 => なにもしない
-			} elseif ($contentComment['ContentComment']['status'] == WorkflowComponent::STATUS_APPROVED) {
-				// 非表示 => 配列から取り除く
-				unset($contentComments[$idx]);
-			}
-		}
-
-		return $contentComments;
 	}
 }
