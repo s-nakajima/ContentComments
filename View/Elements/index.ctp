@@ -47,7 +47,7 @@ $redirectUrl = Router::url();
 							<article class="comment">
 
 								<?php /* 1件データ表示＆編集 */ ?>
-								<?php echo $this->element('ContentComments.once', array(
+								<?php echo $this->element('ContentComments.indexOnce', array(
 									'pluginKey' => $pluginKey,
 									'contentKey' => $contentKey,
 									'redirectUrl' => $redirectUrl,
