@@ -45,7 +45,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 
 		<?php /* コメント表示 */ ?>
 		<div ng-hide="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
-			<?php echo nl2br($contentComment['ContentComment']['comment']) ?>
+			<?php echo h(nl2br($contentComment['ContentComment']['comment'])); ?>
 		</div>
 
 		<?php /* コンテンツコメント編集許可あり or 自分で投稿したコメントなら、編集可能 */ ?>

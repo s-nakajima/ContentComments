@@ -39,7 +39,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 				$contentCommentComment = array(
 					'class' => 'form-control nc-noresize',
 					'rows' => 2,
-					'value' => nl2br($contentComment['ContentComment']['comment']),
+					'value' => h(nl2br($contentComment['ContentComment']['comment'])),
 				);
 
 				/* 編集時入力エラー対応 編集処理で、idが同じのみvalueをセットしない */
