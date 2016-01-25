@@ -17,7 +17,6 @@
  * @param array $contentComment コンテンツコメント一覧の1件データ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
-$this->NetCommonsHtml->script(array('/content_comments/js/content_comments.js'));
 
 ?>
 <?php /* --- 編集ボタン */ ?>

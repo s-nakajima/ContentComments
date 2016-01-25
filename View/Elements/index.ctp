@@ -17,7 +17,6 @@
  * @param array $contentComments コンテンツコメント一覧データ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
-$this->NetCommonsHtml->script(array('/content_comments/js/content_comments.js'));
 
 // プラグインキー
 $pluginKey = $this->request->params['plugin'];
