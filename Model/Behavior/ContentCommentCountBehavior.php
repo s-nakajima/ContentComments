@@ -9,7 +9,7 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-App::uses('ContentComment', 'ContentComments.Model');
+App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
  * Summary for ContentComment Behavior
@@ -70,7 +70,7 @@ class ContentCommentCountBehavior extends ModelBehavior {
 			'fields' => array('content_key', 'count(content_key) as ContentComment__cnt'),	// Model__エイリアスにする
 			'conditions' => array(
 				'plugin_key' => Current::read('Plugin.key'),
-				'status' => ContentComment::STATUS_PUBLISHED,
+				'status' => WorkflowComponent::STATUS_PUBLISHED,
 				'content_key' => array_keys($contents)
 			),
 			'group' => array('content_key'),

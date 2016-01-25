@@ -10,6 +10,7 @@
  */
 
 App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
  * ContentComment 例外 Test Case
@@ -69,7 +70,7 @@ class ContentCommentExceptionTest extends NetCommonsModelTestCase {
 				'block_key' => 111,
 				'plugin_key' => 'plugin_1',
 				'content_key' => 'content_1',
-				'status' => ContentComment::STATUS_PUBLISHED, // 公開
+				'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 				'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 			),
 		);

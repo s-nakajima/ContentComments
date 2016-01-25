@@ -32,7 +32,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 
 				<?php /* ステータス */ ?>
 				<?php echo $this->Workflow->label($contentComment['ContentComment']['status'], array(
-					ContentComment::STATUS_APPROVED => array(
+					WorkflowComponent::STATUS_APPROVED => array(
 						'class' => 'label-warning',
 						'message' => __d('content_comments', 'Approving'),
 					),

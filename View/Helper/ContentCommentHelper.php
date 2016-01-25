@@ -11,6 +11,7 @@
  */
 
 App::uses('AppHelper', 'View/Helper');
+App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
  * ContentComment Helper
@@ -129,7 +130,7 @@ class ContentCommentHelper extends AppHelper {
 			// ・承認許可ありの場合、表示する。
 			if (Current::permission('content_comment_publishable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')) {
 				// 表示 => なにもしない
-			} elseif ($contentComment['ContentComment']['status'] == ContentComment::STATUS_APPROVED) {
+			} elseif ($contentComment['ContentComment']['status'] == WorkflowComponent::STATUS_APPROVED) {
 				// 非表示 => 配列から取り除く
 				unset($contentComments[$idx]);
 			}

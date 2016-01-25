@@ -49,10 +49,10 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 					<?php echo $this->NetCommonsForm->hidden('_tmp.process', array('value' => ContentCommentsComponent::PROCESS_ADD)); ?>
 					<?php
 					// コメント承認機能 0:使わない=>公開 1:使う=>未承認
-					$status = $useCommentApproval ? ContentComment::STATUS_APPROVED : ContentComment::STATUS_PUBLISHED;
+					$status = $useCommentApproval ? WorkflowComponent::STATUS_APPROVED : WorkflowComponent::STATUS_PUBLISHED;
 					if (Current::permission('content_comment_publishable')) {
 						// 公開
-						$status = ContentComment::STATUS_PUBLISHED;
+						$status = WorkflowComponent::STATUS_PUBLISHED;
 					}
 					echo $this->NetCommonsForm->hidden('ContentComment.status', array('value' => $status));
 					?>

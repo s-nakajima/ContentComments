@@ -12,7 +12,7 @@
 
 App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
 App::uses('ContentCommentsComponent', 'ContentComments.Controller/Component');
-App::uses('ContentComment', 'ContentComments.Model');
+App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
  * ContentCommentsController Test Case
@@ -72,7 +72,7 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 			'ContentComment' => array(
 				'plugin_key' => 'plugin_1',
 				'content_key' => 'content_1',
-				'status' => ContentComment::STATUS_PUBLISHED, // 公開
+				'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 			),
 			'_tmp' => array(
 				'redirect_url' => 'http://localhost/',
@@ -214,7 +214,7 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 			'ContentComment' => array(
 				'plugin_key' => 'plugin_1',
 				'content_key' => 'content_1',
-				'status' => ContentComment::STATUS_PUBLISHED, // 公開
+				'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 			),
 			'_tmp' => array(
 				'redirect_url' => 'http://localhost/',

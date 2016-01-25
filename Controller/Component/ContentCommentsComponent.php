@@ -11,7 +11,7 @@
  */
 
 App::uses('Component', 'Controller');
-App::uses('ContentComment', 'ContentComments.Model');
+App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 App::uses('ComponentCollection', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
@@ -212,14 +212,14 @@ class ContentCommentsComponent extends Component {
 
 		// ログインしていない
 		if (!(bool)AuthComponent::user()) {
-			$conditions['ContentComment.status'] = ContentComment::STATUS_PUBLISHED;
+			$conditions['ContentComment.status'] = WorkflowComponent::STATUS_PUBLISHED;
 			return $conditions;
 		}
 
 		// 公開権限なし、ログイン済み
 		$addConditions = array(
 			'OR' => array(
-				'ContentComment.status' => ContentComment::STATUS_PUBLISHED,
+				'ContentComment.status' => WorkflowComponent::STATUS_PUBLISHED,
 				'ContentComment.created_user' => (int)AuthComponent::user('id'),
 			)
 		);

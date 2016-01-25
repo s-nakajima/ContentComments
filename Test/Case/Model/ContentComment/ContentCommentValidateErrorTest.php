@@ -10,6 +10,7 @@
  */
 
 App::uses('NetCommonsModelTestCase', 'NetCommons.TestSuite');
+App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
  * ContentComment validateエラー Test Case
@@ -65,7 +66,7 @@ class ContentCommentValidateErrorTest extends NetCommonsModelTestCase {
 		//			'block_key' => 'block_1',
 		//			'plugin_key' => 'plugin_1',
 		//			'content_key' => 'content_1',
-		//			'status' => ContentComment::STATUS_PUBLISHED, // 公開
+		//			'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 		//			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 		//		));
 		$data = array('ContentComment' => array(
@@ -90,7 +91,7 @@ class ContentCommentValidateErrorTest extends NetCommonsModelTestCase {
 			'block_key' => null,
 			'plugin_key' => 'plugin_1',
 			'content_key' => 'content_1',
-			'status' => ContentComment::STATUS_PUBLISHED, // 公開
+			'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 		));
 		if (!$this->ContentComment->saveContentComment($data)) {
@@ -111,7 +112,7 @@ class ContentCommentValidateErrorTest extends NetCommonsModelTestCase {
 			'block_key' => 'block_1',
 			'plugin_key' => null,
 			'content_key' => 'content_1',
-			'status' => ContentComment::STATUS_PUBLISHED, // 公開
+			'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 		));
 		if (!$this->ContentComment->saveContentComment($data)) {
@@ -132,7 +133,7 @@ class ContentCommentValidateErrorTest extends NetCommonsModelTestCase {
 			'block_key' => 'block_1',
 			'plugin_key' => 'plugin_1',
 			'content_key' => null,
-			'status' => ContentComment::STATUS_PUBLISHED, // 公開
+			'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 		));
 		if (!$this->ContentComment->saveContentComment($data)) {
@@ -174,7 +175,7 @@ class ContentCommentValidateErrorTest extends NetCommonsModelTestCase {
 			'block_key' => 'block_1',
 			'plugin_key' => 'plugin_1',
 			'content_key' => 'content_1',
-			'status' => ContentComment::STATUS_PUBLISHED, // 公開
+			'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 			'comment' => null,
 		));
 		if (!$this->ContentComment->saveContentComment($data)) {

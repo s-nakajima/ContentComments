@@ -10,6 +10,7 @@
  */
 
 App::uses('NetCommonsGetTest', 'NetCommons.TestSuite');
+App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
  * ContentComment Test Case
@@ -76,7 +77,7 @@ class ContentCommentTest extends NetCommonsGetTest {
 			'block_key' => 'block_1',
 			'plugin_key' => 'plugin_1',
 			'content_key' => 'content_1',
-			'status' => ContentComment::STATUS_PUBLISHED, // 公開
+			'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 		));
 		$contentComment = $this->ContentComment->saveContentComment($data);
@@ -94,7 +95,7 @@ class ContentCommentTest extends NetCommonsGetTest {
 			'block_key' => 'block_1',
 			'plugin_key' => 'plugin_1',
 			'content_key' => 'content_1',
-			'status' => ContentComment::STATUS_PUBLISHED, // 公開
+			'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 		));
 		$contentComment = $this->ContentComment->saveContentComment($data);
@@ -113,7 +114,7 @@ class ContentCommentTest extends NetCommonsGetTest {
 			'block_key' => 'block_2',
 			'plugin_key' => 'plugin_2',
 			'content_key' => 'content_2',
-			'status' => ContentComment::STATUS_PUBLISHED, // 公開
+			'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
 		));
 		$contentComment = $this->ContentComment->saveContentComment($data);
 		//var_dump($this->ContentComment->validationErrors);
