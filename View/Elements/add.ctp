@@ -40,7 +40,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 			<div class="media-body">
 				<?php echo $this->NetCommonsForm->create('ContentComment', array(
 					'name' => 'form',
-					'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
+					'url' => '/content_comments/content_comments/add' . Current::read('Frame.id'),
 					'type' => 'post',
 				)); ?>
 					<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>

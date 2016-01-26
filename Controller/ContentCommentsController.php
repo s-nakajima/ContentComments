@@ -38,18 +38,22 @@ class ContentCommentsController extends ContentCommentsAppController {
 		'NetCommons.Permission' => array(
 			//アクセスの権限
 			'allow' => array(
+				'add' => 'content_comment_creatable',
 				'edit' => 'content_comment_creatable',
+				'approve' => 'content_comment_publishable',
+				'delete' => 'content_comment_creatable'
 			),
 		),
 	);
 
+
 /**
- * 編集（登録・編集・削除・承認）
+ * 登録
  *
- * @return CakeResponse
+ * @return void
  */
-	public function edit() {
-		if ($this->request->is('post') || $this->request->is('put') || $this->request->is('delete')) {
+	public function add() {
+		if ($this->request->is('post')) {
 			// コメントする
 			if (!$this->ContentComments->comment()) {
 				$this->throwBadRequest();
@@ -60,5 +64,56 @@ class ContentCommentsController extends ContentCommentsAppController {
 		}
 	}
 
+
+/**
+ * 編集
+ *
+ * @return CakeResponse
+ */
+	public function edit() {
+		if ($this->request->is('put')) {
+			// コメントする
+			if (!$this->ContentComments->comment()) {
+				$this->throwBadRequest();
+				return;
+			}
+			// 一覧へ
+			$this->redirect($this->request->data('_tmp.redirect_url'));
+		}
+	}
+
+/**
+ * 承認
+ *
+ * @return CakeResponse
+ */
+	public function approve() {
+		if ($this->request->is('put')) {
+			// コメントする
+			if (!$this->ContentComments->comment()) {
+				$this->throwBadRequest();
+				return;
+			}
+			// 一覧へ
+			$this->redirect($this->request->data('_tmp.redirect_url'));
+		}
+	}
+
+/**
+ * 削除
+ *
+ * @return CakeResponse
+ */
+	public function delete() {
+		if ($this->request->is('delete')) {
+			// コメントする
+			if (!$this->ContentComments->comment()) {
+				$this->throwBadRequest();
+				return;
+			}
+			// 一覧へ
+			$this->redirect($this->request->data('_tmp.redirect_url'));
+		}
+	}
 }
 
