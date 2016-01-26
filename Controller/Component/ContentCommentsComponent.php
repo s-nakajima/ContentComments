@@ -23,17 +23,6 @@ App::uses('SessionComponent', 'Controller/Component');
  * @package NetCommons\NetCommons\Controller\Component
  */
 class ContentCommentsComponent extends Component {
-
-/**
- * @var SessionComponent セッションコンポーネント
- */
-	public $Session = null;
-
-/**
- * @var Controller コントローラ
- */
-	protected $_controller = null;
-
 /**
  * @var int start limit
  */
@@ -65,6 +54,18 @@ class ContentCommentsComponent extends Component {
 	const PROCESS_APPROVED = '4';
 
 /**
+ * Other components
+ *
+ * @var array
+ */
+	public $components = array('Session');
+
+/**
+ * @var Controller コントローラ
+ */
+	protected $_controller = null;
+
+/**
  * Called before the Controller::beforeFilter().
  *
  * @param Controller $controller Instantiating controller
@@ -73,10 +74,6 @@ class ContentCommentsComponent extends Component {
  */
 	public function initialize(Controller $controller) {
 		$this->_controller = $controller;
-
-		// コンポーネントから他のコンポーネントを使用する
-		$collection = new ComponentCollection();
-		$this->Session = new SessionComponent($collection);
 	}
 
 /**
