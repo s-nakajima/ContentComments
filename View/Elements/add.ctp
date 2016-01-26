@@ -46,7 +46,6 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 					<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 					<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
 					<?php echo $this->NetCommonsForm->hidden('_tmp.redirect_url', array('value' => $redirectUrl)); ?>
-					<?php echo $this->NetCommonsForm->hidden('_tmp.process', array('value' => ContentCommentsComponent::PROCESS_ADD)); ?>
 					<?php
 					// コメント承認機能 0:使わない=>公開 1:使う=>未承認
 					$status = $useCommentApproval ? WorkflowComponent::STATUS_APPROVED : WorkflowComponent::STATUS_PUBLISHED;
@@ -72,7 +71,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 					</div>
 
 					<?php /* 登録時入力エラー対応 登録処理のみエラー表示エリア配置 */ ?>
-					<?php if ($this->request->data('_tmp.process') == ContentCommentsComponent::PROCESS_ADD): ?>
+					<?php if (!isset($this->request->data['_tmp']['ContentComment']['id'])): ?>
 						<div class="has-error">
 							<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
 						</div>

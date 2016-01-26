@@ -130,26 +130,21 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
  */
 	public function dataProviderEditPost() {
 		$data = $this->__getData();
-		$commonParams = array(
-			'role' => Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
-			'urlOptions' => array(
-				'action' => 'edit',
-			),
-		);
 
 		return array(
-			'editアクションのPOSTテスト:登録' => Hash::merge(array(
+			'editアクションのPOSTテスト:登録' => array(
 				'method' => 'post',
 				'data' => Hash::merge($data, array(
 					'ContentComment' => array(
 						'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 					),
-					'_tmp' => array(
-						'process' => ContentCommentsComponent::PROCESS_ADD,
-					),
 				)),
-			), $commonParams),
-			'editアクションのPOSTテスト:編集' => Hash::merge(array(
+				'role' => Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
+				'urlOptions' => array(
+					'action' => 'add',
+				)
+			),
+			'editアクションのPOSTテスト:編集' => array(
 				'method' => 'put',
 				'data' => Hash::merge($data, array(
 					'ContentComment' => array(
@@ -157,34 +152,37 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 						'created_user' => 1,
 						'comment' => 'edit......................',
 					),
-					'_tmp' => array(
-						'process' => ContentCommentsComponent::PROCESS_EDIT,
-					),
 				)),
-			), $commonParams),
-			'editアクションのPOSTテスト:承認' => Hash::merge(array(
+				'role' => Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
+				'urlOptions' => array(
+					'action' => 'edit',
+				),
+			),
+			'editアクションのPOSTテスト:承認' => array(
 				'method' => 'put',
 				'data' => Hash::merge($data, array(
 					'ContentComment' => array(
 						'id' => 3,
 					),
-					'_tmp' => array(
-						'process' => ContentCommentsComponent::PROCESS_APPROVED,
-					),
 				)),
-			), $commonParams),
-			'editアクションのPOSTテスト:削除' => Hash::merge(array(
+				'role' => Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
+				'urlOptions' => array(
+					'action' => 'approve',
+				),
+			),
+			'editアクションのPOSTテスト:削除' => array(
 				'method' => 'delete',
 				'data' => Hash::merge($data, array(
 					'ContentComment' => array(
 						'id' => 3,
 						'created_user' => 1,
 					),
-					'_tmp' => array(
-						'process' => ContentCommentsComponent::PROCESS_DELETE,
-					),
 				)),
-			), $commonParams),
+				'role' => Role::ROOM_ROLE_KEY_ROOM_ADMINISTRATOR,
+				'urlOptions' => array(
+					'action' => 'delete',
+				),
+			),
 		);
 	}
 
@@ -193,7 +191,7 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
  *
  * @return void
  */
-	public function testEditPostException() {
+	/*public function testEditPostException() {
 		$this->setExpectedException('BadRequestException');
 
 		$method = 'put';
@@ -218,7 +216,6 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 			),
 			'_tmp' => array(
 				'redirect_url' => 'http://localhost/',
-				//'process' => ContentCommentsComponent::PROCESS_ADD, //例外条件
 			),
 		);
 
@@ -227,9 +224,18 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 			TestAuthGeneral::login($this, $role);
 		}
 
+		// ContentComment mock
+		$this->controller->ContentComments = $this->getMock('ContentCommentsComponent', ['comment'], [new ComponentCollection()]);
+		//$this->controller = $this->generate('ContentComments', array('components' => array('ContentComments')));
+		$this->controller->ContentComments
+			->expects($this->once())
+			->method('comment')
+			->will($this->returnValue(false));
+
+		$this->testAction('/content_comments/content_comments/edit', ['data' => $data, 'method' => 'put']);
 		//テスト実施
-		$this->_testPostAction($method, $data, $urlOptions, $exception, $return);
+		//$this->_testPostAction($method, $data, $urlOptions, $exception, $return);
 
 		$this->fail('テストNG');
-	}
+	}*/
 }

@@ -30,7 +30,6 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 		<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
 		<?php echo $this->NetCommonsForm->hidden('_tmp.redirect_url', array('value' => $redirectUrl)); ?>
-		<?php echo $this->NetCommonsForm->hidden('_tmp.process', array('value' => ContentCommentsComponent::PROCESS_EDIT)); ?>
 		<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 		<div class="form-group">
@@ -43,8 +42,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 				);
 
 				/* 編集時入力エラー対応 編集処理で、idが同じのみvalueをセットしない */
-				if ($this->request->data('_tmp.process') == ContentCommentsComponent::PROCESS_EDIT &&
-					$this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']) {
+				if ($this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']) {
 					$contentCommentComment['value'] = $this->request->data('_tmp.ContentComment.comment');
 				}
 
@@ -54,8 +52,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		</div>
 
 		<?php /* 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置 */ ?>
-		<?php if ($this->request->data('_tmp.process') == ContentCommentsComponent::PROCESS_EDIT &&
-			$this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']): ?>
+		<?php if ($this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']): ?>
 			<div class="has-error">
 				<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
 			</div>

@@ -36,10 +36,6 @@ class ContentCommentsComponentExceptionTest extends ContentCommentsComponentAllT
 				'content_key' => 'content_1',
 				'status' => '1', // 公開
 			),
-			'_tmp' => array(
-				'redirect_url' => 'http://localhost/',
-				'process' => ContentCommentsComponent::PROCESS_DELETE, // 削除
-			),
 			'Block' => array(
 				'id' => 'Block_1',
 			),
@@ -49,6 +45,7 @@ class ContentCommentsComponentExceptionTest extends ContentCommentsComponentAllT
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
 
+		$this->controller->action = 'delete';
 		$this->contentComments->initialize($this->controller);
 
 		$this->contentComments->comment();

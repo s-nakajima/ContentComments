@@ -46,7 +46,6 @@ class ContentCommentsController extends ContentCommentsAppController {
 		),
 	);
 
-
 /**
  * 登録
  *
@@ -63,7 +62,6 @@ class ContentCommentsController extends ContentCommentsAppController {
 			$this->redirect($this->request->data('_tmp.redirect_url'));
 		}
 	}
-
 
 /**
  * 編集

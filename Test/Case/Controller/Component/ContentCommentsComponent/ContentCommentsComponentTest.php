@@ -42,11 +42,9 @@ class ContentCommentsComponentTest extends ContentCommentsComponentAllTestBase {
 				'content_key' => 'content_1',
 				'status' => '1',
 			),
-			'_tmp' => array(
-				'process' => ContentCommentsComponent::PROCESS_ADD, // 登録
-			),
 		);
 
+		$this->controller->action = 'add';
 		$this->contentComments->initialize($this->controller);
 
 		Current::$current['Block']['key'] = 'block_1';

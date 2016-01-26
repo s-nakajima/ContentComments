@@ -34,26 +34,6 @@ class ContentCommentsComponent extends Component {
 	const MAX_LIMIT = 100;
 
 /**
- * @var string 登録処理
- */
-	const PROCESS_ADD = '1';
-
-/**
- * @var string 編集処理
- */
-	const PROCESS_EDIT = '2';
-
-/**
- * @var string 削除処理
- */
-	const PROCESS_DELETE = '3';
-
-/**
- * @var string 承認処理
- */
-	const PROCESS_APPROVED = '4';
-
-/**
  * Other components
  *
  * @var array
@@ -155,17 +135,15 @@ class ContentCommentsComponent extends Component {
  * @return bool 成功 or 失敗
  */
 	public function comment() {
-		$process = $this->_controller->request->data('_tmp.process');
-
 		// パーミッションがあるかチェック
-		if (!$this->__checkPermission($process)) {
+		if (!$this->__checkPermission()) {
 			return false;
 		}
 
 		// 登録・編集・承認
-		if ($process == $this::PROCESS_ADD ||
-			$process == $this::PROCESS_EDIT ||
-			$process == $this::PROCESS_APPROVED) {
+		if ($this->_controller->action == 'add' ||
+			$this->_controller->action == 'edit' ||
+			$this->_controller->action == 'approve') {
 
 			// dataの準備
 			$data = $this->__readyData();
@@ -176,18 +154,18 @@ class ContentCommentsComponent extends Component {
 
 				// 別プラグインにエラーメッセージとどの処理を送るため  http://skgckj.hateblo.jp/entry/2014/02/09/005111
 				$this->Session->write('errors.ContentComment', $this->_controller->ContentComment->validationErrors);
-				$this->Session->write('_tmp.process', $process);
 				$this->Session->write('_tmp.ContentComment.id', $this->_controller->request->data('ContentComment.id'));
 				$this->Session->write('_tmp.ContentComment.comment', $this->_controller->request->data('ContentComment.comment'));
 			}
 
 			// 削除
-		} elseif ($process == $this::PROCESS_DELETE) {
+		} elseif ($this->_controller->action == 'delete') {
 			// コンテンツコメントの削除
 			if (!$this->_controller->ContentComment->deleteContentComment($this->_controller->request->data('ContentComment.id'))) {
 				return false;
 			}
 		}
+
 		return true;
 	}
 
@@ -229,23 +207,22 @@ class ContentCommentsComponent extends Component {
 /**
  * パーミッションがあるかチェック
  *
- * @param int $process どの処理
  * @return bool true:パーミッションあり or false:パーミッションなし
  */
-	private function __checkPermission($process) {
+	private function __checkPermission() {
 		// 登録処理 and 投稿許可あり
-		if ($process == $this::PROCESS_ADD && Current::permission('content_comment_creatable')) {
+		if ($this->_controller->action == 'add' && Current::permission('content_comment_creatable')) {
 			return true;
 
 			// (編集処理 or 削除処理) and (編集許可あり or 自分で投稿したコメントなら、編集・削除可能)
-		} elseif (($process == $this::PROCESS_EDIT || $process == $this::PROCESS_DELETE) && (
+		} elseif (($this->_controller->action == 'edit' || $this->_controller->action == 'delete') && (
 				Current::permission('content_comment_editable') ||
 				$this->_controller->data['ContentComment']['created_user'] == (int)AuthComponent::user('id')
 		)) {
 			return true;
 
 			// 承認処理 and 承認許可あり
-		} elseif ($process == $this::PROCESS_APPROVED && Current::permission('content_comment_publishable')) {
+		} elseif ($this->_controller->action == 'approve' && Current::permission('content_comment_publishable')) {
 			return true;
 
 		}

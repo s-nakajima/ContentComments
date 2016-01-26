@@ -30,14 +30,13 @@ class ContentCommentsComponentCheckPermissionTest extends ContentCommentsCompone
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
 
+		$this->controller->action = 'add';
 		$this->contentComments->initialize($this->controller);
-
-		$process = ContentCommentsComponent::PROCESS_ADD; // 登録
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__checkPermission');
 		$privateMethod->setAccessible(true);
-		$rtn = $privateMethod->invoke($this->contentComments, $process);
+		$rtn = $privateMethod->invoke($this->contentComments);
 
 		$this->assertTrue($rtn);
 	}
@@ -52,14 +51,13 @@ class ContentCommentsComponentCheckPermissionTest extends ContentCommentsCompone
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '0'; // 投稿許可なし
 
+		$this->controller->action = 'add';
 		$this->contentComments->initialize($this->controller);
-
-		$process = ContentCommentsComponent::PROCESS_ADD; // 登録
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__checkPermission');
 		$privateMethod->setAccessible(true);
-		$rtn = $privateMethod->invoke($this->contentComments, $process);
+		$rtn = $privateMethod->invoke($this->contentComments);
 
 		$this->assertFalse($rtn);
 	}
@@ -74,14 +72,13 @@ class ContentCommentsComponentCheckPermissionTest extends ContentCommentsCompone
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
 
+		$this->controller->action = 'approve';
 		$this->contentComments->initialize($this->controller);
-
-		$process = ContentCommentsComponent::PROCESS_APPROVED; // 承認
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__checkPermission');
 		$privateMethod->setAccessible(true);
-		$rtn = $privateMethod->invoke($this->contentComments, $process);
+		$rtn = $privateMethod->invoke($this->contentComments);
 
 		$this->assertTrue($rtn);
 	}
@@ -96,14 +93,13 @@ class ContentCommentsComponentCheckPermissionTest extends ContentCommentsCompone
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
 
+		$this->controller->action = 'approve';
 		$this->contentComments->initialize($this->controller);
-
-		$process = ContentCommentsComponent::PROCESS_APPROVED; // 承認
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__checkPermission');
 		$privateMethod->setAccessible(true);
-		$rtn = $privateMethod->invoke($this->contentComments, $process);
+		$rtn = $privateMethod->invoke($this->contentComments);
 
 		$this->assertFalse($rtn);
 	}

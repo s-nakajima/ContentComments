@@ -33,9 +33,6 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 				'content_key' => 'content_1',
 				'status' => '1', // 公開
 			),
-			'_tmp' => array(
-				'process' => ContentCommentsComponent::PROCESS_ADD, // 登録
-			),
 			'Block' => array(
 				'id' => 'Block_1',
 			),
@@ -46,6 +43,7 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
 
+		$this->controller->action = 'add';
 		$this->contentComments->initialize($this->controller);
 
 		$this->assertTrue($this->contentComments->comment());
@@ -64,9 +62,6 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 				'content_key' => 'content_1',
 				'status' => '1', // 公開
 			),
-			'_tmp' => array(
-				'process' => ContentCommentsComponent::PROCESS_ADD, // 登録
-			),
 			'Block' => array(
 				'id' => 'Block_1',
 			),
@@ -77,6 +72,7 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
 
+		$this->controller->action = 'add';
 		$this->contentComments->initialize($this->controller);
 
 		$this->contentComments->comment();
@@ -98,9 +94,6 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 				'content_key' => 'content_1',
 				'status' => '1', // 公開
 			),
-			'_tmp' => array(
-				'process' => ContentCommentsComponent::PROCESS_ADD, // 登録
-			),
 			'Block' => array(
 				'id' => 'Block_1',
 			),
@@ -111,6 +104,7 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '0'; // 投稿許可なし
 
+		$this->controller->action = 'add';
 		$this->contentComments->initialize($this->controller);
 
 		$this->assertFalse($this->contentComments->comment());
@@ -131,10 +125,6 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 				'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 				'status' => '1', // 公開
 			),
-			'_tmp' => array(
-				'redirect_url' => 'http://localhost/',
-				'process' => ContentCommentsComponent::PROCESS_EDIT, // 編集
-			),
 			'Block' => array(
 				'id' => 'Block_1',
 			),
@@ -145,6 +135,7 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
 
+		$this->controller->action = 'edit';
 		$this->contentComments->initialize($this->controller);
 
 		$this->assertTrue($this->contentComments->comment());
@@ -163,10 +154,6 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 				'content_key' => 'content_1',
 				'status' => '1', // 公開
 			),
-			'_tmp' => array(
-				'redirect_url' => 'http://localhost/',
-				'process' => ContentCommentsComponent::PROCESS_APPROVED, // 承認
-			),
 			'Block' => array(
 				'id' => 'Block_1',
 			),
@@ -177,6 +164,7 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
 
+		$this->controller->action = 'approve';
 		$this->contentComments->initialize($this->controller);
 
 		$this->assertTrue($this->contentComments->comment());
@@ -195,10 +183,6 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 				'plugin_key' => 'plugin_1',
 				'content_key' => 'content_1',
 			),
-			'_tmp' => array(
-				'redirect_url' => 'http://localhost/',
-				'process' => ContentCommentsComponent::PROCESS_DELETE, // 削除
-			),
 			'Block' => array(
 				'id' => 'Block_1',
 			),
@@ -209,6 +193,7 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
 
+		$this->controller->action = 'delete';
 		$this->contentComments->initialize($this->controller);
 
 		$this->assertTrue($this->contentComments->comment());
@@ -227,10 +212,6 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 				'plugin_key' => 'plugin_1',
 				'content_key' => 'content_1',
 			),
-			'_tmp' => array(
-				'redirect_url' => 'http://localhost/',
-				'process' => ContentCommentsComponent::PROCESS_DELETE, // 削除
-			),
 			'Block' => array(
 				'id' => 'Block_1',
 			),
@@ -241,6 +222,7 @@ class ContentCommentsComponentCommnetTest extends ContentCommentsComponentAllTes
 		Current::$current['Permission']['content_comment_editable']['value'] = '1';
 		Current::$current['Permission']['content_comment_creatable']['value'] = '1';
 
+		$this->controller->action = 'delete';
 		$this->contentComments->initialize($this->controller);
 
 		$this->assertFalse($this->contentComments->comment());
