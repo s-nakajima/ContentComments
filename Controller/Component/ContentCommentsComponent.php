@@ -178,6 +178,7 @@ class ContentCommentsComponent extends Component {
 				$this->Session->write('errors.ContentComment', $this->_controller->ContentComment->validationErrors);
 				$this->Session->write('_tmp.process', $process);
 				$this->Session->write('_tmp.ContentComment.id', $this->_controller->request->data('ContentComment.id'));
+				$this->Session->write('_tmp.ContentComment.comment', $this->_controller->request->data('ContentComment.comment'));
 			}
 
 			// 削除

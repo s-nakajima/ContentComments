@@ -45,7 +45,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 				/* 編集時入力エラー対応 編集処理で、idが同じのみvalueをセットしない */
 				if ($this->request->data('_tmp.process') == ContentCommentsComponent::PROCESS_EDIT &&
 					$this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']) {
-					$contentCommentComment['value'] = '';
+					$contentCommentComment['value'] = $this->request->data('_tmp.ContentComment.comment');
 				}
 
 				echo $this->NetCommonsForm->textarea('ContentComment.comment', $contentCommentComment);
