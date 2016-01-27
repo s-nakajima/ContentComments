@@ -50,6 +50,7 @@ class ContentCommentDeleteBehavior extends ModelBehavior {
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 	public function beforeDelete(Model $model, $cascade = true) {
+		// 多言語のコンテンツを key を使って、Model::deleteAll() で削除した場合を想定
 		// 削除済みなら、もう処理をしない
 		if ($this->isDelete) {
 			return;
