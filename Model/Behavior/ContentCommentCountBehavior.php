@@ -12,7 +12,7 @@
 App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
- * Summary for ContentComment Behavior
+ * Summary for ContentCommentCount Behavior
  */
 class ContentCommentCountBehavior extends ModelBehavior {
 
