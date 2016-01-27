@@ -64,6 +64,8 @@ class ContentCommentsComponent extends Component {
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::startup
  */
 	public function startup(Controller $controller) {
+		$controller->ContentComment = ClassRegistry::init('ContentComments.ContentComment');
+
 		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
 		if ($this->Session->read('errors')) {
 			foreach ($this->Session->read('errors') as $model => $errors) {
@@ -124,6 +126,12 @@ class ContentCommentsComponent extends Component {
 		}
 
 		$this->_controller->request->data['ContentComments'] = $contentComments;
+
+		if (!in_array('ContentComments.ContentComment', $controller->helpers) &&
+			!array_key_exists('ContentComments.ContentComment', $controller->helpers)
+		) {
+			$controller->helpers[] = 'ContentComments.ContentComment';
+		}
 	}
 
 /**
