@@ -13,7 +13,6 @@
 /**
  * @param string $pluginKey プラグインキー
  * @param string $contentKey コンテントキー
- * @param string $redirectUrl 操作後の遷移URL
  * @param array $contentComment コンテンツコメント一覧の1件データ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
@@ -23,7 +22,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 <?php /* 編集の表示・非表示フラグ 非表示 */ ?>
 <input class="hide" type="checkbox" ng-model="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>"
 	<?php /* 編集時入力エラー対応　編集処理で、idが同じなら編集画面を開く */ ?>
-	<?php if ($this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']): ?>
+	<?php if ($this->Session->read('ContentComments.forRedirect.requestData.id') == $contentComment['ContentComment']['id']): ?>
 		ng-init="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;"
 	<?php endif; ?>>
 <button type="button" class="btn btn-primary btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;">
@@ -41,7 +40,6 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 	<?php echo $this->NetCommonsForm->hidden('ContentComment.created_user', array('value' => $contentComment['ContentComment']['created_user'])); ?>
 	<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 	<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
-	<?php echo $this->NetCommonsForm->hidden('_tmp.redirect_url', array('value' => $redirectUrl)); ?>
 	<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 	<?php echo $this->NetCommonsForm->button(

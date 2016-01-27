@@ -64,24 +64,10 @@ class ContentCommentsComponent extends Component {
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::startup
  */
 	public function startup(Controller $controller) {
-		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
-		if ($this->Session->read('errors')) {
-			foreach ($this->Session->read('errors') as $model => $errors) {
-				$this->_controller->$model->validationErrors = $errors;
-			}
-			// 表示は遷移・リロードまでの1回っきりなので消す
-			$this->Session->delete('errors');
-		}
+		$controller->ContentComment = ClassRegistry::init('ContentComments.ContentComment');
 
-		if ($this->Session->read('_tmp')) {
-			if ($this->_controller->request->data('_tmp')) {
-				$this->_controller->request->data['_tmp'] = Hash::merge($this->_controller->request->data('_tmp'), $this->Session->read('_tmp'));
-			} else {
-				$this->_controller->request->data['_tmp'] = $this->Session->read('_tmp');
-			}
-			// 表示は遷移・リロードまでの1回っきりなので消す
-			$this->Session->delete('_tmp');
-		}
+		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
+		$controller->ContentComment->validationErrors = $this->Session->read('ContentComments.forRedirect.errors');
 	}
 
 /**
@@ -100,12 +86,12 @@ class ContentCommentsComponent extends Component {
 		}
 
 		// 許可アクションなし
-		if (!in_array($this->_controller->request->params['action'], $this->settings['allow'])) {
+		if (!in_array($controller->request->params['action'], $this->settings['allow'])) {
 			return;
 		}
 
 		// コメントを利用しない
-		if (!Hash::get($this->_controller->viewVars, $this->settings['viewVarsUseComment'])) {
+		if (!Hash::get($controller->viewVars, $this->settings['viewVarsUseComment'])) {
 			return;
 		}
 
@@ -118,15 +104,33 @@ class ContentCommentsComponent extends Component {
 		//表示件数
 		$query['limit'] = $this::START_LIMIT;
 
-		$this->_controller->Paginator->settings = $query;
+		$controller->Paginator->settings = $query;
 		try {
-			$contentComments = $this->_controller->Paginator->paginate('ContentComment');
+			$contentComments = $controller->Paginator->paginate('ContentComment');
 		} catch (Exception $ex) {
 			CakeLog::error($ex);
 			throw $ex;
 		}
 
-		$this->_controller->request->data['ContentComments'] = $contentComments;
+		$controller->request->data['ContentComments'] = $contentComments;
+
+		if (!in_array('ContentComments.ContentComment', $controller->helpers) &&
+			!array_key_exists('ContentComments.ContentComment', $controller->helpers)
+		) {
+			$controller->helpers[] = 'ContentComments.ContentComment';
+		}
+	}
+
+/**
+ * Called after Controller::render() and before the output is printed to the browser.
+ *
+ * @param Controller $controller Controller with components to shutdown
+ * @return void
+ * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::shutdown
+ */
+	public function shutdown(Controller $controller) {
+		// 表示は遷移・リロードまでの1回っきりなので消す
+		$this->Session->delete('ContentComments.forRedirect');
 	}
 
 /**
@@ -153,9 +157,11 @@ class ContentCommentsComponent extends Component {
 				$this->_controller->NetCommons->handleValidationError($this->_controller->ContentComment->validationErrors);
 
 				// 別プラグインにエラーメッセージとどの処理を送るため  http://skgckj.hateblo.jp/entry/2014/02/09/005111
-				$this->Session->write('errors.ContentComment', $this->_controller->ContentComment->validationErrors);
-				$this->Session->write('_tmp.ContentComment.id', $this->_controller->request->data('ContentComment.id'));
-				$this->Session->write('_tmp.ContentComment.comment', $this->_controller->request->data('ContentComment.comment'));
+				$sessionValue = array(
+					'errors' => $this->_controller->ContentComment->validationErrors,
+					'requestData' => $this->_controller->request->data('ContentComment')
+				);
+				$this->Session->write('ContentComments.forRedirect', $sessionValue);
 			}
 
 			// 削除

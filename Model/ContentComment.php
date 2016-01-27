@@ -67,11 +67,7 @@ class ContentComment extends ContentCommentsAppModel {
 				'notBlank' => array(
 					'rule' => array('notBlank'),
 					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('content_comments', 'comment')),
-				),
-				/*'test' => array(
-					'rule' => 'date',
-					'message' => 'Enter a valid date',
-				)*/
+				)
 			),
 		));
 

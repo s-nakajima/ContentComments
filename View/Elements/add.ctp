@@ -14,7 +14,6 @@
  * @param string $pluginKey プラグインキー
  * @param string $contentKey コンテントキー
  * @param bool $useCommentApproval コンテントコメント承認利用フラグ
- * @param string $redirectUrl 操作後の遷移URL
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
@@ -45,7 +44,6 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 				)); ?>
 					<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 					<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
-					<?php echo $this->NetCommonsForm->hidden('_tmp.redirect_url', array('value' => $redirectUrl)); ?>
 					<?php
 					// コメント承認機能 0:使わない=>公開 1:使う=>未承認
 					$status = $useCommentApproval ? WorkflowComponent::STATUS_APPROVED : WorkflowComponent::STATUS_PUBLISHED;
@@ -61,17 +59,26 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 
 					<div class="form-group">
 						<div class="input textarea">
-							<?php echo $this->NetCommonsForm->textarea(
-								'ContentComment.comment',
-								array(
+							<?php
+								/* 登録時入力エラー対応、Sessionのvalueをセット */
+								$contentCommentComment = array(
 									'class' => 'form-control nc-noresize',
 									'rows' => 2,
-							)); ?>
+								);
+								if (!$this->Session->read('ContentComments.forRedirect.requestData.id')) {
+									$contentCommentComment['value'] = $this->Session->read('ContentComments.forRedirect.requestData.comment');
+								}
+
+								echo $this->NetCommonsForm->textarea(
+									'ContentComment.comment',
+									$contentCommentComment
+								);
+							?>
 						</div>
 					</div>
 
 					<?php /* 登録時入力エラー対応 登録処理のみエラー表示エリア配置 */ ?>
-					<?php if (!isset($this->request->data['_tmp']['ContentComment']['id'])): ?>
+					<?php if (!$this->Session->read('ContentComments.forRedirect.requestData.id')): ?>
 						<div class="has-error">
 							<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
 						</div>
