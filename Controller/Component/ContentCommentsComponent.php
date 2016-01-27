@@ -68,9 +68,8 @@ class ContentCommentsComponent extends Component {
 
 		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
 		if ($this->Session->read('errors')) {
-			foreach ($this->Session->read('errors') as $model => $errors) {
-				$controller->$model->validationErrors = $errors;
-			}
+			$controller->ContentComment->validationErrors = $this->Session->read('errors.ContentComment');
+
 			// 表示は遷移・リロードまでの1回っきりなので消す
 			$this->Session->delete('errors');
 		}
