@@ -69,14 +69,14 @@ class ContentCommentsComponent extends Component {
 		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
 		if ($this->Session->read('errors')) {
 			foreach ($this->Session->read('errors') as $model => $errors) {
-				$this->_controller->$model->validationErrors = $errors;
+				$controller->$model->validationErrors = $errors;
 			}
 			// 表示は遷移・リロードまでの1回っきりなので消す
 			$this->Session->delete('errors');
 		}
 
 		if ($this->Session->read('_tmp')) {
-			$this->_controller->request->data['_tmp'] = $this->Session->read('_tmp');
+			$controller->request->data['_tmp'] = $this->Session->read('_tmp');
 
 			// 表示は遷移・リロードまでの1回っきりなので消す
 			$this->Session->delete('_tmp');
@@ -99,12 +99,12 @@ class ContentCommentsComponent extends Component {
 		}
 
 		// 許可アクションなし
-		if (!in_array($this->_controller->request->params['action'], $this->settings['allow'])) {
+		if (!in_array($controller->request->params['action'], $this->settings['allow'])) {
 			return;
 		}
 
 		// コメントを利用しない
-		if (!Hash::get($this->_controller->viewVars, $this->settings['viewVarsUseComment'])) {
+		if (!Hash::get($controller->viewVars, $this->settings['viewVarsUseComment'])) {
 			return;
 		}
 
@@ -117,15 +117,15 @@ class ContentCommentsComponent extends Component {
 		//表示件数
 		$query['limit'] = $this::START_LIMIT;
 
-		$this->_controller->Paginator->settings = $query;
+		$controller->Paginator->settings = $query;
 		try {
-			$contentComments = $this->_controller->Paginator->paginate('ContentComment');
+			$contentComments = $controller->Paginator->paginate('ContentComment');
 		} catch (Exception $ex) {
 			CakeLog::error($ex);
 			throw $ex;
 		}
 
-		$this->_controller->request->data['ContentComments'] = $contentComments;
+		$controller->request->data['ContentComments'] = $contentComments;
 
 		if (!in_array('ContentComments.ContentComment', $controller->helpers) &&
 			!array_key_exists('ContentComments.ContentComment', $controller->helpers)
