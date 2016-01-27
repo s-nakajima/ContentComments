@@ -59,12 +59,21 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 
 					<div class="form-group">
 						<div class="input textarea">
-							<?php echo $this->NetCommonsForm->textarea(
-								'ContentComment.comment',
-								array(
+							<?php
+								/* 登録時入力エラー対応、Sessionのvalueをセット */
+								$contentCommentComment = array(
 									'class' => 'form-control nc-noresize',
 									'rows' => 2,
-							)); ?>
+								);
+								if ($this->Session->read('errors') && !$this->Session->read('_tmp.ContentComment.id')) {
+									$contentCommentComment['value'] = $this->Session->read('_tmp.ContentComment.comment');
+								}
+
+								echo $this->NetCommonsForm->textarea(
+									'ContentComment.comment',
+									$contentCommentComment
+								);
+							?>
 						</div>
 					</div>
 
