@@ -73,10 +73,7 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 				'plugin_key' => 'plugin_1',
 				'content_key' => 'content_1',
 				'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
-			),
-			'_tmp' => array(
-				'redirect_url' => 'http://localhost/',
-			),
+			)
 		);
 
 		return $data;
@@ -213,10 +210,7 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 				'plugin_key' => 'plugin_1',
 				'content_key' => 'content_1',
 				'status' => WorkflowComponent::STATUS_PUBLISHED, // 公開
-			),
-			'_tmp' => array(
-				'redirect_url' => 'http://localhost/',
-			),
+			)
 		);
 
 		//ログイン

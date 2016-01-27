@@ -67,9 +67,7 @@ class ContentCommentsComponent extends Component {
 		$controller->ContentComment = ClassRegistry::init('ContentComments.ContentComment');
 
 		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
-		if ($this->Session->read('errors')) {
-			$controller->ContentComment->validationErrors = $this->Session->read('errors.ContentComment');
-		}
+		$controller->ContentComment->validationErrors = $this->Session->read('ContentComments.forRedirect.errors');
 	}
 
 /**
@@ -132,8 +130,7 @@ class ContentCommentsComponent extends Component {
  */
 	public function shutdown(Controller $controller) {
 		// 表示は遷移・リロードまでの1回っきりなので消す
-		$this->Session->delete('errors');
-		$this->Session->delete('_tmp');
+		$this->Session->delete('ContentComments.forRedirect');
 	}
 
 /**
@@ -160,9 +157,11 @@ class ContentCommentsComponent extends Component {
 				$this->_controller->NetCommons->handleValidationError($this->_controller->ContentComment->validationErrors);
 
 				// 別プラグインにエラーメッセージとどの処理を送るため  http://skgckj.hateblo.jp/entry/2014/02/09/005111
-				$this->Session->write('errors.ContentComment', $this->_controller->ContentComment->validationErrors);
-				$this->Session->write('_tmp.ContentComment.id', $this->_controller->request->data('ContentComment.id'));
-				$this->Session->write('_tmp.ContentComment.comment', $this->_controller->request->data('ContentComment.comment'));
+				$sessionValue = array(
+					'errors' => $this->_controller->ContentComment->validationErrors,
+					'requestData' => $this->_controller->request->data('ContentComment')
+				);
+				$this->Session->write('ContentComments.forRedirect', $sessionValue);
 			}
 
 			// 削除

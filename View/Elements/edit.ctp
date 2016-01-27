@@ -40,8 +40,8 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 				);
 
 				/* 編集時入力エラー対応 編集処理で、idが同じのみSessionのvalueをセット */
-				if ($this->Session->read('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']) {
-					$contentCommentComment['value'] = $this->Session->read('_tmp.ContentComment.comment');
+				if ($this->Session->read('ContentComments.forRedirect.requestData.id') == $contentComment['ContentComment']['id']) {
+					$contentCommentComment['value'] = $this->Session->read('ContentComments.forRedirect.requestData.comment');
 				}
 
 				echo $this->NetCommonsForm->textarea('ContentComment.comment', $contentCommentComment);
@@ -50,7 +50,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		</div>
 
 		<?php /* 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置 */ ?>
-		<?php if ($this->Session->read('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']): ?>
+		<?php if ($this->Session->read('ContentComments.forRedirect.requestData.id') == $contentComment['ContentComment']['id']): ?>
 			<div class="has-error">
 				<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
 			</div>
