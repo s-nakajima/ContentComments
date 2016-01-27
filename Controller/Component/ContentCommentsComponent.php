@@ -69,16 +69,6 @@ class ContentCommentsComponent extends Component {
 		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
 		if ($this->Session->read('errors')) {
 			$controller->ContentComment->validationErrors = $this->Session->read('errors.ContentComment');
-
-			// 表示は遷移・リロードまでの1回っきりなので消す
-			$this->Session->delete('errors');
-		}
-
-		if ($this->Session->read('_tmp')) {
-			$controller->request->data['_tmp'] = $this->Session->read('_tmp');
-
-			// 表示は遷移・リロードまでの1回っきりなので消す
-			$this->Session->delete('_tmp');
 		}
 	}
 
@@ -131,6 +121,19 @@ class ContentCommentsComponent extends Component {
 		) {
 			$controller->helpers[] = 'ContentComments.ContentComment';
 		}
+	}
+
+/**
+ * Called after Controller::render() and before the output is printed to the browser.
+ *
+ * @param Controller $controller Controller with components to shutdown
+ * @return void
+ * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::shutdown
+ */
+	public function shutdown(Controller $controller) {
+		// 表示は遷移・リロードまでの1回っきりなので消す
+		$this->Session->delete('errors');
+		$this->Session->delete('_tmp');
 	}
 
 /**

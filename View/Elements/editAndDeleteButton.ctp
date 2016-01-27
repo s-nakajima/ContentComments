@@ -22,7 +22,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 <?php /* 編集の表示・非表示フラグ 非表示 */ ?>
 <input class="hide" type="checkbox" ng-model="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>"
 	<?php /* 編集時入力エラー対応　編集処理で、idが同じなら編集画面を開く */ ?>
-	<?php if ($this->request->data('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']): ?>
+	<?php if ($this->Session->read('_tmp.ContentComment.id') == $contentComment['ContentComment']['id']): ?>
 		ng-init="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;"
 	<?php endif; ?>>
 <button type="button" class="btn btn-primary btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;">

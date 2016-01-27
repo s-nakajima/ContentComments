@@ -69,7 +69,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 					</div>
 
 					<?php /* 登録時入力エラー対応 登録処理のみエラー表示エリア配置 */ ?>
-					<?php if (!isset($this->request->data['_tmp']['ContentComment']['id'])): ?>
+					<?php if (!$this->Session->read('_tmp.ContentComment.id')): ?>
 						<div class="has-error">
 							<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
 						</div>
