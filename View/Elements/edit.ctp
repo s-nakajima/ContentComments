@@ -21,7 +21,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 <div ng-show="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
 	<?php echo $this->NetCommonsForm->create('ContentComment', array(
 		'name' => 'form',
-		'url' => '/content_comments/content_comments/edit' . Current::read('Frame.id'),
+		'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
 		'type' => 'put',
 	)); ?>
 		<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>

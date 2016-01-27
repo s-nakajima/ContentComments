@@ -22,7 +22,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 <?php echo $this->NetCommonsForm->create('ContentComment', array(
 	'name' => 'form',
 	'style' => 'display: inline;',
-	'url' => '/content_comments/content_comments/approve' . Current::read('Frame.id'),
+	'url' => '/content_comments/content_comments/approve/' . Current::read('Frame.id'),
 	'type' => 'put',
 )); ?>
 	<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
