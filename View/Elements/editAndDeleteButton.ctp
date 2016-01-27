@@ -13,7 +13,6 @@
 /**
  * @param string $pluginKey プラグインキー
  * @param string $contentKey コンテントキー
- * @param string $redirectUrl 操作後の遷移URL
  * @param array $contentComment コンテンツコメント一覧の1件データ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
@@ -41,7 +40,6 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 	<?php echo $this->NetCommonsForm->hidden('ContentComment.created_user', array('value' => $contentComment['ContentComment']['created_user'])); ?>
 	<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 	<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
-	<?php echo $this->NetCommonsForm->hidden('_tmp.redirect_url', array('value' => $redirectUrl)); ?>
 	<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 	<?php echo $this->NetCommonsForm->button(

@@ -59,7 +59,7 @@ class ContentCommentsController extends ContentCommentsAppController {
 				return;
 			}
 			// 一覧へ
-			$this->redirect($this->request->data('_tmp.redirect_url'));
+			$this->redirect($this->request->referer());
 		}
 	}
 
@@ -76,7 +76,7 @@ class ContentCommentsController extends ContentCommentsAppController {
 				return;
 			}
 			// 一覧へ
-			$this->redirect($this->request->data('_tmp.redirect_url'));
+			$this->redirect($this->request->referer());
 		}
 	}
 
@@ -93,7 +93,7 @@ class ContentCommentsController extends ContentCommentsAppController {
 				return;
 			}
 			// 一覧へ
-			$this->redirect($this->request->data('_tmp.redirect_url'));
+			$this->redirect($this->request->referer());
 		}
 	}
 
@@ -110,7 +110,7 @@ class ContentCommentsController extends ContentCommentsAppController {
 				return;
 			}
 			// 一覧へ
-			$this->redirect($this->request->data('_tmp.redirect_url'));
+			$this->redirect($this->request->referer());
 		}
 	}
 }

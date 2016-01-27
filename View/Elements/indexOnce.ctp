@@ -13,7 +13,6 @@
 /**
  * @param string $pluginKey プラグインキー
  * @param string $contentKey コンテントキー
- * @param string $redirectUrl 操作後の遷移URL
  * @param array $contentComment コンテンツコメント一覧の1件データ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
@@ -54,7 +53,6 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 			<?php echo $this->element('ContentComments.edit', array(
 				'pluginKey' => $pluginKey,
 				'contentKey' => $contentKey,
-				'redirectUrl' => $redirectUrl,
 				'contentComment' => $contentComment,
 			)); ?>
 		<?php endif; ?>

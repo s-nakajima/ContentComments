@@ -14,7 +14,6 @@
  * @param string $pluginKey プラグインキー
  * @param string $contentKey コンテントキー
  * @param bool $useCommentApproval コンテントコメント承認利用フラグ
- * @param string $redirectUrl 操作後の遷移URL
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
@@ -45,7 +44,6 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 				)); ?>
 					<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 					<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
-					<?php echo $this->NetCommonsForm->hidden('_tmp.redirect_url', array('value' => $redirectUrl)); ?>
 					<?php
 					// コメント承認機能 0:使わない=>公開 1:使う=>未承認
 					$status = $useCommentApproval ? WorkflowComponent::STATUS_APPROVED : WorkflowComponent::STATUS_PUBLISHED;

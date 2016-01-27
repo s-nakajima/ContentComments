@@ -20,9 +20,6 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 
 // プラグインキー
 $pluginKey = $this->request->params['plugin'];
-
-// 操作後の遷移URL
-$redirectUrl = Router::url();
 ?>
 <div class="row">
 	<div class="col-xs-12">
@@ -39,8 +36,7 @@ $redirectUrl = Router::url();
 						'pluginKey' => $pluginKey,
 						'contentKey' => $contentKey,
 						'useCommentApproval' => $useCommentApproval,
-						'contentCommentCnt' => $contentCommentCnt,
-						'redirectUrl' => $redirectUrl,
+						'contentCommentCnt' => $contentCommentCnt
 					)); ?>
 				<?php endif; ?>
 
@@ -54,7 +50,6 @@ $redirectUrl = Router::url();
 								<?php echo $this->element('ContentComments.indexOnce', array(
 									'pluginKey' => $pluginKey,
 									'contentKey' => $contentKey,
-									'redirectUrl' => $redirectUrl,
 									'contentComment' => $contentComment,
 								)); ?>
 
@@ -65,7 +60,6 @@ $redirectUrl = Router::url();
 										<?php echo $this->element('ContentComments.approvalButton', array(
 											'pluginKey' => $pluginKey,
 											'contentKey' => $contentKey,
-											'redirectUrl' => $redirectUrl,
 											'contentComment' => $contentComment,
 										)); ?>
 									<?php endif; ?>
@@ -76,7 +70,6 @@ $redirectUrl = Router::url();
 										<?php echo $this->element('ContentComments.editAndDeleteButton', array(
 											'pluginKey' => $pluginKey,
 											'contentKey' => $contentKey,
-											'redirectUrl' => $redirectUrl,
 											'contentComment' => $contentComment,
 										)); ?>
 									<?php endif; ?>
