@@ -1,0 +1,74 @@
+<?php
+/**
+ * コンテンツコメント削除 Behavior
+ *
+ * @author Noriko Arai <arai@nii.ac.jp>
+ * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
+ * @link http://www.netcommons.org NetCommons Project
+ * @license http://www.netcommons.org/license.txt NetCommons License
+ * @copyright Copyright 2014, NetCommons Project
+ */
+
+/**
+ * Summary for ContentCommentDelete Behavior
+ */
+class ContentCommentDeleteBehavior extends ModelBehavior {
+
+/**
+ * @var array 設定
+ */
+	public $settings = array();
+
+/**
+ * @var bool 削除済みか
+ */
+	public $isDelete = null;
+
+/**
+ * setup
+ *
+ * @param Model $model モデル
+ * @param array $settings 設定値
+ * @return void
+ * @link http://book.cakephp.org/2.0/ja/models/behaviors.html#ModelBehavior::setup
+ */
+	public function setup(Model $model, $settings = array()) {
+		$this->settings[$model->alias] = $settings;
+		$this->isDelete = false;
+	}
+
+/**
+ * Before delete is called before any delete occurs on the attached model, but after the model's
+ * beforeDelete is called. Returning false from a beforeDelete will abort the delete.
+ *
+ * @param Model $model Model using this behavior
+ * @param bool $cascade If true records that depend on this record will also be deleted
+ * @return mixed False if the operation should abort. Any other result will continue.
+ * @throws InternalErrorException
+ * @link http://book.cakephp.org/2.0/ja/models/behaviors.html#ModelBehavior::beforedelete
+ * @link http://book.cakephp.org/2.0/ja/models/callback-methods.html#beforedelete
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ */
+	public function beforeDelete(Model $model, $cascade = true) {
+		// 削除済みなら、もう処理をしない
+		if ($this->isDelete) {
+			return;
+		}
+
+		// コンテンツ取得
+		$content = $model->find('first', array(
+			'conditions' => array($model->alias . '.id' => $model->id)
+		));
+
+		$model->loadModels([
+			'ContentComment' => 'ContentComments.ContentComment',
+		]);
+
+		// コンテンツコメント 削除
+		if (! $model->ContentComment->deleteAll(array($model->ContentComment->alias . '.content_key' => $content[$model->alias]['key']), false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		return true;
+	}
+}
