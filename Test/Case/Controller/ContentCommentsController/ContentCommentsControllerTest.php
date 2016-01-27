@@ -191,7 +191,7 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
  *
  * @return void
  */
-	/*public function testEditPostException() {
+	public function testEditPostException() {
 		$this->setExpectedException('BadRequestException');
 
 		$method = 'put';
@@ -224,18 +224,17 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 			TestAuthGeneral::login($this, $role);
 		}
 
-		// ContentComment mock
-		$this->controller->ContentComments = $this->getMock('ContentCommentsComponent', ['comment'], [new ComponentCollection()]);
-		//$this->controller = $this->generate('ContentComments', array('components' => array('ContentComments')));
-		$this->controller->ContentComments
+		$componentMock = $this->getMock('ContentCommentsComponent', ['comment'], [$this->controller->Components]);
+		$componentMock
 			->expects($this->once())
 			->method('comment')
 			->will($this->returnValue(false));
 
-		$this->testAction('/content_comments/content_comments/edit', ['data' => $data, 'method' => 'put']);
+		$this->controller->Components->set('ContentComments', $componentMock);
+
 		//テスト実施
-		//$this->_testPostAction($method, $data, $urlOptions, $exception, $return);
+		$this->_testPostAction($method, $data, $urlOptions, $exception, $return);
 
 		$this->fail('テストNG');
-	}*/
+	}
 }
