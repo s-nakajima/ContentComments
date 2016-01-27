@@ -62,7 +62,8 @@ class ContentCommentCountBehavior extends ModelBehavior {
 
 		$ContentComment = ClassRegistry::init('ContentComments.ContentComment');
 
-		// バーチャルフィールドを追加  http://book.cakephp.org/2.0/ja/models/virtual-fields.html#sql
+		// バーチャルフィールドを追加
+		/* @link http://book.cakephp.org/2.0/ja/models/virtual-fields.html#sql */
 		$ContentComment->virtualFields['cnt'] = 0;
 
 		$contentCommentCnts = $ContentComment->find('all', array(
