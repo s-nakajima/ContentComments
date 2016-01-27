@@ -74,11 +74,8 @@ class ContentCommentsComponent extends Component {
 		}
 
 		if ($this->Session->read('_tmp')) {
-			if ($this->_controller->request->data('_tmp')) {
-				$this->_controller->request->data['_tmp'] = Hash::merge($this->_controller->request->data('_tmp'), $this->Session->read('_tmp'));
-			} else {
-				$this->_controller->request->data['_tmp'] = $this->Session->read('_tmp');
-			}
+			$this->_controller->request->data['_tmp'] = $this->Session->read('_tmp');
+
 			// 表示は遷移・リロードまでの1回っきりなので消す
 			$this->Session->delete('_tmp');
 		}
