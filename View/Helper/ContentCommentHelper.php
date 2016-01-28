@@ -48,21 +48,23 @@ class ContentCommentHelper extends AppHelper {
 /**
  * Default Constructor
  *
+ * #### Sample code
+ * ##### controller file
+ * ```
+ * public $helpers = array(
+ *     'ContentComments.ContentComment' => [
+ *         'use_comment' => 'use_comment',
+ *         'use_comment_approval' => 'use_comment_approval'
+ *     ]
+ * );
+ * ```
+ *
  * @param View $view The View this helper is being attached to.
  * @param array $settings Configuration settings for the helper.
  * @link http://book.cakephp.org/2.0/ja/views/helpers.html#configuring-helpers
  */
 	public function __construct(View $view, $settings = array()) {
 		$settings = Set::merge($this->_defaults, $settings);
-
-		// $settings初期値(フラグのDB項目名)
-//		if (empty($settings)) {
-//			$settings = array(
-//				'use_comment' => 'use_comment',						// コメント利用フラグ
-//				'use_comment_approval' => 'use_comment_approval',	// コメント承認を使うフラグ
-//			);
-//		}
-
 		parent::__construct($view, $settings);
 	}
 
@@ -117,11 +119,8 @@ class ContentCommentHelper extends AppHelper {
 	public function index($contentModelName, $dbSettings, $content) {
 		$output = '';
 
-		// コメント利用フラグ
-		$useComment = Hash::get($dbSettings, $this->settings['use_comment']);
-
 		// コメントを利用する
-		if ($useComment) {
+		if ($dbSettings[$this->settings['use_comment']]) {
 			$output .= $this->_View->element('ContentComments.index', array(
 				'contentKey' => $content[$contentModelName]['key'],
 				'useCommentApproval' => Hash::get($dbSettings, $this->settings['use_comment_approval']),
