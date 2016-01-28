@@ -66,7 +66,8 @@ class ContentCommentsComponent extends Component {
 	public function startup(Controller $controller) {
 		$controller->ContentComment = ClassRegistry::init('ContentComments.ContentComment');
 
-		// コンテントコメントからエラーメッセージを受け取る仕組み http://skgckj.hateblo.jp/entry/2014/02/09/005111
+		// コンテントコメントからエラーメッセージを受け取る仕組み
+		/* @link http://skgckj.hateblo.jp/entry/2014/02/09/005111 */
 		$controller->ContentComment->validationErrors = $this->Session->read('ContentComments.forRedirect.errors');
 	}
 
