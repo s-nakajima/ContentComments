@@ -30,13 +30,26 @@ $pluginKey = $this->request->params['plugin'];
 			<div>
 			<?php endif; ?>
 
+				<?php /* コメント数 */ ?>
+				<div class="content-comments">
+					<div class="comment-count">
+						<div class="row">
+							<div class="col-xs-12">
+								<label class="control-label" for="CommentComment">
+									<span class="glyphicon glyphicon-comment"></span>
+									<?php echo sprintf(__d('content_comments', '%s comments'), $contentCommentCnt) ?>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<?php if (Current::permission('content_comment_creatable')): ?>
 					<?php /* 登録 */ ?>
 					<?php echo $this->element('ContentComments.add', array(
 						'pluginKey' => $pluginKey,
 						'contentKey' => $contentKey,
-						'useCommentApproval' => $useCommentApproval,
-						'contentCommentCnt' => $contentCommentCnt
+						'useCommentApproval' => $useCommentApproval
 					)); ?>
 				<?php endif; ?>
 

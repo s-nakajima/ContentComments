@@ -19,14 +19,6 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
 <div class="content-comments">
 	<div class="comment-form">
-		<div class="row">
-			<div class="col-xs-12">
-			<label class="control-label" for="CommentComment">
-				<span class="glyphicon glyphicon-comment"></span>
-				<?php echo sprintf(__d('content_comments', '%s comments'), $contentCommentCnt) ?>
-			</label>
-			</div>
-		</div>
 		<div class="media">
 			<div class="pull-left">
 				<?php /* 自分のアバター */ ?>
