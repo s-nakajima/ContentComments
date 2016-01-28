@@ -22,7 +22,7 @@ class ContentCommentDeleteBehavior extends ModelBehavior {
 /**
  * @var bool 削除済みか
  */
-	public $isDelete = null;
+	public $isDeleted = null;
 
 /**
  * setup
@@ -34,7 +34,7 @@ class ContentCommentDeleteBehavior extends ModelBehavior {
  */
 	public function setup(Model $model, $settings = array()) {
 		$this->settings[$model->alias] = $settings;
-		$this->isDelete = false;
+		$this->isDeleted = false;
 	}
 
 /**
@@ -52,7 +52,7 @@ class ContentCommentDeleteBehavior extends ModelBehavior {
 	public function beforeDelete(Model $model, $cascade = true) {
 		// 多言語のコンテンツを key を使って、Model::deleteAll() で削除した場合を想定
 		// 削除済みなら、もう処理をしない
-		if ($this->isDelete) {
+		if ($this->isDeleted) {
 			return;
 		}
 
