@@ -31,8 +31,9 @@ class VideosController extends VideosAppController {
 	public $helpers = array(
 		'ContentComments.ContentComment' => array(
 			'viewVarsKey' => array(
+				'contentKey' => 'video.Video.key',
 				'useComment' => 'videoBlockSetting.use_comment',
-				'useApproval' => 'videoBlockSetting.use_comment_approval'
+				'useCommentApproval' => 'videoBlockSetting.use_comment_approval'
 			)
 		)
 	);
@@ -93,8 +94,8 @@ class VideosController extends VideosAppController {
 	public $components = array(
 		'ContentComments.ContentComments' => array(
 			'viewVarsKey' => array(
-				'useComment' => 'videoBlockSetting.use_comment',
-				'useApproval' => 'videoBlockSetting.use_comment_approval'
+				'contentKey' => 'video.Video.key',
+				'useComment' => 'videoBlockSetting.use_comment'
 			),
 			'allow' => array('view')
 		)
@@ -125,7 +126,7 @@ class VideosController extends VideosAppController {
 ```
 <?php
 	echo $video['title'];
-	echo $this->ContentComment->index($video['Video']['key']);
+	echo $this->ContentComment->index($video);
 ?>
 ```
 
