@@ -13,7 +13,6 @@
 /**
  * @param string $contentKey コンテントキー
  * @param bool $useCommentApproval コンテントコメント承認利用フラグ
- * @param int $contentCommentCnt コンテンツコメント件数
  * @param array $contentComments コンテンツコメント一覧データ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
@@ -24,7 +23,7 @@ $pluginKey = $this->request->params['plugin'];
 <div class="row">
 	<div class="col-xs-12">
 		<article>
-			<?php if (count($contentComments) >= 1 || Current::permission('content_comment_creatable')): ?>
+			<?php if ($this->Paginator->param('count') >= 1 || Current::permission('content_comment_creatable')): ?>
 			<div class="panel panel-default">
 			<?php else: ?>
 			<div>
@@ -37,7 +36,7 @@ $pluginKey = $this->request->params['plugin'];
 							<div class="col-xs-12">
 								<label class="control-label" for="CommentComment">
 									<span class="glyphicon glyphicon-comment"></span>
-									<?php echo sprintf(__d('content_comments', '%s comments'), $contentCommentCnt) ?>
+									<?php echo sprintf(__d('content_comments', '%s comments'), $this->Paginator->param('count')) ?>
 								</label>
 							</div>
 						</div>

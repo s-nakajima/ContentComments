@@ -75,6 +75,42 @@ class ContentComment extends ContentCommentsAppModel {
 	}
 
 /**
+ * Get conditions
+ *
+ * @param string|array $contentKeys コンテンツキー
+ * @return query conditions
+ */
+	public function getConditions($contentKeys) {
+		$conditions = array(
+			'block_key' => Current::read('Block.key'),
+			'plugin_key' => Current::read('Plugin.key'),
+			'content_key' => $contentKeys
+		);
+
+		// 公開権限あり
+		if (Current::permission('content_comment_publishable')) {
+			return $conditions;
+		}
+
+		// ログインしていない
+		if (! (bool)AuthComponent::user()) {
+			$conditions['ContentComment.status'] = WorkflowComponent::STATUS_PUBLISHED;
+			return $conditions;
+		}
+
+		// 公開権限なし、ログイン済み
+		$addConditions = array(
+			'OR' => array(
+				'ContentComment.status' => WorkflowComponent::STATUS_PUBLISHED,
+				'ContentComment.created_user' => (int)AuthComponent::user('id'),
+			)
+		);
+		$conditions = array_merge($conditions, $addConditions);
+
+		return $conditions;
+	}
+
+/**
  * コンテンツコメント データ保存
  *
  * @param array $data received post data

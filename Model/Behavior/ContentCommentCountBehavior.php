@@ -60,7 +60,12 @@ class ContentCommentCountBehavior extends ModelBehavior {
 			$contents[$contentKey] = $content;
 		}
 
+
 		$ContentComment = ClassRegistry::init('ContentComments.ContentComment');
+
+		$contentKeys = array_keys($contents);
+		/* @see ContentComment::getConditions() */
+		$conditions = $ContentComment->getConditions($contentKeys);
 
 		// バーチャルフィールドを追加
 		/* @link http://book.cakephp.org/2.0/ja/models/virtual-fields.html#sql */
@@ -69,11 +74,7 @@ class ContentCommentCountBehavior extends ModelBehavior {
 		$contentCommentCnts = $ContentComment->find('all', array(
 			'recursive' => -1,
 			'fields' => array('content_key', 'count(content_key) as ContentComment__cnt'),	// Model__エイリアスにする
-			'conditions' => array(
-				'plugin_key' => Current::read('Plugin.key'),
-				'status' => WorkflowComponent::STATUS_PUBLISHED,
-				'content_key' => array_keys($contents)
-			),
+			'conditions' => $conditions,
 			'group' => array('content_key'),
 		));
 

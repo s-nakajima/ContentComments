@@ -108,7 +108,8 @@ class ContentCommentsComponent extends Component {
 		}
 
 		// 条件
-		$query['conditions'] = $this->__getConditions($contentKey);
+		/* @see ContentComment::getConditions() */
+		$query['conditions'] = $controller->ContentComment->getConditions($contentKey);
 
 		//ソート
 		$query['order'] = array('ContentComment.created' => 'desc');
@@ -168,7 +169,8 @@ class ContentCommentsComponent extends Component {
 			if (!$this->_controller->ContentComment->saveContentComment($data)) {
 				$this->_controller->NetCommons->handleValidationError($this->_controller->ContentComment->validationErrors);
 
-				// 別プラグインにエラーメッセージとどの処理を送るため  http://skgckj.hateblo.jp/entry/2014/02/09/005111
+				// 別プラグインにエラーメッセージとどの処理を送るため
+				/* @link http://skgckj.hateblo.jp/entry/2014/02/09/005111 */
 				$sessionValue = array(
 					'errors' => $this->_controller->ContentComment->validationErrors,
 					'requestData' => $this->_controller->request->data('ContentComment')
@@ -185,42 +187,6 @@ class ContentCommentsComponent extends Component {
 		}
 
 		return true;
-	}
-
-/**
- * Get conditions
- *
- * @param string $contentKey コンテンツキー
- * @return query conditions
- */
-	private function __getConditions($contentKey) {
-		$conditions = array(
-			'block_key' => Current::read('Block.key'),
-			'plugin_key' => $this->_controller->request->params['plugin'],
-			'content_key' => $contentKey
-		);
-
-		// 公開権限あり
-		if (Current::permission('content_comment_publishable')) {
-			return $conditions;
-		}
-
-		// ログインしていない
-		if (! (bool)AuthComponent::user()) {
-			$conditions['ContentComment.status'] = WorkflowComponent::STATUS_PUBLISHED;
-			return $conditions;
-		}
-
-		// 公開権限なし、ログイン済み
-		$addConditions = array(
-			'OR' => array(
-				'ContentComment.status' => WorkflowComponent::STATUS_PUBLISHED,
-				'ContentComment.created_user' => (int)AuthComponent::user('id'),
-			)
-		);
-		$conditions = array_merge($conditions, $addConditions);
-
-		return $conditions;
 	}
 
 /**

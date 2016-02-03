@@ -73,10 +73,9 @@ class ContentCommentHelper extends AppHelper {
  * <?php echo $this->ContentComment->index($video); ?>
  * ```
  *
- * @param array $content Array of content data with ContentComment count.
  * @return string HTML tags
  */
-	public function index($content) {
+	public function index() {
 		$output = '';
 		$useComment = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['useComment']);
 
@@ -101,7 +100,6 @@ class ContentCommentHelper extends AppHelper {
 			$output .= $this->_View->element('ContentComments.index', array(
 				'contentKey' => $contentKey,
 				'useCommentApproval' => $useCommentApproval,
-				'contentCommentCnt' => Hash::get($content, 'ContentCommentCnt.cnt'),
 				'contentComments' => $this->request->data('ContentComments'),
 			));
 		}
