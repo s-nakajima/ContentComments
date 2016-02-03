@@ -53,6 +53,7 @@ class ContentCommentsComponent extends Component {
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::initialize
  */
 	public function initialize(Controller $controller) {
+		// どのファンクションでも $controller にアクセスできるようにクラス内変数に保持する
 		$this->_controller = $controller;
 	}
 
@@ -75,29 +76,39 @@ class ContentCommentsComponent extends Component {
  * Called before the Controller::beforeRender(), and before
  * the view class is loaded, and before Controller::render()
  *
+ * コンテンツコメントの一覧データをPaginatorで取得する
+ *
  * @param Controller $controller Controller with components to beforeRender
  * @return void
  * @link http://book.cakephp.org/2.0/ja/controllers/components.html#Component::beforeRender
  * @throws Exception Paginatorによる例外
  */
 	public function beforeRender(Controller $controller) {
-		// コメント利用フラグのDB項目名, コンテンツキーのDB項目名, 許可アクション
-		if (! isset($this->settings['viewVarsUseComment']) || ! isset($this->settings['viewVarsContentKey']) || ! isset($this->settings['allow'])) {
+		$useComment = Hash::get($controller->viewVars, $this->settings['viewVarsKey']['useComment']);
+
+		// コンテンツキー
+		$contentKey = Hash::get($controller->viewVars, $this->settings['viewVarsKey']['contentKey']);
+
+		// 許可アクション
+		$allow = $this->settings['allow'];
+
+		// コメントを利用しない
+		if (! $useComment) {
+			return;
+		}
+
+		// コンテンツキーのDB項目名なし
+		if (! isset($contentKey)) {
 			return;
 		}
 
 		// 許可アクションなし
-		if (!in_array($controller->request->params['action'], $this->settings['allow'])) {
-			return;
-		}
-
-		// コメントを利用しない
-		if (!Hash::get($controller->viewVars, $this->settings['viewVarsUseComment'])) {
+		if (! isset($allow) || ! in_array($controller->request->params['action'], $allow)) {
 			return;
 		}
 
 		// 条件
-		$query['conditions'] = $this->__getConditions();
+		$query['conditions'] = $this->__getConditions($contentKey);
 
 		//ソート
 		$query['order'] = array('ContentComment.created' => 'desc');
@@ -179,13 +190,14 @@ class ContentCommentsComponent extends Component {
 /**
  * Get conditions
  *
+ * @param string $contentKey コンテンツキー
  * @return query conditions
  */
-	private function __getConditions() {
+	private function __getConditions($contentKey) {
 		$conditions = array(
 			'block_key' => Current::read('Block.key'),
 			'plugin_key' => $this->_controller->request->params['plugin'],
-			'content_key' => Hash::get($this->_controller->viewVars, $this->settings['viewVarsContentKey'])
+			'content_key' => $contentKey
 		);
 
 		// 公開権限あり
@@ -194,7 +206,7 @@ class ContentCommentsComponent extends Component {
 		}
 
 		// ログインしていない
-		if (!(bool)AuthComponent::user()) {
+		if (! (bool)AuthComponent::user()) {
 			$conditions['ContentComment.status'] = WorkflowComponent::STATUS_PUBLISHED;
 			return $conditions;
 		}
