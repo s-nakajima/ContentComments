@@ -19,7 +19,7 @@ class FakeModel extends CakeTestModel {
 /**
  * @var array ビヘイビア
  */
-	public $actsAs = array('ContentComments.ContentCommentCount');
+	public $actsAs = array('ContentComments.ContentComment');
 }
 
 /**

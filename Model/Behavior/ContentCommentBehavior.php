@@ -1,6 +1,6 @@
 <?php
 /**
- * コンテンツコメント件数 Behavior
+ * コンテンツコメント Behavior
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
@@ -12,14 +12,19 @@
 App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
- * Summary for ContentCommentCount Behavior
+ * Summary for ContentComment Behavior
  */
-class ContentCommentCountBehavior extends ModelBehavior {
+class ContentCommentBehavior extends ModelBehavior {
 
 /**
  * @var array 設定
  */
 	public $settings = array();
+
+/**
+ * @var bool 削除済みか
+ */
+	public $isDeleted = null;
 
 /**
  * setup
@@ -31,6 +36,7 @@ class ContentCommentCountBehavior extends ModelBehavior {
  */
 	public function setup(Model $model, $settings = array()) {
 		$this->settings[$model->alias] = $settings;
+		$this->isDeleted = false;
 	}
 
 /**
@@ -110,5 +116,41 @@ class ContentCommentCountBehavior extends ModelBehavior {
 
 		$results = array_values($contents);
 		return $results;
+	}
+
+/**
+ * beforeDelete
+ * コンテンツが削除されたら、書いてあったコメントも削除
+ *
+ * @param Model $model Model using this behavior
+ * @param bool $cascade If true records that depend on this record will also be deleted
+ * @return mixed False if the operation should abort. Any other result will continue.
+ * @throws InternalErrorException
+ * @link http://book.cakephp.org/2.0/ja/models/behaviors.html#ModelBehavior::beforedelete
+ * @link http://book.cakephp.org/2.0/ja/models/callback-methods.html#beforedelete
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ */
+	public function beforeDelete(Model $model, $cascade = true) {
+		// 多言語のコンテンツを key を使って、Model::deleteAll() で削除した場合を想定
+		// 削除済みなら、もう処理をしない
+		if ($this->isDeleted) {
+			return;
+		}
+
+		// コンテンツ取得
+		$content = $model->find('first', array(
+			'conditions' => array($model->alias . '.id' => $model->id)
+		));
+
+		$model->loadModels([
+			'ContentComment' => 'ContentComments.ContentComment',
+		]);
+
+		// コンテンツコメント 削除
+		if (! $model->ContentComment->deleteAll(array($model->ContentComment->alias . '.content_key' => $content[$model->alias]['key']), false)) {
+			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+		}
+
+		return true;
 	}
 }
