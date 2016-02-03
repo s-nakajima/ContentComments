@@ -14,6 +14,7 @@
  * @param string $contentKey コンテントキー
  * @param bool $useCommentApproval コンテントコメント承認利用フラグ
  * @param array $contentComments コンテンツコメント一覧データ
+ * @param int $approvalCnt 未承認件数
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 
@@ -36,7 +37,14 @@ $pluginKey = $this->request->params['plugin'];
 							<div class="col-xs-12">
 								<label class="control-label" for="CommentComment">
 									<span class="glyphicon glyphicon-comment"></span>
-									<?php echo sprintf(__d('content_comments', '%s comments'), $this->Paginator->param('count')) ?>
+									<?php
+										echo sprintf(__d('content_comments', '%s comments'), $this->Paginator->param('count'));
+
+										// 未承認1件以上
+										if ($approvalCnt >= 1) {
+											echo sprintf(__d('content_comments', '（%s 未承認）'), $approvalCnt);
+										}
+									?>
 								</label>
 							</div>
 						</div>

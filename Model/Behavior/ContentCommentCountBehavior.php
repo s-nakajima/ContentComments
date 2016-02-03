@@ -82,8 +82,33 @@ class ContentCommentCountBehavior extends ModelBehavior {
 			$contentKey = $contentCommentCnt['ContentComment']['content_key'];
 			$contents[$contentKey]['ContentCommentCnt']['cnt'] = $contentCommentCnt['ContentComment']['cnt'];
 		}
-		$results = array_values($contents);
 
+		// 公開権限なし
+		if (! Current::permission('content_comment_publishable')) {
+			$results = array_values($contents);
+			return $results;
+		}
+
+		// --- 未承認件数の取得
+		// 未承認のみ
+		$conditions['ContentComment.status'] = WorkflowComponent::STATUS_APPROVED;
+
+		// バーチャルフィールドを追加
+		$ContentComment->virtualFields['approval_cnt'] = 0;
+
+		$approvalCnts = $ContentComment->find('all', array(
+			'recursive' => -1,
+			'fields' => array('content_key', 'count(content_key) as ContentComment__approval_cnt'),	// Model__エイリアスにする
+			'conditions' => $conditions,
+			'group' => array('content_key'),
+		));
+
+		foreach ($approvalCnts as $approvalCnt) {
+			$contentKey = $approvalCnt['ContentComment']['content_key'];
+			$contents[$contentKey]['ContentCommentCnt']['approval_cnt'] = $approvalCnt['ContentComment']['approval_cnt'];
+		}
+
+		$results = array_values($contents);
 		return $results;
 	}
 }

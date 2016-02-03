@@ -54,7 +54,15 @@ class ContentCommentHelper extends AppHelper {
 		// コメントを利用する
 		if ($useComment) {
 			$element = '<span class="glyphicon glyphicon-comment" aria-hidden="true"></span> ';
+			// nullを考慮して intにキャスト
 			$element .= (int)Hash::get($content, 'ContentCommentCnt.cnt');
+			$approvalCnt = (int)Hash::get($content, 'ContentCommentCnt.approval_cnt');
+
+			// 未承認1件以上
+			if ($approvalCnt >= 1) {
+				$element .= sprintf(__d('content_comments', '（%s 未承認）'), $approvalCnt);
+			}
+
 			$attributes = Hash::merge($attributes, array('style' => 'padding-right: 15px;'));
 
 			/* @link http://book.cakephp.org/2.0/ja/core-libraries/helpers/html.html#HtmlHelper::tag */
@@ -73,9 +81,10 @@ class ContentCommentHelper extends AppHelper {
  * <?php echo $this->ContentComment->index($video); ?>
  * ```
  *
+ * @param array $content Array of content data with ContentComment count.
  * @return string HTML tags
  */
-	public function index() {
+	public function index($content) {
 		$output = '';
 		$useComment = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['useComment']);
 
@@ -97,10 +106,14 @@ class ContentCommentHelper extends AppHelper {
 
 		// コメントを利用する
 		if ($useComment) {
+			// 未承認件数
+			$approvalCnt = (int)Hash::get($content, 'ContentCommentCnt.approval_cnt');
+
 			$output .= $this->_View->element('ContentComments.index', array(
 				'contentKey' => $contentKey,
 				'useCommentApproval' => $useCommentApproval,
 				'contentComments' => $this->request->data('ContentComments'),
+				'approvalCnt' => $approvalCnt,
 			));
 		}
 
