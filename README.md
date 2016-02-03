@@ -126,7 +126,7 @@ class VideosController extends VideosAppController {
 ```
 <?php
 	echo $video['title'];
-	echo $this->ContentComment->index();
+	echo $this->ContentComment->index($video);
 ?>
 ```
 
