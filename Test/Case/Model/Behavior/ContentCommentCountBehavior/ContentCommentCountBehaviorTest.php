@@ -74,13 +74,13 @@ class ContentCommentCountBehaviorTest extends NetCommonsModelTestCase {
 			'key' => 'content_1'
 		);
 		Current::$current['Plugin']['key'] = 'plugin_1';
+		Current::$current['Block']['key'] = 'block_1';
 
 		// BehaviorのafterFindでコンテンツコメント数取得
 		$fake = $this->FakeModel->find('all', array(
 			'recursive' => 1,
 			'conditions' => $conditions,
 		));
-
 		$this->assertEquals($fake[0]['ContentCommentCnt']['cnt'], 2);
 	}
 
@@ -94,6 +94,7 @@ class ContentCommentCountBehaviorTest extends NetCommonsModelTestCase {
 			'key' => 'content_1'
 		);
 		Current::$current['Plugin']['key'] = 'plugin_1';
+		Current::$current['Block']['key'] = 'block_1';
 
 		// BehaviorのafterFindでコンテンツコメント数取得
 		$fake = $this->FakeModel->find('all', array(
@@ -114,6 +115,7 @@ class ContentCommentCountBehaviorTest extends NetCommonsModelTestCase {
 			'key' => 'content_2'
 		);
 		Current::$current['Plugin']['key'] = 'plugin_2';
+		Current::$current['Block']['key'] = 'block_2';
 
 		// BehaviorのafterFindでコンテンツコメント数取得
 		$fake = $this->FakeModel->find('all', array(
@@ -134,6 +136,7 @@ class ContentCommentCountBehaviorTest extends NetCommonsModelTestCase {
 			'key' => 'content_3'
 		);
 		Current::$current['Plugin']['key'] = 'plugin_1';
+		Current::$current['Block']['key'] = 'block_1';
 
 		// BehaviorのafterFindでコンテンツコメント数取得
 		$fake = $this->FakeModel->find('all', array(
