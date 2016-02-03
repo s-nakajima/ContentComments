@@ -31,66 +31,28 @@ class ContentCommentHelper extends AppHelper {
 	);
 
 /**
- * Default settings
- *
- * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
- * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @link http://www.netcommons.org NetCommons Project
- * @license http://www.netcommons.org/license.txt NetCommons License
- */
-	protected $_defaults = array(
-		'fields' => array(
-			'use_comment' => 'use_comment',						// コメント利用フラグ
-			'use_comment_approval' => 'use_comment_approval',	// コメント承認を使うフラグ
-		),
-	);
-
-/**
- * Default Constructor
- *
- * #### Sample code
- * ##### controller file
- * ```
- * public $helpers = array(
- *     'ContentComments.ContentComment' => [
- *         'use_comment' => 'use_comment',
- *         'use_comment_approval' => 'use_comment_approval'
- *     ]
- * );
- * ```
- *
- * @param View $view The View this helper is being attached to.
- * @param array $settings Configuration settings for the helper.
- * @link http://book.cakephp.org/2.0/ja/views/helpers.html#configuring-helpers
- */
-	public function __construct(View $view, $settings = array()) {
-		$settings = Set::merge($this->_defaults, $settings);
-		parent::__construct($view, $settings);
-	}
-
-/**
  * コメント数表示
  *
  * コメント数の表示HTMLを返します。<br>
  * 設定データ配列、コンテンツデータ配列を指定してください。<br>
- * 設定データ配列のuse_commentを判断し、コンテンツデータ配列のContentCommentCnt.cntを表示します。
+ * 設定データ配列の['viewVarsKey']['useComment']を判断し、コンテンツデータ配列のContentCommentCnt.cntを表示します。
  *
  * #### Sample code
  * ##### template file(ctp file)
  * ```
- * <?php echo $this->ContentComment->cnt($videoBlockSetting, $video); ?>
+ * <?php echo $this->ContentComment->count($video); ?>
  * ```
  *
- * @param array $dbSettings Array of use comment setting data.
  * @param array $content Array of content data with ContentComment count.
  * @param array $attributes Array of attributes and HTML arguments.
  * @return string HTML tags
  */
-	public function count($dbSettings, $content, $attributes = array()) {
+	public function count($content, $attributes = array()) {
 		$output = '';
+		$useComment = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['useComment']);
 
 		// コメントを利用する
-		if ($dbSettings[$this->settings['use_comment']]) {
+		if ($useComment) {
 			$element = '<span class="glyphicon glyphicon-comment" aria-hidden="true"></span> ';
 			$element .= (int)Hash::get($content, 'ContentCommentCnt.cnt');
 			$attributes = Hash::merge($attributes, array('style' => 'padding-right: 15px;'));
@@ -108,22 +70,37 @@ class ContentCommentHelper extends AppHelper {
  * #### Sample code
  * ##### template file(ctp file)
  * ```
- * <?php echo $this->ContentComment->index('Video', $videoBlockSetting, $video); ?>
+ * <?php echo $this->ContentComment->index($video); ?>
  * ```
  *
- * @param string $contentModelName コンテンツのモデル名
- * @param array $dbSettings Array of use comment setting data.
  * @param array $content Array of content data with ContentComment count.
  * @return string HTML tags
  */
-	public function index($contentModelName, $dbSettings, $content) {
+	public function index($content) {
 		$output = '';
+		$useComment = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['useComment']);
+
+		// コメント承認を使う
+		$useCommentApproval = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['useCommentApproval']);
+
+		// コンテンツキー
+		$contentKey = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['contentKey']);
+
+		// コメントを利用しない
+		if (! $useComment) {
+			return;
+		}
+
+		// コンテンツキーのDB項目名なし
+		if (! isset($contentKey)) {
+			return;
+		}
 
 		// コメントを利用する
-		if ($dbSettings[$this->settings['use_comment']]) {
+		if ($useComment) {
 			$output .= $this->_View->element('ContentComments.index', array(
-				'contentKey' => $content[$contentModelName]['key'],
-				'useCommentApproval' => Hash::get($dbSettings, $this->settings['use_comment_approval']),
+				'contentKey' => $contentKey,
+				'useCommentApproval' => $useCommentApproval,
 				'contentCommentCnt' => Hash::get($content, 'ContentCommentCnt.cnt'),
 				'contentComments' => $this->request->data('ContentComments'),
 			));
