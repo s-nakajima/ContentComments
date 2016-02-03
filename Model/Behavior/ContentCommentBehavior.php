@@ -66,7 +66,6 @@ class ContentCommentBehavior extends ModelBehavior {
 			$contents[$contentKey] = $content;
 		}
 
-
 		$ContentComment = ClassRegistry::init('ContentComments.ContentComment');
 
 		$contentKeys = array_keys($contents);
