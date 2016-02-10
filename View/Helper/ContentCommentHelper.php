@@ -11,7 +11,7 @@
  */
 
 App::uses('AppHelper', 'View/Helper');
-App::uses('WorkflowComponent', 'Workflow.Controller/Component');
+//App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
 /**
  * ContentComment Helper
