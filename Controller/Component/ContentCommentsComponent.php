@@ -20,7 +20,7 @@ App::uses('SessionComponent', 'Controller/Component');
  * ContentComments Component
  *
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
- * @package NetCommons\NetCommons\Controller\Component
+ * @package NetCommons\ContentComments\Controller\Component
  */
 class ContentCommentsComponent extends Component {
 /**
