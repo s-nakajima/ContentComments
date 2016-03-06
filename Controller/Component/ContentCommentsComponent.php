@@ -13,7 +13,6 @@
 App::uses('Component', 'Controller');
 App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 
-App::uses('ComponentCollection', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 
 /**
