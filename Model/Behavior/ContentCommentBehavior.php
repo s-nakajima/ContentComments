@@ -150,6 +150,7 @@ class ContentCommentBehavior extends ModelBehavior {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
+		$this->isDeleted = true;
 		return true;
 	}
 }
