@@ -17,14 +17,9 @@ App::uses('WorkflowComponent', 'Workflow.Controller/Component');
 class ContentCommentBehavior extends ModelBehavior {
 
 /**
- * @var array 設定
- */
-	public $settings = array();
-
-/**
  * @var bool 削除済みか
  */
-	public $isDeleted = null;
+	private $__isDeleted = null;
 
 /**
  * setup
@@ -36,7 +31,7 @@ class ContentCommentBehavior extends ModelBehavior {
  */
 	public function setup(Model $model, $settings = array()) {
 		$this->settings[$model->alias] = $settings;
-		$this->isDeleted = false;
+		$this->__isDeleted = false;
 	}
 
 /**
@@ -132,7 +127,7 @@ class ContentCommentBehavior extends ModelBehavior {
 	public function beforeDelete(Model $model, $cascade = true) {
 		// 多言語のコンテンツを key を使って、Model::deleteAll() で削除した場合を想定
 		// 削除済みなら、もう処理をしない
-		if ($this->isDeleted) {
+		if ($this->__isDeleted) {
 			return;
 		}
 
@@ -150,7 +145,7 @@ class ContentCommentBehavior extends ModelBehavior {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 
-		$this->isDeleted = true;
+		$this->__isDeleted = true;
 		return true;
 	}
 }
