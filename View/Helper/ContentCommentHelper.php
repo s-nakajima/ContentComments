@@ -108,9 +108,12 @@ class ContentCommentHelper extends AppHelper {
 		if ($useComment) {
 			// 未承認件数
 			$approvalCnt = (int)Hash::get($content, 'ContentCommentCnt.approval_cnt');
+			// メールのためのコンテンツタイトル
+			$contentTitleForMail = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['contentTitleForMail']);
 
 			$output .= $this->_View->element('ContentComments.index', array(
 				'contentKey' => $contentKey,
+				'contentTitleForMail' => $contentTitleForMail,
 				'useCommentApproval' => $useCommentApproval,
 				'contentComments' => $this->request->data('ContentComments'),
 				'approvalCnt' => $approvalCnt,

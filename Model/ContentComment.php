@@ -12,11 +12,32 @@
  */
 
 App::uses('ContentCommentsAppModel', 'ContentComments.Model');
+//App::uses('MailQueueBehavior', 'Mails.Model.Behavior');
 
 /**
  * Summary for ContentComment Model
  */
 class ContentComment extends ContentCommentsAppModel {
+
+/**
+ * use behaviors
+ *
+ * @var array
+ * @see MailQueueBehavior
+ */
+	public $actsAs = array(
+		'Mails.MailQueue' => array(		// 自動でメールキューの登録, 削除
+			'embedTags' => array(
+				'X-SUBJECT' => '_mail.content_title',
+				'X-BODY' => 'ContentComment.comment',
+				'X-URL' => '_mail.url',
+			),
+			// 暫定対応：Error: Class 'MailQueueBehavior' not found	エラーのため
+			//           ContentCommentsComponent.php:68 -> ClassRegistry::init('ContentComments.ContentComment');で落ちてる
+			//'workflowType' => MailQueueBehavior::MAIL_QUEUE_WORKFLOW_TYPE_COMMENT,
+			'workflowType' => 'contentComment',
+		),
+	);
 
 /**
  * Validation rules
@@ -155,6 +176,8 @@ class ContentComment extends ContentCommentsAppModel {
 		if (empty($id)) {
 			return false;
 		}
+
+		$this->Behaviors->unload('Mails.MailQueue');
 
 		//トランザクションBegin
 		$this->begin();

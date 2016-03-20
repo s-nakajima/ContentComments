@@ -12,7 +12,8 @@
 
 /**
  * @param string $pluginKey プラグインキー
- * @param string $contentKey コンテントキー
+ * @param string $contentKey コンテンツキー
+ * @param string $contentTitleForMail メールのためのコンテンツタイトル
  * @param array $contentComment コンテンツコメント一覧の1件データ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
@@ -29,6 +30,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 		<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
 		<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
+		<?php echo $this->NetCommonsForm->hidden('_mail.content_title', array('value' => $contentTitleForMail)); ?>
 
 		<div class="form-group">
 			<div class="input textarea">

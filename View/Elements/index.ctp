@@ -11,7 +11,8 @@
  */
 
 /**
- * @param string $contentKey コンテントキー
+ * @param string $contentKey コンテンツキー
+ * @param string $contentTitleForMail メールのためのコンテンツタイトル
  * @param bool $useCommentApproval コンテントコメント承認利用フラグ
  * @param array $contentComments コンテンツコメント一覧データ
  * @param int $approvalCnt 未承認件数
@@ -56,6 +57,7 @@ $pluginKey = $this->request->params['plugin'];
 					<?php echo $this->element('ContentComments.add', array(
 						'pluginKey' => $pluginKey,
 						'contentKey' => $contentKey,
+						'contentTitleForMail' => $contentTitleForMail,
 						'useCommentApproval' => $useCommentApproval
 					)); ?>
 				<?php endif; ?>
@@ -90,6 +92,7 @@ $pluginKey = $this->request->params['plugin'];
 										<?php echo $this->element('ContentComments.editAndDeleteButton', array(
 											'pluginKey' => $pluginKey,
 											'contentKey' => $contentKey,
+											'contentTitleForMail' => $contentTitleForMail,
 											'contentComment' => $contentComment,
 										)); ?>
 									<?php endif; ?>

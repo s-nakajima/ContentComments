@@ -221,6 +221,8 @@ class ContentCommentsComponent extends Component {
 	private function __readyData() {
 		$data['ContentComment'] = $this->_controller->request->data('ContentComment');
 		$data['ContentComment']['block_key'] = Current::read('Block.key');
+		$data['_mail'] = $this->_controller->request->data('_mail');
+		$data['_mail']['url'] = $this->_controller->request->referer();
 
 		return $data;
 	}
