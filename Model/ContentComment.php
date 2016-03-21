@@ -12,7 +12,7 @@
  */
 
 App::uses('ContentCommentsAppModel', 'ContentComments.Model');
-//App::uses('MailQueueBehavior', 'Mails.Model.Behavior');
+App::uses('MailQueueBehavior', 'Mails.Model/Behavior');
 
 /**
  * Summary for ContentComment Model
@@ -32,10 +32,7 @@ class ContentComment extends ContentCommentsAppModel {
 				'X-BODY' => 'ContentComment.comment',
 				'X-URL' => '_mail.url',
 			),
-			// 暫定対応：Error: Class 'MailQueueBehavior' not found	エラーのため
-			//           ContentCommentsComponent.php:68 -> ClassRegistry::init('ContentComments.ContentComment');で落ちてる
-			//'workflowType' => MailQueueBehavior::MAIL_QUEUE_WORKFLOW_TYPE_COMMENT,
-			'workflowType' => 'contentComment',
+			'workflowType' => MailQueueBehavior::MAIL_QUEUE_WORKFLOW_TYPE_COMMENT,
 		),
 	);
 
