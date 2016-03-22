@@ -73,6 +73,7 @@ class ContentCommentBehavior extends ModelBehavior {
 			'fields' => array('content_key', 'count(content_key) as ContentComment__cnt'),	// Model__エイリアスにする
 			'conditions' => $conditions,
 			'group' => array('content_key'),
+			'callbacks' => false,
 		));
 
 		foreach ($results as &$result) {
@@ -102,6 +103,7 @@ class ContentCommentBehavior extends ModelBehavior {
 			'fields' => array('content_key', 'count(content_key) as ContentComment__approval_cnt'),	// Model__エイリアスにする
 			'conditions' => $conditions,
 			'group' => array('content_key'),
+			'callbacks' => false,
 		));
 
 		foreach ($results as &$result) {
