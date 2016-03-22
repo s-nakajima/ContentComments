@@ -14,6 +14,8 @@
  * @param string $pluginKey プラグインキー
  * @param string $contentKey コンテントキー
  * @param array $contentComment コンテンツコメント一覧の1件データ
+ * @param string $contentTitleForMail メールのためのコンテンツタイトル
+ * @param bool $useCommentApproval コンテントコメント承認利用フラグ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 
@@ -30,6 +32,8 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 	<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
 	<?php echo $this->NetCommonsForm->hidden('ContentComment.status', array('value' => WorkflowComponent::STATUS_PUBLISHED)); //公開 ?>
 	<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
+	<?php echo $this->NetCommonsForm->hidden('_mail.content_title', array('value' => $contentTitleForMail)); ?>
+	<?php echo $this->NetCommonsForm->hidden('_mail.use_comment_approval', array('value' => $useCommentApproval)); ?>
 
 	<?php echo $this->NetCommonsForm->button(
 		"<span class='glyphicon glyphicon-ok'></span>",

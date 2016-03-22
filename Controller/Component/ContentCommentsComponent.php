@@ -165,6 +165,7 @@ class ContentCommentsComponent extends Component {
 			$data = $this->__readyData();
 
 			// コンテンツコメントのデータ保存
+			/** @see ContentComment::saveContentComment() */
 			if (!$this->_controller->ContentComment->saveContentComment($data)) {
 				$this->_controller->NetCommons->handleValidationError($this->_controller->ContentComment->validationErrors);
 

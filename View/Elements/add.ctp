@@ -38,6 +38,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 					<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
 					<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
 					<?php echo $this->NetCommonsForm->hidden('_mail.content_title', array('value' => $contentTitleForMail)); ?>
+					<?php echo $this->NetCommonsForm->hidden('_mail.use_comment_approval', array('value' => $useCommentApproval)); ?>
 					<?php
 					// コメント承認機能 0:使わない=>公開 1:使う=>未承認
 					$status = $useCommentApproval ? WorkflowComponent::STATUS_APPROVED : WorkflowComponent::STATUS_PUBLISHED;

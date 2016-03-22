@@ -32,6 +32,9 @@ class ContentComment extends ContentCommentsAppModel {
 				'X-BODY' => 'ContentComment.comment',
 				'X-URL' => '_mail.url',
 			),
+			'requestDataKeys' => array(
+				'useCommentApproval' => '_mail.use_comment_approval',
+			),
 			'workflowType' => MailQueueBehavior::MAIL_QUEUE_WORKFLOW_TYPE_COMMENT,
 		),
 	);

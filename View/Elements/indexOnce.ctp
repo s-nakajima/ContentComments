@@ -14,6 +14,8 @@
  * @param string $pluginKey プラグインキー
  * @param string $contentKey コンテントキー
  * @param array $contentComment コンテンツコメント一覧の1件データ
+ * @param string $contentTitleForMail メールのためのコンテンツタイトル
+ * @param bool $useCommentApproval コンテントコメント承認利用フラグ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
@@ -54,6 +56,8 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 				'pluginKey' => $pluginKey,
 				'contentKey' => $contentKey,
 				'contentComment' => $contentComment,
+				'useCommentApproval' => $useCommentApproval,
+				'contentTitleForMail' => $contentTitleForMail,
 			)); ?>
 		<?php endif; ?>
 

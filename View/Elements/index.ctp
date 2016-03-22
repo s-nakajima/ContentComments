@@ -73,6 +73,8 @@ $pluginKey = $this->request->params['plugin'];
 									'pluginKey' => $pluginKey,
 									'contentKey' => $contentKey,
 									'contentComment' => $contentComment,
+									'useCommentApproval' => $useCommentApproval,
+									'contentTitleForMail' => $contentTitleForMail,
 								)); ?>
 
 								<div class="text-right" ng-hide="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
@@ -83,6 +85,8 @@ $pluginKey = $this->request->params['plugin'];
 											'pluginKey' => $pluginKey,
 											'contentKey' => $contentKey,
 											'contentComment' => $contentComment,
+											'contentTitleForMail' => $contentTitleForMail,
+											'contentComment' => $contentComment,
 										)); ?>
 									<?php endif; ?>
 
@@ -92,7 +96,6 @@ $pluginKey = $this->request->params['plugin'];
 										<?php echo $this->element('ContentComments.editAndDeleteButton', array(
 											'pluginKey' => $pluginKey,
 											'contentKey' => $contentKey,
-											'contentTitleForMail' => $contentTitleForMail,
 											'contentComment' => $contentComment,
 										)); ?>
 									<?php endif; ?>
