@@ -50,20 +50,17 @@ class ContentCommentBehavior extends ModelBehavior {
 		}
 
 		// コンテンツコメント件数をセット
-		$contents = array();
-		foreach ($results as $content) {
-			$contentKey = $content[$model->alias]['key'];
-
-			$content['ContentCommentCnt'] = array(
-				'content_key' => $contentKey,
+		$contentKeys = array();
+		foreach ($results as &$result) {
+			$result['ContentCommentCnt'] = array(
 				'cnt' => 0
 			);
-			$contents[$contentKey] = $content;
+			$contentKey = $result[$model->alias]['key'];
+			$contentKeys[] = $contentKey;
 		}
 
 		$ContentComment = ClassRegistry::init('ContentComments.ContentComment');
 
-		$contentKeys = array_keys($contents);
 		/* @see ContentComment::getConditions() */
 		$conditions = $ContentComment->getConditions($contentKeys);
 
@@ -78,14 +75,18 @@ class ContentCommentBehavior extends ModelBehavior {
 			'group' => array('content_key'),
 		));
 
-		foreach ($contentCommentCnts as $contentCommentCnt) {
-			$contentKey = $contentCommentCnt['ContentComment']['content_key'];
-			$contents[$contentKey]['ContentCommentCnt']['cnt'] = $contentCommentCnt['ContentComment']['cnt'];
+		foreach ($results as &$result) {
+			$contentKey = $result[$model->alias]['key'];
+			foreach ($contentCommentCnts as $contentCommentCnt) {
+				if ($contentKey == $contentCommentCnt['ContentComment']['content_key']) {
+					$result['ContentCommentCnt']['cnt'] = $contentCommentCnt['ContentComment']['cnt'];
+					break;
+				}
+			}
 		}
 
 		// 公開権限なし
 		if (! Current::permission('content_comment_publishable')) {
-			$results = array_values($contents);
 			return $results;
 		}
 
@@ -103,12 +104,16 @@ class ContentCommentBehavior extends ModelBehavior {
 			'group' => array('content_key'),
 		));
 
-		foreach ($approvalCnts as $approvalCnt) {
-			$contentKey = $approvalCnt['ContentComment']['content_key'];
-			$contents[$contentKey]['ContentCommentCnt']['approval_cnt'] = $approvalCnt['ContentComment']['approval_cnt'];
+		foreach ($results as &$result) {
+			$contentKey = $result[$model->alias]['key'];
+			foreach ($approvalCnts as $approvalCnt) {
+				if ($contentKey == $approvalCnt['ContentComment']['content_key']) {
+					$result['ContentCommentCnt']['approval_cnt'] = $approvalCnt['ContentComment']['approval_cnt'];
+					break;
+				}
+			}
 		}
 
-		$results = array_values($contents);
 		return $results;
 	}
 
