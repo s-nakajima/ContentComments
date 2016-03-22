@@ -86,7 +86,7 @@ $pluginKey = $this->request->params['plugin'];
 											'contentKey' => $contentKey,
 											'contentComment' => $contentComment,
 											'contentTitleForMail' => $contentTitleForMail,
-											'contentComment' => $contentComment,
+											'useCommentApproval' => $useCommentApproval,
 										)); ?>
 									<?php endif; ?>
 
