@@ -27,12 +27,12 @@ class ContentComment extends ContentCommentsAppModel {
  */
 	public $actsAs = array(
 		'Mails.MailQueue' => array(		// 自動でメールキューの登録, 削除
-			'embedTags' => array(
-				'X-SUBJECT' => '_mail.content_title',
-				'X-BODY' => 'ContentComment.comment',
-				'X-URL' => '_mail.url',
-			),
 			'requestDataKeys' => array(
+				'embedTags' => array(
+					'X-SUBJECT' => '_mail.content_title',
+					'X-BODY' => 'ContentComment.comment',
+					'X-URL' => '_mail.url',
+				),
 				'useCommentApproval' => '_mail.use_comment_approval',
 			),
 			'workflowType' => MailQueueBehavior::MAIL_QUEUE_WORKFLOW_TYPE_COMMENT,
