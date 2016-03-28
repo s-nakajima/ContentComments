@@ -33,6 +33,15 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 		<?php echo $this->NetCommonsForm->hidden('_mail.content_title', array('value' => $contentTitleForMail)); ?>
 		<?php echo $this->NetCommonsForm->hidden('_mail.use_comment_approval', array('value' => $useCommentApproval)); ?>
+		<?php
+		// コメント承認ありで、公開権限なしの人が公開記事を更新したら、未承認にする
+		if ($useCommentApproval &&
+			!Current::permission('content_comment_publishable') &&
+			$contentComment['ContentComment']['status'] == WorkflowComponent::STATUS_PUBLISHED) {
+
+			echo $this->NetCommonsForm->hidden('ContentComment.status', array('value' => WorkflowComponent::STATUS_APPROVED));
+		}
+		?>
 
 		<div class="form-group">
 			<div class="input textarea">
