@@ -32,6 +32,10 @@ class ContentCommentBehavior extends ModelBehavior {
 	public function setup(Model $model, $settings = array()) {
 		$this->settings[$model->alias] = $settings;
 		$this->__isDeleted = false;
+
+		$model->loadModels([
+			'ContentComment' => 'ContentComments.ContentComment',
+		]);
 	}
 
 /**
@@ -62,32 +66,10 @@ class ContentCommentBehavior extends ModelBehavior {
 			$contentKeys[] = $contentKey;
 		}
 
-		$ContentComment = ClassRegistry::init('ContentComments.ContentComment');
-
 		/* @see ContentComment::getConditions() */
-		$conditions = $ContentComment->getConditions($contentKeys);
+		$conditions = $model->ContentComment->getConditions($contentKeys);
 
-		// バーチャルフィールドを追加
-		/* @link http://book.cakephp.org/2.0/ja/models/virtual-fields.html#sql */
-		$ContentComment->virtualFields['cnt'] = 0;
-
-		$contentCommentCnts = $ContentComment->find('all', array(
-			'recursive' => -1,
-			'fields' => array('content_key', 'count(content_key) as ContentComment__cnt'),	// Model__エイリアスにする
-			'conditions' => $conditions,
-			'group' => array('content_key'),
-			'callbacks' => false,
-		));
-
-		foreach ($results as &$result) {
-			$contentKey = $result[$model->alias]['key'];
-			foreach ($contentCommentCnts as $contentCommentCnt) {
-				if ($contentKey == $contentCommentCnt['ContentComment']['content_key']) {
-					$result['ContentCommentCnt']['cnt'] = $contentCommentCnt['ContentComment']['cnt'];
-					break;
-				}
-			}
-		}
+		$results = $this->__applyCnt($model, $results, $conditions, 'cnt');
 
 		// 公開権限なし
 		if (! Current::permission('content_comment_publishable')) {
@@ -97,13 +79,29 @@ class ContentCommentBehavior extends ModelBehavior {
 		// --- 未承認件数の取得
 		// 未承認のみ
 		$conditions['ContentComment.status'] = WorkflowComponent::STATUS_APPROVED;
+		$results = $this->__applyCnt($model, $results, $conditions, 'approval_cnt');
 
+		return $results;
+	}
+
+/**
+ * 件数をFind結果に付ける
+ *
+ * @param Model $model モデル
+ * @param mixed $results Find結果
+ * @param array $conditions 条件
+ * @param string $virtualFieldName 件数のバーチャルフィールド名
+ * @return array Find結果
+ * @throws InternalErrorException
+ */
+	private function __applyCnt(Model $model, $results, $conditions, $virtualFieldName) {
 		// バーチャルフィールドを追加
-		$ContentComment->virtualFields['approval_cnt'] = 0;
+		/* @link http://book.cakephp.org/2.0/ja/models/virtual-fields.html#sql */
+		$model->ContentComment->virtualFields[$virtualFieldName] = 0;
 
-		$approvalCnts = $ContentComment->find('all', array(
+		$contentCommentCnts = $model->ContentComment->find('all', array(
 			'recursive' => -1,
-			'fields' => array('content_key', 'count(content_key) as ContentComment__approval_cnt'),	// Model__エイリアスにする
+			'fields' => array('content_key', 'count(content_key) as ContentComment__' . $virtualFieldName),	// Model__エイリアスにする
 			'conditions' => $conditions,
 			'group' => array('content_key'),
 			'callbacks' => false,
@@ -111,9 +109,9 @@ class ContentCommentBehavior extends ModelBehavior {
 
 		foreach ($results as &$result) {
 			$contentKey = $result[$model->alias]['key'];
-			foreach ($approvalCnts as $approvalCnt) {
-				if ($contentKey == $approvalCnt['ContentComment']['content_key']) {
-					$result['ContentCommentCnt']['approval_cnt'] = $approvalCnt['ContentComment']['approval_cnt'];
+			foreach ($contentCommentCnts as $contentCommentCnt) {
+				if ($contentKey == $contentCommentCnt['ContentComment']['content_key']) {
+					$result['ContentCommentCnt'][$virtualFieldName] = $contentCommentCnt['ContentComment'][$virtualFieldName];
 					break;
 				}
 			}
