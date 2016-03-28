@@ -19,6 +19,7 @@
         "mustangostang/spyc":           "dev-master",
         "netcommons/mails":             "dev-master",
         "netcommons/net-commons":       "dev-master",
+        "netcommons/workflow":          "dev-master",
         "satooshi/php-coveralls":       "dev-master"
     },
     "license": "NetCommons License",
