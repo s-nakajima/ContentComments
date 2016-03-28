@@ -48,6 +48,9 @@ class ContentCommentBehavior extends ModelBehavior {
 		if (empty($results) || ! isset($results[0][$model->alias]['key'])) {
 			return $results;
 		}
+		if ($model->recursive == -1) {
+			return $results;
+		}
 
 		// コンテンツコメント件数をセット
 		$contentKeys = array();
