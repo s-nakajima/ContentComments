@@ -34,6 +34,7 @@ class ContentCommentTest extends NetCommonsGetTest {
  */
 	public $fixtures = array(
 		'plugin.content_comments.content_comment',
+		'plugin.site_manager.site_setting',
 	);
 
 /**
