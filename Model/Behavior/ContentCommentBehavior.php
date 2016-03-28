@@ -33,9 +33,7 @@ class ContentCommentBehavior extends ModelBehavior {
 		$this->settings[$model->alias] = $settings;
 		$this->__isDeleted = false;
 
-		$model->loadModels([
-			'ContentComment' => 'ContentComments.ContentComment',
-		]);
+		$model->ContentComment = ClassRegistry::init('ContentComments.ContentComment', true);
 	}
 
 /**

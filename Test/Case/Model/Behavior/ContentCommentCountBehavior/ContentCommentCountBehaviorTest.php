@@ -81,6 +81,7 @@ class ContentCommentCountBehaviorTest extends NetCommonsModelTestCase {
 			'recursive' => 1,
 			'conditions' => $conditions,
 		));
+
 		$this->assertEquals($fake[0]['ContentCommentCnt']['cnt'], 2);
 	}
 
