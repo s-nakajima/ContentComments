@@ -195,23 +195,57 @@ class ContentCommentsComponent extends Component {
  * @return bool true:パーミッションあり or false:パーミッションなし
  */
 	private function __checkPermission() {
+		// 登録処理
+		if ($this->_controller->action == 'add') {
+			// 投稿許可ありか
+			return $this->__isCreatable();
+		}
+
+		// 編集処理 or 削除処理
+		if ($this->_controller->action == 'edit' || $this->_controller->action == 'delete') {
+			// 編集許可ありか
+			return $this->__isEditable();
+		}
+
+		// 承認処理 and 承認許可あり
+		if ($this->_controller->action == 'approve' && Current::permission('content_comment_publishable')) {
+			return true;
+		}
+		return false;
+	}
+
+/**
+ * 投稿許可ありか
+ *
+ * @return bool true:あり or false:なし
+ */
+	private function __isCreatable() {
+		// 投稿許可あり
+		if (Current::permission('content_comment_creatable')) {
+			return true;
+		}
+
 		$isVisitorCreatable = $this->_controller->request->data('_tmp.is_visitor_creatable');
-
-		// 登録処理 and (投稿許可あり or ビジター投稿許可あり)
-		if ($this->_controller->action == 'add' && (Current::permission('content_comment_creatable') || $isVisitorCreatable)) {
+		//  ビジター投稿許可あり
+		if ($isVisitorCreatable) {
 			return true;
+		}
+		return false;
+	}
 
-			// (編集処理 or 削除処理) and (編集許可あり or 自分で投稿したコメントなら、編集・削除可能)
-		} elseif (($this->_controller->action == 'edit' || $this->_controller->action == 'delete') && (
-				Current::permission('content_comment_editable') ||
-				$this->_controller->data['ContentComment']['created_user'] == (int)AuthComponent::user('id')
-		)) {
+/**
+ * 編集許可ありか
+ *
+ * @return bool true:あり or false:なし
+ */
+	private function __isEditable() {
+		// 編集許可あり
+		if (Current::permission('content_comment_editable')) {
 			return true;
-
-			// 承認処理 and 承認許可あり
-		} elseif ($this->_controller->action == 'approve' && Current::permission('content_comment_publishable')) {
+		}
+		// 自分で投稿したコメントなら、編集・削除可能
+		if ($this->_controller->data['ContentComment']['created_user'] == (int)AuthComponent::user('id')) {
 			return true;
-
 		}
 		return false;
 	}
