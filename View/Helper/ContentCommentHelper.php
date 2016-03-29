@@ -106,6 +106,15 @@ class ContentCommentHelper extends AppHelper {
 
 		// コメントを利用する
 		if ($useComment) {
+
+			$WorkflowComponent = new WorkflowComponent(new ComponentCollection());
+
+			// ビジター投稿許可フラグ
+			$permissions = $WorkflowComponent->getBlockRolePermissions(
+				array('content_comment_creatable')
+			);
+			$isVisitorCreatable = Hash::get($permissions, 'BlockRolePermissions.content_comment_creatable.visitor.value');
+
 			// 未承認件数
 			$approvalCnt = (int)Hash::get($content, 'ContentCommentCnt.approval_cnt');
 			// メールのためのコンテンツタイトル
@@ -117,6 +126,7 @@ class ContentCommentHelper extends AppHelper {
 				'useCommentApproval' => $useCommentApproval,
 				'contentComments' => $this->request->data('ContentComments'),
 				'approvalCnt' => $approvalCnt,
+				'isVisitorCreatable' => $isVisitorCreatable,
 			));
 		}
 

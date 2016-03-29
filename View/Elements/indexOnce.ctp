@@ -21,10 +21,13 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
 <div class="media">
 	<div class="pull-left">
-		<?php /* アバター */ ?>
-		<?php echo $this->DisplayUser->avatarLink($contentComment, array(
-			'class' => '',
-		)); ?>
+		<?php /* created_user=0以外 and ログイン済みならアバター表示 => ログインなし投稿(created_user=0) と 未ログインはアバター表示しない */ ?>
+		<?php if ($contentComment['TrackableCreator']['id'] && AuthComponent::user()): ?>
+			<?php /* アバター */ ?>
+			<?php echo $this->DisplayUser->avatarLink($contentComment, array(
+				'class' => '',
+			)); ?>
+		<?php endif; ?>
 	</div>
 	<div class="media-body">
 		<div class="row">
@@ -49,8 +52,10 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 			<?php echo nl2br(h($contentComment['ContentComment']['comment'])); ?>
 		</div>
 
-		<?php /* コンテンツコメント編集許可あり or 自分で投稿したコメントなら、編集可能 */ ?>
-		<?php if (Current::permission('content_comment_editable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')): ?>
+		<?php /* 編集許可あり or (自分で投稿したコメント & ログイン済みなら、編集可能) */ ?>
+		<?php if (Current::permission('content_comment_editable') || (
+				$contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id') &&
+				AuthComponent::user())): ?>
 			<?php /* 編集 */ ?>
 			<?php echo $this->element('ContentComments.edit', array(
 				'pluginKey' => $pluginKey,

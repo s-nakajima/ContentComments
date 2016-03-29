@@ -40,3 +40,18 @@ msgstr "未承認"
 #: Videos/View/Elements/VideoBlockSettings/edit_form.ctp:73
 msgid "Use comment"
 msgstr "コメントを利用する"
+
+msgid "Commented."
+msgstr "コメントしました。"
+
+msgid "Edit the comment."
+msgstr "コメントを編集しました。"
+
+msgid "Approved the comment."
+msgstr "コメントを承認しました。"
+
+msgid "Comment has been deleted."
+msgstr "コメントを削除しました。"
+
+msgid "Received your comment. It does not appear until it has been approved."
+msgstr "コメントを受付ました。承認されるまで表示されません。"

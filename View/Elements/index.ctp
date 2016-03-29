@@ -16,6 +16,7 @@
  * @param bool $useCommentApproval コンテントコメント承認利用フラグ
  * @param array $contentComments コンテンツコメント一覧データ
  * @param int $approvalCnt 未承認件数
+ * @param bool $isVisitorCreatable ビジター投稿許可フラグ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 
@@ -52,13 +53,15 @@ $pluginKey = $this->request->params['plugin'];
 					</div>
 				</div>
 
-				<?php if (Current::permission('content_comment_creatable')): ?>
+				<?php /* コメント許可あり or ビジターまで投稿OKなら、ログインなしでもコメント投稿できる */ ?>
+				<?php if (Current::permission('content_comment_creatable') || $isVisitorCreatable): ?>
 					<?php /* 登録 */ ?>
 					<?php echo $this->element('ContentComments.add', array(
 						'pluginKey' => $pluginKey,
 						'contentKey' => $contentKey,
 						'contentTitleForMail' => $contentTitleForMail,
-						'useCommentApproval' => $useCommentApproval
+						'useCommentApproval' => $useCommentApproval,
+						'isVisitorCreatable' => $isVisitorCreatable
 					)); ?>
 				<?php endif; ?>
 
@@ -90,8 +93,11 @@ $pluginKey = $this->request->params['plugin'];
 										)); ?>
 									<?php endif; ?>
 
-									<?php /* 編集許可あり or 自分で投稿したコメントなら、編集・削除可能 */ ?>
-									<?php if (Current::permission('content_comment_editable') || $contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id')): ?>
+									<?php /* 編集許可あり or (自分で投稿したコメント & ログイン済みなら、編集・削除可能) */ ?>
+									<?php if (Current::permission('content_comment_editable') || (
+											$contentComment['ContentComment']['created_user'] == (int)AuthComponent::user('id') &&
+											AuthComponent::user())): ?>
+
 										<?php /* 編集・削除ボタン */ ?>
 										<?php echo $this->element('ContentComments.editAndDeleteButton', array(
 											'pluginKey' => $pluginKey,

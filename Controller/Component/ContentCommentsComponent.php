@@ -195,8 +195,10 @@ class ContentCommentsComponent extends Component {
  * @return bool true:パーミッションあり or false:パーミッションなし
  */
 	private function __checkPermission() {
-		// 登録処理 and 投稿許可あり
-		if ($this->_controller->action == 'add' && Current::permission('content_comment_creatable')) {
+		$isVisitorCreatable = $this->_controller->request->data('_tmp.is_visitor_creatable');
+
+		// 登録処理 and (投稿許可あり or ビジター投稿許可あり)
+		if ($this->_controller->action == 'add' && (Current::permission('content_comment_creatable') || $isVisitorCreatable)) {
 			return true;
 
 			// (編集処理 or 削除処理) and (編集許可あり or 自分で投稿したコメントなら、編集・削除可能)

@@ -15,6 +15,7 @@
  * @param string $contentKey コンテンツキー
  * @param string $contentTitleForMail メールのためのコンテンツタイトル
  * @param bool $useCommentApproval コンテントコメント承認利用フラグ
+ * @param bool $isVisitorCreatable ビジター投稿許可フラグ
  */
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
@@ -22,11 +23,14 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 	<div class="comment-form">
 		<div class="media">
 			<div class="pull-left">
-				<?php /* 自分のアバター */ ?>
-				<?php echo $this->DisplayUser->avatarLink(AuthComponent::user(), array(
-					'class' => '',
-					'alt' => AuthComponent::user('handlename'),
-				), [], 'id'); ?>
+				<?php /* ログインなしはアバター表示しない */ ?>
+				<?php if (AuthComponent::user()): ?>
+					<?php /* 自分のアバター */ ?>
+					<?php echo $this->DisplayUser->avatarLink(AuthComponent::user(), array(
+						'class' => '',
+						'alt' => AuthComponent::user('handlename'),
+					), [], 'id'); ?>
+				<?php endif; ?>
 
 			</div>
 			<div class="media-body">
@@ -39,6 +43,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 					<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
 					<?php echo $this->NetCommonsForm->hidden('_mail.content_title', array('value' => $contentTitleForMail)); ?>
 					<?php echo $this->NetCommonsForm->hidden('_mail.use_comment_approval', array('value' => $useCommentApproval)); ?>
+					<?php echo $this->NetCommonsForm->hidden('_tmp.is_visitor_creatable', array('value' => $isVisitorCreatable)); ?>
 					<?php
 					// コメント承認機能 0:使わない=>公開 1:使う=>未承認
 					$status = $useCommentApproval ? WorkflowComponent::STATUS_APPROVED : WorkflowComponent::STATUS_PUBLISHED;

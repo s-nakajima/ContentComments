@@ -48,6 +48,32 @@ class ContentCommentsController extends ContentCommentsAppController {
 	);
 
 /**
+ * beforeFilter
+ *
+ * @return void
+ * @see NetCommonsAppController::beforeFilter()
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+
+		// ブロック未選択は、何も表示しない
+		if (! Current::read('Block.id')) {
+			$this->setAction('emptyRender');
+			return false;
+		}
+
+		$isVisitorCreatable = $this->request->data('_tmp.is_visitor_creatable');
+
+		// ビジターまで投稿OKなら、ログインなしでもコメント投稿できる
+		if ($this->action == 'add' && $isVisitorCreatable) {
+			// Permissionコンポーネント外す
+			$this->Components->unload('NetCommons.Permission');
+			// ゲストアクセスOKのアクションを設定
+			$this->Auth->allow('add');
+		}
+	}
+
+/**
  * 登録
  *
  * @return void
@@ -61,8 +87,9 @@ class ContentCommentsController extends ContentCommentsAppController {
 			}
 			// キューからメール送信
 			MailSend::send();
-			// 一覧へ
-			$this->redirect($this->request->referer());
+
+			$message = __d('content_comments', 'Commented.');
+			$this->__setFlashMessageAndRedirect($message);
 		}
 	}
 
@@ -80,8 +107,9 @@ class ContentCommentsController extends ContentCommentsAppController {
 			}
 			// キューからメール送信
 			MailSend::send();
-			// 一覧へ
-			$this->redirect($this->request->referer());
+
+			$message = __d('content_comments', 'Edit the comment.');
+			$this->__setFlashMessageAndRedirect($message);
 		}
 	}
 
@@ -99,8 +127,9 @@ class ContentCommentsController extends ContentCommentsAppController {
 			}
 			// キューからメール送信
 			MailSend::send();
-			// 一覧へ
-			$this->redirect($this->request->referer());
+
+			$message = __d('content_comments', 'Approved the comment.');
+			$this->__setFlashMessageAndRedirect($message);
 		}
 	}
 
@@ -116,9 +145,40 @@ class ContentCommentsController extends ContentCommentsAppController {
 				$this->throwBadRequest();
 				return;
 			}
-			// 一覧へ
-			$this->redirect($this->request->referer());
+
+			$message = __d('content_comments', 'Comment has been deleted.');
+			$this->__setFlashMessageAndRedirect($message);
 		}
+	}
+
+/**
+ * _setFlashMessageAndRedirect
+ *
+ * @param string $message flash error message
+ * @return void
+ */
+	private function __setFlashMessageAndRedirect($message) {
+		// エラーなし
+		if (!$this->ContentComment->validationErrors) {
+			$status = $this->request->data('ContentComment.status');
+
+			// 承認依頼ならワーニング表示
+			if ($status == WorkflowComponent::STATUS_APPROVED) {
+				$message = __d('content_comments', 'Received your comment. It does not appear until it has been approved.');
+				$this->NetCommons->setFlashNotification($message, array(
+					'class' => 'warning',
+					'interval' => NetCommonsComponent::ALERT_VALIDATE_ERROR_INTERVAL,
+				));
+			} else {
+				$this->NetCommons->setFlashNotification($message, array(
+					'class' => 'success',
+					'interval' => NetCommonsComponent::ALERT_SUCCESS_INTERVAL,
+				));
+			}
+		}
+
+		// 一覧へ
+		$this->redirect($this->request->referer());
 	}
 }
 
