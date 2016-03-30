@@ -92,14 +92,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
 		$this->controller->action = 'edit';
 		$this->contentComments->initialize($this->controller);
 
-		CakeSession::write('Auth.User.id', 1); // ログインしているユーザID
+		//CakeSession::write('Auth.User.id', 1); // ログインしているユーザID
+		Current::$current['User']['id'] = '1';
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__checkPermission');
 		$privateMethod->setAccessible(true);
 		$rtn = $privateMethod->invoke($this->contentComments);
 
-		CakeSession::write('Auth.User.id', null);
+		//CakeSession::write('Auth.User.id', null);
 
 		$this->assertTrue($rtn);
 	}
@@ -122,14 +123,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
 		$this->controller->action = 'edit';
 		$this->contentComments->initialize($this->controller);
 
-		CakeSession::write('Auth.User.id', 1); // ログインしているユーザID
+		//CakeSession::write('Auth.User.id', 1); // ログインしているユーザID
+		Current::$current['User']['id'] = '1';
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__checkPermission');
 		$privateMethod->setAccessible(true);
 		$rtn = $privateMethod->invoke($this->contentComments);
 
-		CakeSession::write('Auth.User.id', null);
+		//CakeSession::write('Auth.User.id', null);
 
 		$this->assertFalse($rtn);
 	}
@@ -204,14 +206,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
 		$this->controller->action = 'delete';
 		$this->contentComments->initialize($this->controller);
 
-		CakeSession::write('Auth.User.id', 1); // ログインしているユーザID
+		//CakeSession::write('Auth.User.id', 1); // ログインしているユーザID
+		Current::$current['User']['id'] = '1';
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__checkPermission');
 		$privateMethod->setAccessible(true);
 		$rtn = $privateMethod->invoke($this->contentComments);
 
-		CakeSession::write('Auth.User.id', null);
+		//CakeSession::write('Auth.User.id', null);
 
 		$this->assertTrue($rtn);
 	}
@@ -234,14 +237,15 @@ class ContentCommentsComponentCheckPermissionEditDeleteTest extends ContentComme
 		$this->controller->action = 'delete';
 		$this->contentComments->initialize($this->controller);
 
-		CakeSession::write('Auth.User.id', 1); // ログインしているユーザID
+		//CakeSession::write('Auth.User.id', 1); // ログインしているユーザID
+		Current::$current['User']['id'] = '1';
 
 		// privateメソッド呼び出し
 		$privateMethod = new ReflectionMethod($this->contentComments, '__checkPermission');
 		$privateMethod->setAccessible(true);
 		$rtn = $privateMethod->invoke($this->contentComments);
 
-		CakeSession::write('Auth.User.id', null);
+		//CakeSession::write('Auth.User.id', null);
 
 		$this->assertFalse($rtn);
 	}
