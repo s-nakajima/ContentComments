@@ -244,7 +244,7 @@ class ContentCommentsComponent extends Component {
 			return true;
 		}
 		// 自分で投稿したコメントなら、編集・削除可能
-		if ($this->_controller->data['ContentComment']['created_user'] == (int)AuthComponent::user('id')) {
+		if ($this->_controller->data['ContentComment']['created_user'] == (int)Current::read('User.id')) {
 			return true;
 		}
 		return false;

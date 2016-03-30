@@ -121,7 +121,7 @@ class ContentComment extends ContentCommentsAppModel {
 		$addConditions = array(
 			'OR' => array(
 				'ContentComment.status' => WorkflowComponent::STATUS_PUBLISHED,
-				'ContentComment.created_user' => (int)AuthComponent::user('id'),
+				'ContentComment.created_user' => (int)Current::read('User.id'),
 			)
 		);
 		$conditions = array_merge($conditions, $addConditions);
