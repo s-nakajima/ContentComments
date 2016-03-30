@@ -24,6 +24,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		<div class="media">
 			<div class="pull-left">
 				<?php /* 自分のアバター */ ?>
+				<?php /** @see DisplayUserHelper::avatarLink() */ ?>
 				<?php echo $this->DisplayUser->avatarLink(Current::read('User'), array(
 					'class' => '',
 					'alt' => Current::read('User.handlename'),
