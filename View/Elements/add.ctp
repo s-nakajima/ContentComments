@@ -23,15 +23,11 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 	<div class="comment-form">
 		<div class="media">
 			<div class="pull-left">
-				<?php /* ログインなしはアバター表示しない */ ?>
-				<?php if (AuthComponent::user()): ?>
-					<?php /* 自分のアバター */ ?>
-					<?php echo $this->DisplayUser->avatarLink(AuthComponent::user(), array(
-						'class' => '',
-						'alt' => AuthComponent::user('handlename'),
-					), [], 'id'); ?>
-				<?php endif; ?>
-
+				<?php /* 自分のアバター */ ?>
+				<?php echo $this->DisplayUser->avatarLink(AuthComponent::user(), array(
+					'class' => '',
+					'alt' => AuthComponent::user('handlename'),
+				), [], 'id'); ?>
 			</div>
 			<div class="media-body">
 				<?php echo $this->NetCommonsForm->create('ContentComment', array(

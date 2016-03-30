@@ -21,8 +21,8 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
 <div class="media">
 	<div class="pull-left">
-		<?php /* created_user=0以外 and ログイン済みならアバター表示 => ログインなし投稿(created_user=0) と 未ログインはアバター表示しない */ ?>
-		<?php if ($contentComment['TrackableCreator']['id'] && AuthComponent::user()): ?>
+		<?php /* created_userがあるときだけ表示 */ ?>
+		<?php if ($contentComment['TrackableCreator']['id']): ?>
 			<?php /* アバター */ ?>
 			<?php echo $this->DisplayUser->avatarLink($contentComment, array(
 				'class' => '',
