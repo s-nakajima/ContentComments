@@ -40,6 +40,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		array(
 			'name' => 'd',
 			'class' => 'btn btn-warning btn-sm',
-			'onclick' => 'return confirm(\'' . sprintf(__d('content_comments', 'Approving the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')'
+			'onclick' => 'return confirm(\'' . sprintf(__d('content_comments', 'Approving the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')',
+			'ng-class' => '{disabled: sending}',
 	)); ?>
 <?php echo $this->NetCommonsForm->end();

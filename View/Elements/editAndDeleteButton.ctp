@@ -46,6 +46,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		"<span class='glyphicon glyphicon-trash'></span>",
 		array(
 			'class' => 'btn btn-danger btn-sm',
-			'onclick' => 'return confirm(\'' . sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')'
+			'onclick' => 'return confirm(\'' . sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')',
+			'ng-class' => '{disabled: sending}',
 	)); ?>
 <?php echo $this->NetCommonsForm->end();
