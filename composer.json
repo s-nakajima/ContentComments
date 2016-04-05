@@ -18,7 +18,7 @@
     "require-dev": {
         "mustangostang/spyc":           "dev-master",
         "s-nakajima/mails":             "dev-master",
-        "netcommons/net-commons":       "dev-master",
+        "s-nakajima/net-commons":       "dev-master",
         "netcommons/workflow":          "dev-master",
         "satooshi/php-coveralls":       "dev-master"
     },
