@@ -86,7 +86,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 							<?php echo $this->NetCommonsForm->button(
 								__d('content_comments', 'Comment'),
 								array(
-									'class' => 'btn btn-success btn-sm',
+									'class' => 'btn btn-primary btn-sm',
 									'ng-class' => '{disabled: sending}',
 							)); ?>
 						</div>
