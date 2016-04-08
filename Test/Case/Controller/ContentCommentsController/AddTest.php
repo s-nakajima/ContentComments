@@ -105,7 +105,7 @@ class ContentCommentsControllerAddTest extends NetCommonsControllerTestCase {
 		));
 
 		//テスト実行
-		$this->_testPostAction('post', $data, array('action' => 'add'));
+		$this->_testPostAction('post', $data, array('action' => 'add'), null, 'view');
 
 		//チェック
 		//正常の場合、リダイレクト
@@ -137,7 +137,7 @@ class ContentCommentsControllerAddTest extends NetCommonsControllerTestCase {
 		$this->controller->Components->set('ContentComments', $componentMock);
 
 		//テスト実施
-		$this->_testPostAction('post', $data, array('action' => 'add'), 'BadRequestException');
+		$this->_testPostAction('post', $data, array('action' => 'add'), 'BadRequestException', 'view');
 
 		$this->fail('テストNG');
 	}
