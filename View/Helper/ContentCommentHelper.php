@@ -60,7 +60,7 @@ class ContentCommentHelper extends AppHelper {
 
 			// 未承認1件以上
 			if ($approvalCnt >= 1) {
-				$element .= sprintf(__d('content_comments', '（%s 未承認）'), $approvalCnt);
+				$element .= sprintf(__d('content_comments', '（%s unapproved）'), $approvalCnt);
 			}
 
 			$attributes = Hash::merge($attributes, array('style' => 'padding-right: 15px;'));

@@ -39,3 +39,17 @@ msgstr ""
 msgid "Use comment"
 msgstr ""
 
+msgid "Commented."
+msgstr ""
+
+msgid "Edit the comment."
+msgstr ""
+
+msgid "Approved the comment."
+msgstr ""
+
+msgid "Comment has been deleted."
+msgstr ""
+
+msgid "Received your comment. It does not appear until it has been approved."
+msgstr ""

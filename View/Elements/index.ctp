@@ -44,7 +44,7 @@ $pluginKey = $this->request->params['plugin'];
 
 										// 未承認1件以上
 										if ($approvalCnt >= 1) {
-											echo sprintf(__d('content_comments', '（%s 未承認）'), $approvalCnt);
+											echo sprintf(__d('content_comments', '（%s unapproved）'), $approvalCnt);
 										}
 									?>
 								</label>
