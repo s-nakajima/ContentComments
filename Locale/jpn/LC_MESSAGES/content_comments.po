@@ -4,54 +4,66 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-05-05 02:43+0000\n"
-"PO-Revision-Date: 2015-06-03 10:56+0900\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2016-04-08 14:38+0900\n"
+"Language-Team: EMAIL@ADDRESS\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"POT-Creation-Date: \n"
+"X-Generator: Poedit 1.8.7\n"
+"Last-Translator: \n"
 "Language: ja_JP\n"
-"X-Generator: Poedit 1.8.1\n"
 
-#: Plugin/ContentComments/Model/ContentComment.php:92
-#: Plugin/ContentComments/View/Elements/index.ctp:117;142
-msgid "comment"
-msgstr "コメント"
-
-#: Plugin/ContentComments/View/Elements/form.ctp:25
-msgid "%s comments"
-msgstr "%s コメント"
-
-#: Plugin/ContentComments/View/Elements/form.ctp:68
-#: Plugin/ContentComments/View/Elements/index.ctp:90
-msgid "Comment"
-msgstr "コメントする"
-
-#: Plugin/ContentComments/View/Elements/index.ctp:117
-msgid "Approving the %s. Are you sure to proceed?"
-msgstr "%s を承認します。本当によろしいですか。"
-
-#: Plugin/ContentComments/View/Elements/status_label.ctp:16
-msgid "Approving"
-msgstr "未承認"
-
-#: Videos/View/Elements/VideoBlockSettings/edit_form.ctp:73
-msgid "Use comment"
-msgstr "コメントを利用する"
-
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:91
 msgid "Commented."
 msgstr "コメントしました。"
 
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:111
 msgid "Edit the comment."
 msgstr "コメントを編集しました。"
 
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:131
 msgid "Approved the comment."
 msgstr "コメントを承認しました。"
 
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:149
 msgid "Comment has been deleted."
 msgstr "コメントを削除しました。"
 
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:167
 msgid "Received your comment. It does not appear until it has been approved."
 msgstr "コメントを受付ました。承認されるまで表示されません。"
+
+#: Plugin/ContentComments/Model/ContentComment.php:88
+#: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
+#: Plugin/ContentComments/View/Elements/editAndDeleteButton.ctp:49
+#: Plugin/Mails/Model/Behavior/MailQueueBehavior.php:290
+msgid "comment"
+msgstr "コメント"
+
+#: Plugin/ContentComments/View/Elements/add.ctp:87
+#: Plugin/ContentComments/View/Elements/edit.ctp:79
+msgid "Comment"
+msgstr "コメントする"
+
+#: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
+msgid "Approving the %s. Are you sure to proceed?"
+msgstr "\"%s を承認します。本当によろしいですか。"
+
+#: Plugin/ContentComments/View/Elements/index.ctp:43
+msgid "%s comments"
+msgstr "%s コメント"
+
+#: Plugin/ContentComments/View/Elements/index.ctp:47
+#: Plugin/ContentComments/View/Helper/ContentCommentHelper.php:63
+msgid "（%s unapproved）"
+msgstr "（%s 未承認）"
+
+#: Plugin/ContentComments/View/Elements/indexOnce.ctp:41
+msgid "Approving"
+msgstr "未承認"
+
+#: Plugin/Videos/View/Elements/VideoBlocks/edit_form.ctp:33
+msgid "Use comment"
+msgstr "コメントを利用する"

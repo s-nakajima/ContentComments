@@ -13,43 +13,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ContentComments/Model/ContentComment.php:92
-#: ContentComments/View/Elements/index.ctp:169;204
-msgid "comment"
-msgstr ""
-
-#: ContentComments/View/Elements/form.ctp:26
-msgid "%s comments"
-msgstr ""
-
-#: ContentComments/View/Elements/form.ctp:75
-#: ContentComments/View/Elements/index.ctp:140
-msgid "Comment"
-msgstr ""
-
-#: ContentComments/View/Elements/index.ctp:169
-msgid "Approving the %s. Are you sure to proceed?"
-msgstr ""
-
-#: ContentComments/View/Elements/status_label.ctp:16
-msgid "Approving"
-msgstr ""
-
-#: Videos/View/Elements/VideoBlockSettings/edit_form.ctp:73
-msgid "Use comment"
-msgstr ""
-
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:91
 msgid "Commented."
 msgstr ""
 
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:111
 msgid "Edit the comment."
 msgstr ""
 
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:131
 msgid "Approved the comment."
 msgstr ""
 
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:149
 msgid "Comment has been deleted."
 msgstr ""
 
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:167
 msgid "Received your comment. It does not appear until it has been approved."
 msgstr ""
+
+#: Plugin/ContentComments/Model/ContentComment.php:88
+#: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
+#: Plugin/ContentComments/View/Elements/editAndDeleteButton.ctp:49
+#: Plugin/Mails/Model/Behavior/MailQueueBehavior.php:290
+msgid "comment"
+msgstr ""
+
+#: Plugin/ContentComments/View/Elements/add.ctp:87
+#: Plugin/ContentComments/View/Elements/edit.ctp:79
+msgid "Comment"
+msgstr ""
+
+#: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
+msgid "Approving the %s. Are you sure to proceed?"
+msgstr ""
+
+#: Plugin/ContentComments/View/Elements/index.ctp:43
+msgid "%s comments"
+msgstr ""
+
+#: Plugin/ContentComments/View/Elements/index.ctp:47
+#: Plugin/ContentComments/View/Helper/ContentCommentHelper.php:63
+msgid "（%s unapproved）"
+msgstr ""
+
+#: Plugin/ContentComments/View/Elements/indexOnce.ctp:41
+msgid "Approving"
+msgstr ""
+
+#: Plugin/Videos/View/Elements/VideoBlocks/edit_form.ctp:33
+msgid "Use comment"
+msgstr ""
+
