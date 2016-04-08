@@ -83,6 +83,11 @@ class ContentCommentsComponent extends Component {
  * @throws Exception Paginatorによる例外
  */
 	public function beforeRender(Controller $controller) {
+		// 設定なし
+		if (! isset($this->settings['viewVarsKey']['useComment'], $this->settings['viewVarsKey']['contentKey'], $this->settings['allow'])) {
+			return;
+		}
+
 		$useComment = Hash::get($controller->viewVars, $this->settings['viewVarsKey']['useComment']);
 
 		// コンテンツキー
@@ -102,7 +107,7 @@ class ContentCommentsComponent extends Component {
 		}
 
 		// 許可アクションなし
-		if (! isset($allow) || ! in_array($controller->request->params['action'], $allow)) {
+		if (! in_array($controller->request->params['action'], $allow)) {
 			return;
 		}
 

@@ -193,13 +193,6 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
  */
 	public function testPostException($method, $data, $urlOptions, $exception = null, $return = 'view') {
 		$componentMock = $this->getMock('ContentCommentsComponent', ['comment'], [$this->controller->Components]);
-		$componentMock->settings = array(
-			'viewVarsKey' => array(
-				'contentKey' => 'xxx',
-				'useComment' => 'xxx',
-			),
-			'allow' => array('view'),
-		);
 		$componentMock
 			->expects($this->once())
 			->method('comment')
@@ -226,13 +219,6 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
  */
 	public function testAddPostAjaxFail($method, $data, $urlOptions, $exception = null, $return = 'view') {
 		$componentMock = $this->getMock('ContentCommentsComponent', ['comment'], [$this->controller->Components]);
-		$componentMock->settings = array(
-			'viewVarsKey' => array(
-				'contentKey' => 'xxx',
-				'useComment' => 'xxx',
-			),
-			'allow' => array('view'),
-		);
 		$componentMock
 			->expects($this->once())
 			->method('comment')
