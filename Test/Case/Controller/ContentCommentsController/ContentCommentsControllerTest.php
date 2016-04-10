@@ -81,7 +81,7 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 				'id' => '6'
 			),
 			'Block' => array(
-				'id' => 'Block_1',
+				'id' => '1',
 			),
 			'ContentComment' => array(
 				'plugin_key' => 'plugin_1',
