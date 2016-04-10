@@ -107,7 +107,7 @@ class ContentCommentHelperCountTest extends NetCommonsHelperTestCase {
 				),
 			),
 			'fakeSetting' => array(
-				'use_comment' => '0',
+				'use_comment' => '0',	// コメント利用しない
 				'use_comment_approval' => '1',
 			),
 		);
