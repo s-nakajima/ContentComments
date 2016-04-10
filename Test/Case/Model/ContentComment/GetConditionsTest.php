@@ -25,9 +25,7 @@ class ContentCommentGetConditionsTest extends NetCommonsGetTest {
  *
  * @var array
  */
-	public $fixtures = array(
-		'plugin.workflow.workflow_comment',
-	);
+	public $fixtures = array();
 
 /**
  * Plugin name
