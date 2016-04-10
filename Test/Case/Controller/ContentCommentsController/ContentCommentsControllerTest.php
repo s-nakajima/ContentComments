@@ -114,7 +114,7 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 	}
 
 /**
- * editアクションのPOSTテスト用DataProvider
+ * アクションのPOSTテスト用DataProvider
  *
  * #### 戻り値
  *  - method: リクエストのmethod(post put delete)
