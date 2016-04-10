@@ -112,7 +112,7 @@ class ContentComment extends ContentCommentsAppModel {
 		}
 
 		// ログインしていない
-		if (! (bool)AuthComponent::user()) {
+		if (!Current::read('User')) {
 			$conditions['ContentComment.status'] = WorkflowComponent::STATUS_PUBLISHED;
 			return $conditions;
 		}
