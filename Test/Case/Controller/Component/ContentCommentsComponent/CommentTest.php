@@ -84,10 +84,26 @@ class ContentCommentsComponentCommentTest extends NetCommonsControllerTestCase {
 	}
 
 /**
+ * テストPermissionの取得
+ *
+ * @return array
+ */
+	private function __getPermission() {
+		$permission = array(
+			'content_comment_publishable' => array('value' => '1'),
+			'content_comment_editable' => array('value' => '1'),
+			'content_comment_creatable' => array('value' => '1'),
+		);
+
+		return $permission;
+	}
+
+/**
  * comment()のテスト
  *
  * @param string $action controller->action
  * @param array $permission Current::permission
+ * @param array $expected チェック期待値
  * @param array $data controller->data
  * @param array $requestData request->data
  * @param string|null $exception Exception
@@ -95,7 +111,7 @@ class ContentCommentsComponentCommentTest extends NetCommonsControllerTestCase {
  * @dataProvider dataProviderGet
  * @return void
  */
-	public function testComment($action, $permission, $data = null, $requestData = null, $exception = null, $return = 'view') {
+	public function testComment($action, $permission, $expected, $data = null, $requestData = null, $exception = null, $return = 'view') {
 		//テストアクション実行
 		$this->_testGetAction('/test_content_comments/test_content_comments_component/index',
 				array('method' => 'assertNotEmpty'), $exception, $return);
@@ -114,14 +130,153 @@ class ContentCommentsComponentCommentTest extends NetCommonsControllerTestCase {
 		}
 
 		//テスト実行
-		$this->controller->ContentComments->comment();
+		$result = $this->controller->ContentComments->comment();
 
-		//$validationErrors = $this->controller->ContentComment->validationErrors;
-		//debug($validationErrors);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
  * アクションのGETテスト用DataProvider
+ *
+ * #### 戻り値
+ *  - action: controller->action
+ *  - permission: Current::permission
+ *  - expected: チェック期待値
+ *  - data: request->data
+ *  - exception: Exception
+ *  - return: testActionの実行後の結果
+ *
+ * @return array
+ */
+	public function dataProviderGet() {
+		$data = $this->__getData();
+		$permission = $this->__getPermission();
+
+		return array(
+			'登録:正常' => array(
+				'action' => 'add',
+				'permission' => $permission,
+				'expected' => true,
+				'requestData' => Hash::merge($data, array(
+					'ContentComment' => array('comment' => 'Lorem ipsum'),
+				)),
+			),
+			'パーミッションがあるかチェック:全てなし' => array(
+				'action' => null,
+				'permission' => null,
+				'expected' => false,
+			),
+			'登録：投稿許可ありか:なし' => array(
+				'action' => 'add',
+				'permission' => array(
+					'content_comment_creatable' => array('value' => '0'),
+				),
+				'expected' => false,
+			),
+			'登録：投稿許可ありか:ビジター投稿許可あり' => array(
+				'action' => 'add',
+				'permission' => array(
+					'content_comment_creatable' => array('value' => '0'),
+				),
+				'expected' => true,
+				'requestData' => array(
+					'_tmp' => array('is_visitor_creatable' => '1'),
+				),
+			),
+			'編集:正常' => array(
+				'action' => 'edit',
+				'permission' => $permission,
+				'expected' => true,
+				'requestData' => Hash::merge($data, array(
+					'ContentComment' => array('comment' => 'Lorem ipsum'),
+				)),
+			),
+			'編集：編集許可ありか:なし' => array(
+				'action' => 'edit',
+				'permission' => array(
+					'content_comment_editable' => array('value' => '0'),
+				),
+				'expected' => false,
+				'data' => array(
+					'ContentComment' => array('created_user' => 'xxx'),
+				),
+			),
+			'編集：編集許可ありか:自分で投稿したコメントなら、編集・削除可能' => array(
+				'action' => 'edit',
+				'permission' => array(
+					'content_comment_editable' => array('value' => '0'),
+				),
+				'expected' => true,
+				'data' => array(
+					'ContentComment' => array('created_user' => '1'),
+				),
+			),
+			'承認:正常' => array(
+				'action' => 'approve',
+				'permission' => $permission,
+				'expected' => true,
+				'requestData' => $data,
+			),
+			'削除:正常' => array(
+				'action' => 'delete',
+				'permission' => $permission,
+				'expected' => true,
+				'requestData' => Hash::merge($data, array(
+					'ContentComment' => array('id' => 1),
+				)),
+			),
+			'削除:削除するコンテンツのidなし' => array(
+				'action' => 'delete',
+				'permission' => $permission,
+				'expected' => false,
+				'requestData' => $data,
+			),
+		);
+	}
+
+/**
+ * comment()のvalidateエラーテスト
+ *
+ * @param string $action controller->action
+ * @param array $permission Current::permission
+ * @param array $data controller->data
+ * @param array $requestData request->data
+ * @param string|null $exception Exception
+ * @param string $return testActionの実行後の結果
+ * @dataProvider dataProviderGetValidate
+ * @return void
+ */
+	public function testCommentValidate($action, $permission, $data = null, $requestData = null, $exception = null, $return = 'view') {
+		//テストアクション実行
+		$this->_testGetAction('/test_content_comments/test_content_comments_component/index',
+			array('method' => 'assertNotEmpty'), $exception, $return);
+		$pattern = '/' . preg_quote('Controller/Component/TestContentCommentsComponent', '/') . '/';
+		$this->assertRegExp($pattern, $this->view);
+
+		$this->controller->action = $action;
+
+		Current::$current['Permission'] = $permission;
+		Current::$current['Block']['key'] = 'block_1';
+
+		if (isset($data)) {
+			$this->controller->data = $data;
+		}
+		if (isset($requestData)) {
+			$this->controller->request->data = $requestData;
+		}
+
+		//テスト実行
+		$result = $this->controller->ContentComments->comment();
+
+		$this->assertTrue($result);
+
+		$validationErrors = $this->controller->ContentComment->validationErrors;
+		$this->assertNotEmpty($validationErrors);
+		//debug($validationErrors);
+	}
+
+/**
+ * アクションのGET validateエラーテスト用DataProvider
  *
  * #### 戻り値
  *  - action: controller->action
@@ -132,122 +287,24 @@ class ContentCommentsComponentCommentTest extends NetCommonsControllerTestCase {
  *
  * @return array
  */
-	public function dataProviderGet() {
+	public function dataProviderGetValidate() {
 		$data = $this->__getData();
+		$permission = $this->__getPermission();
 
 		return array(
-			'登録:正常' => array(
-				'action' => 'add',
-				'permission' => array(
-					'content_comment_publishable' => array('value' => '1'),
-					'content_comment_editable' => array('value' => '1'),
-					'content_comment_creatable' => array('value' => '1'),
-				),
-				'requestData' => Hash::merge($data, array(
-					'ContentComment' => array(
-						'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-					),
-				)),
-			),
 			'登録:validateエラー:空コメント' => array(
 				'action' => 'add',
-				'permission' => array(
-					'content_comment_publishable' => array('value' => '1'),
-					'content_comment_editable' => array('value' => '1'),
-					'content_comment_creatable' => array('value' => '1'),
-				),
+				'permission' => $permission,
 				'requestData' => Hash::merge($data, array(
-					'ContentComment' => array(
-						'comment' => '',
-					),
-				)),
-			),
-			'パーミッションがあるかチェック:全てなし' => array(
-				'action' => null,
-				'permission' => null,
-			),
-			'登録：投稿許可ありか:なし' => array(
-				'action' => 'add',
-				'permission' => array(
-					'content_comment_creatable' => array('value' => '0'),
-				),
-			),
-			'登録：投稿許可ありか:ビジター投稿許可あり' => array(
-				'action' => 'add',
-				'permission' => array(
-					'content_comment_creatable' => array('value' => '0'),
-				),
-				'requestData' => array(
-					'_tmp' => array(
-						'is_visitor_creatable' => '1',
-					),
-				),
-			),
-			'編集:正常' => array(
-				'action' => 'edit',
-				'permission' => array(
-					'content_comment_publishable' => array('value' => '1'),
-					'content_comment_editable' => array('value' => '1'),
-					'content_comment_creatable' => array('value' => '1'),
-				),
-				'requestData' => Hash::merge($data, array(
-					'ContentComment' => array(
-						'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-					),
+					'ContentComment' => array('comment' => ''),
 				)),
 			),
 			'編集:validateエラー:空コメント' => array(
 				'action' => 'edit',
-				'permission' => array(
-					'content_comment_publishable' => array('value' => '1'),
-					'content_comment_editable' => array('value' => '1'),
-					'content_comment_creatable' => array('value' => '1'),
-				),
+				'permission' => $permission,
 				'requestData' => Hash::merge($data, array(
-					'ContentComment' => array(
-						'comment' => '',
-					),
+					'ContentComment' => array('comment' => ''),
 				)),
-			),
-			'編集：編集許可ありか:なし' => array(
-				'action' => 'edit',
-				'permission' => array(
-					'content_comment_editable' => array('value' => '0'),
-				),
-				'data' => array(
-					'ContentComment' => array(
-						'created_user' => 'xxx',
-					),
-				),
-			),
-			'編集：編集許可ありか:自分で投稿したコメントなら、編集・削除可能' => array(
-				'action' => 'edit',
-				'permission' => array(
-					'content_comment_editable' => array('value' => '0'),
-				),
-				'data' => array(
-					'ContentComment' => array(
-						'created_user' => '1',
-					),
-				),
-			),
-			'承認:正常' => array(
-				'action' => 'approve',
-				'permission' => array(
-					'content_comment_publishable' => array('value' => '1'),
-					'content_comment_editable' => array('value' => '1'),
-					'content_comment_creatable' => array('value' => '1'),
-				),
-				'requestData' => $data,
-			),
-			'削除:正常' => array(
-				'action' => 'delete',
-				'permission' => array(
-					'content_comment_publishable' => array('value' => '1'),
-					'content_comment_editable' => array('value' => '1'),
-					'content_comment_creatable' => array('value' => '1'),
-				),
-				'requestData' => $data,
 			),
 		);
 	}

@@ -73,6 +73,23 @@ class ContentCommentsComponentBeforeRenderTest extends NetCommonsControllerTestC
 	}
 
 /**
+ * テストSettingsの取得
+ *
+ * @return array
+ */
+	private function __getSettings() {
+		$settings = array(
+			'viewVarsKey' => array(
+				'contentKey' => 'fake.Fake.key',
+				'useComment' => 'fakeSetting.use_comment',
+			),
+			'allow' => array('index'),
+		);
+
+		return $settings;
+	}
+
+/**
  * beforeRender()のテスト
  *
  * @param array $settings ContentComments->settings
@@ -111,26 +128,18 @@ class ContentCommentsComponentBeforeRenderTest extends NetCommonsControllerTestC
  * @return array
  */
 	public function dataProviderGet() {
+		$settings = $this->__getSettings();
+
 		return array(
 			// エラー：Indirect modification of overloaded property Mock_TestContentCommentsComponentController_591fac1e::$Paginator has no effect
 			//         をphpunitで解消できなかったため、対応先送り。phpunitでなく通常の利用ではエラー出ない。
 			//			'正常' => array(
-			//				'settings' => array(
-			//					'viewVarsKey' => array(
-			//						'contentKey' => 'fake.Fake.key',
-			//						'useComment' => 'fakeSetting.use_comment',
-			//					),
-			//					'allow' => array('index'),
-			//				),
+			//				'settings' => $settings,
 			//				'viewVars' => array(
 			//					'fake' => array(
-			//						'Fake' => array(
-			//							'key' => 'key',
-			//						),
+			//						'Fake' => array('key' => 'key'),
 			//					),
-			//					'fakeSetting' => array(
-			//						'use_comment' => 1,
-			//					),
+			//					'fakeSetting' => array('use_comment' => 1),
 			//				),
 			//			),
 			'設定なし' => array(
@@ -138,60 +147,28 @@ class ContentCommentsComponentBeforeRenderTest extends NetCommonsControllerTestC
 				'viewVars' => array(),
 			),
 			'コメントを利用しない(設定なし)' => array(
-				'settings' => array(
-					'viewVarsKey' => array(
-						'contentKey' => 'fake.Fake.key',
-						'useComment' => 'fakeSetting.use_comment',
-					),
-					'allow' => array('index'),
-				),
+				'settings' => $settings,
 				'viewVars' => array(),
 			),
 			'コメントを利用しない' => array(
-				'settings' => array(
-					'viewVarsKey' => array(
-						'contentKey' => 'fake.Fake.key',
-						'useComment' => 'fakeSetting.use_comment',
-					),
-					'allow' => array('index'),
-				),
+				'settings' => $settings,
 				'viewVars' => array(
-					'fakeSetting' => array(
-						'use_comment' => 0,
-					),
+					'fakeSetting' => array('use_comment' => 0),
 				),
 			),
 			'コンテンツキーのDB項目名なし(設定なし)' => array(
-				'settings' => array(
-					'viewVarsKey' => array(
-						'contentKey' => 'fake.Fake.key',
-						'useComment' => 'fakeSetting.use_comment',
-					),
-					'allow' => array('index'),
-				),
+				'settings' => $settings,
 				'viewVars' => array(
-					'fakeSetting' => array(
-						'use_comment' => 1,
-					),
+					'fakeSetting' => array('use_comment' => 1),
 				),
 			),
 			'コンテンツキーのDB項目名なし' => array(
-				'settings' => array(
-					'viewVarsKey' => array(
-						'contentKey' => 'fake.Fake.key',
-						'useComment' => 'fakeSetting.use_comment',
-					),
-					'allow' => array('index'),
-				),
+				'settings' => $settings,
 				'viewVars' => array(
 					'fake' => array(
-						'Fake' => array(
-							'xxx' => 'key',
-						),
+						'Fake' => array('xxx' => 'key'),
 					),
-					'fakeSetting' => array(
-						'use_comment' => 1,
-					),
+					'fakeSetting' => array('use_comment' => 1),
 				),
 			),
 			'許可アクションなし' => array(
@@ -204,13 +181,9 @@ class ContentCommentsComponentBeforeRenderTest extends NetCommonsControllerTestC
 				),
 				'viewVars' => array(
 					'fake' => array(
-						'Fake' => array(
-							'key' => 'key',
-						),
+						'Fake' => array('key' => 'key'),
 					),
-					'fakeSetting' => array(
-						'use_comment' => 1,
-					),
+					'fakeSetting' => array('use_comment' => 1),
 				),
 			),
 		);
