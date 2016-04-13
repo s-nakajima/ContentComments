@@ -49,7 +49,7 @@ msgstr "コメントする"
 
 #: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
 msgid "Approving the %s. Are you sure to proceed?"
-msgstr "\"%s を承認します。本当によろしいですか。"
+msgstr "%s を承認します。本当によろしいですか。"
 
 #: Plugin/ContentComments/View/Elements/index.ctp:43
 msgid "%s comments"
