@@ -111,6 +111,14 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 		//正常の場合、リダイレクト
 		$header = $this->controller->response->header();
 		$this->assertNotEmpty($header['Location']);
+
+		// 承認時チェック - もし承認中に一般がコメント内容を変えても、承認者が表示しているコメントで上書き＆承認するテスト
+		if ($urlOptions['action'] == 'approve') {
+			$this->ContentComment = ClassRegistry::init('ContentComments.ContentComment', true);
+			$contentComment = $this->ContentComment->findById($data['ContentComment']['id']);
+
+			$this->assertEquals($data['ContentComment']['comment'], $contentComment['ContentComment']['comment']);
+		}
 	}
 
 /**
@@ -132,13 +140,9 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 			'addアクションのPOSTテスト:登録' => array(
 				'method' => 'post',
 				'data' => Hash::merge($data, array(
-					'ContentComment' => array(
-						'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-					),
+					'ContentComment' => array('comment' => 'Lorem ipsum'),
 				)),
-				'urlOptions' => array(
-					'action' => 'add',
-				)
+				'urlOptions' => array('action' => 'add')
 			),
 			'editアクションのPOSTテスト:編集' => array(
 				'method' => 'put',
@@ -149,21 +153,18 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 						'comment' => 'edit......................',
 					),
 				)),
-				'urlOptions' => array(
-					'action' => 'edit',
-				),
+				'urlOptions' => array('action' => 'edit'),
 			),
 			'approveアクションのPOSTテスト:承認' => array(
 				'method' => 'put',
 				'data' => Hash::merge($data, array(
 					'ContentComment' => array(
 						'id' => 3,
+						'comment' => 'approve',
 						'status' => WorkflowComponent::STATUS_APPROVED,	// 承認依頼
 					),
 				)),
-				'urlOptions' => array(
-					'action' => 'approve',
-				),
+				'urlOptions' => array('action' => 'approve'),
 			),
 			'deleteアクションのPOSTテスト:削除' => array(
 				'method' => 'delete',
@@ -173,9 +174,7 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 						'created_user' => 1,
 					),
 				)),
-				'urlOptions' => array(
-					'action' => 'delete',
-				),
+				'urlOptions' => array('action' => 'delete'),
 			),
 		);
 	}
