@@ -34,6 +34,8 @@ class ContentComment extends ContentCommentsAppModel {
 			),
 			'useCommentApproval' => '_mail.use_comment_approval',
 			'workflowType' => MailQueueBehavior::MAIL_QUEUE_WORKFLOW_TYPE_COMMENT,
+			'keyField' => 'content_key',
+			'pluginKey' => 'content_comments',
 		),
 	);
 
