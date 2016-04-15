@@ -111,9 +111,7 @@ class ContentCommentHelper extends AppHelper {
 			$WorkflowComponent = new WorkflowComponent(new ComponentCollection());
 
 			// ビジター投稿許可フラグ
-			$permissions = $WorkflowComponent->getBlockRolePermissions(
-				array('content_comment_creatable')
-			);
+			$permissions = $WorkflowComponent->getBlockRolePermissions(array('content_comment_creatable'));
 			$isVisitorCreatable = Hash::get($permissions, 'BlockRolePermissions.content_comment_creatable.visitor.value');
 
 			// 未承認件数

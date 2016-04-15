@@ -150,6 +150,9 @@ class ContentComment extends ContentCommentsAppModel {
 		}
 
 		try {
+			/** @see MailQueueBehavior::setSetting() */
+			$this->setSetting(MailQueueBehavior::MAIL_QUEUE_SETTING_PLUGIN_NAME, __d('content_comments', 'comment'));
+
 			if (! $contentComment = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
