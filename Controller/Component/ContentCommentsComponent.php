@@ -265,6 +265,11 @@ class ContentCommentsComponent extends Component {
 		$data['ContentComment']['block_key'] = Current::read('Block.key');
 		$data['_mail'] = $this->_controller->request->data('_mail');
 		$data['_mail']['url'] = $this->_controller->request->referer();
+		if ($this->_controller->action == 'approve') {
+			$data['_mail']['is_comment_approve_action'] = 1;
+		} else {
+			$data['_mail']['is_comment_approve_action'] = 0;
+		}
 
 		return $data;
 	}
