@@ -26,7 +26,7 @@ class ContentComment extends ContentCommentsAppModel {
  * @see MailQueueBehavior
  */
 	public $actsAs = array(
-		'Mails.MailQueue' => array(		// 自動でメールキューの登録, 削除
+		'Mails.MailQueue' => array(		// 自動でメールキューの登録
 			'embedTags' => array(
 				'X-SUBJECT' => '_mail.content_title',
 				'X-BODY' => 'ContentComment.comment',
@@ -168,38 +168,5 @@ class ContentComment extends ContentCommentsAppModel {
 		}
 
 		return $contentComment;
-	}
-
-/**
- * コンテンツコメント データ削除
- *
- * @param int $id ID
- * @return mixed On success Model::$data if its not empty or true, false on failure
- * @throws InternalErrorException
- */
-	public function deleteContentComment($id) {
-		if (empty($id)) {
-			return false;
-		}
-
-		$this->Behaviors->unload('Mails.MailQueue');
-
-		//トランザクションBegin
-		$this->begin();
-
-		try {
-			if (! $this->delete($id, false)) {
-				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-			}
-
-			//トランザクションCommit
-			$this->commit();
-
-		} catch (Exception $ex) {
-			//トランザクションRollback
-			$this->rollback($ex);
-		}
-
-		return true;
 	}
 }

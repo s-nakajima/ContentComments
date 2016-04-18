@@ -186,7 +186,7 @@ class ContentCommentsComponent extends Component {
 			// 削除
 		} elseif ($this->_controller->action == 'delete') {
 			// コンテンツコメントの削除
-			if (!$this->_controller->ContentComment->deleteContentComment($this->_controller->request->data('ContentComment.id'))) {
+			if (!$this->_controller->ContentComment->delete($this->_controller->request->data('ContentComment.id'))) {
 				return false;
 			}
 		}
