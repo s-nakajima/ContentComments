@@ -107,6 +107,31 @@ class ContentCommentFixture extends CakeTestFixture {
 			'modified_user' => 1,
 			'modified' => '2015-04-24 16:45:16',
 		),
+		// ContentCommentBehavior用
+		array(
+			'id' => 6,
+			'block_key' => 'block_1',
+			'plugin_key' => 'plugin_1',
+			'content_key' => 'publish_key',
+			'status' => 1,
+			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+			'created_user' => 1,
+			'created' => '2015-04-24 16:45:16',
+			'modified_user' => 1,
+			'modified' => '2015-04-24 16:45:16',
+		),
+		array(
+			'id' => 7,
+			'block_key' => 'block_1',
+			'plugin_key' => 'plugin_1',
+			'content_key' => 'publish_key',
+			'status' => 2, //未承認
+			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+			'created_user' => 1,
+			'created' => '2015-04-24 16:45:16',
+			'modified_user' => 1,
+			'modified' => '2015-04-24 16:45:16',
+		),
 	);
 
 }
