@@ -11,9 +11,6 @@
  */
 
 App::uses('Component', 'Controller');
-App::uses('WorkflowComponent', 'Workflow.Controller/Component');
-
-App::uses('SessionComponent', 'Controller/Component');
 
 /**
  * ContentComments Component
