@@ -29,6 +29,7 @@ class ContentCommentHelper extends AppHelper {
 		'Html',
 		'Users.DisplayUser',
 		'Paginator',
+		'Workflow.Workflow',
 	);
 
 /**
