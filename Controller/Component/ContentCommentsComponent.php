@@ -34,7 +34,10 @@ class ContentCommentsComponent extends Component {
  *
  * @var array
  */
-	public $components = array('Session');
+	public $components = array(
+		'Paginator',
+		'Session',
+	);
 
 /**
  * @var Controller コントローラ
@@ -118,9 +121,9 @@ class ContentCommentsComponent extends Component {
 		//表示件数
 		$query['limit'] = $this::START_LIMIT;
 
-		$controller->Paginator->settings = $query;
+		$this->Paginator->settings = $query;
 		try {
-			$contentComments = $controller->Paginator->paginate('ContentComment');
+			$contentComments = $this->Paginator->paginate('ContentComment');
 		} catch (Exception $ex) {
 			CakeLog::error($ex);
 			throw $ex;
