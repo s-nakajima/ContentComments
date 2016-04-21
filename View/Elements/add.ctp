@@ -22,7 +22,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 <div class="content-comments">
 	<div class="comment-form">
 		<div class="media">
-			<div class="pull-left">
+			<div class="media-left">
 				<?php /* 自分のアバター */ ?>
 				<?php /** @see DisplayUserHelper::avatarLink() */ ?>
 				<?php echo $this->DisplayUser->avatarLink(Current::read('User'), array(

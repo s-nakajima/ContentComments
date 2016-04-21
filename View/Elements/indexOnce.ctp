@@ -20,7 +20,7 @@
 $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
 <div class="media">
-	<div class="pull-left">
+	<div class="media-left">
 		<?php /* created_userがあるときだけ表示 */ ?>
 		<?php if ($contentComment['TrackableCreator']['id']): ?>
 			<?php /* アバター */ ?>
