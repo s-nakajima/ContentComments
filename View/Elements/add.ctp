@@ -26,7 +26,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 				<?php /* 自分のアバター */ ?>
 				<?php /** @see DisplayUserHelper::avatarLink() */ ?>
 				<?php echo $this->DisplayUser->avatarLink(Current::read('User'), array(
-					'class' => '',
+					'class' => 'img-rounded',
 					'alt' => Current::read('User.handlename'),
 				), [], 'id'); ?>
 			</div>

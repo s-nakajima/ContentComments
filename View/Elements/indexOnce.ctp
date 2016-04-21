@@ -24,8 +24,9 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		<?php /* created_userがあるときだけ表示 */ ?>
 		<?php if ($contentComment['TrackableCreator']['id']): ?>
 			<?php /* アバター */ ?>
+			<?php /** @see DisplayUserHelper::avatarLink() */ ?>
 			<?php echo $this->DisplayUser->avatarLink($contentComment, array(
-				'class' => '',
+				'class' => 'img-rounded',
 			)); ?>
 		<?php endif; ?>
 	</div>
