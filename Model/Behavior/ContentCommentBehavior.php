@@ -99,7 +99,9 @@ class ContentCommentBehavior extends ModelBehavior {
 
 		$contentCommentCnts = $model->ContentComment->find('all', array(
 			'recursive' => -1,
-			'fields' => array('content_key', 'count(content_key) as ContentComment__' . $virtualFieldName),	// Model__エイリアスにする
+			// Model__エイリアスにする
+			'fields' => array('content_key',
+				'count(content_key) as ContentComment__' . $virtualFieldName),
 			'conditions' => $conditions,
 			'group' => array('content_key'),
 			'callbacks' => false,
@@ -109,7 +111,8 @@ class ContentCommentBehavior extends ModelBehavior {
 			$contentKey = $result[$model->alias]['key'];
 			foreach ($contentCommentCnts as $contentCommentCnt) {
 				if ($contentKey == $contentCommentCnt['ContentComment']['content_key']) {
-					$result['ContentCommentCnt'][$virtualFieldName] = $contentCommentCnt['ContentComment'][$virtualFieldName];
+					$result['ContentCommentCnt'][$virtualFieldName] =
+						$contentCommentCnt['ContentComment'][$virtualFieldName];
 					break;
 				}
 			}
@@ -142,8 +145,12 @@ class ContentCommentBehavior extends ModelBehavior {
 			'conditions' => array($model->alias . '.id' => $model->id)
 		));
 
+		$conditions = array(
+			'ContentComment.content_key' => $content[$model->alias]['key']
+		);
+
 		// コンテンツコメント 削除
-		if (! $model->ContentComment->deleteAll(array($model->ContentComment->alias . '.content_key' => $content[$model->alias]['key']), false)) {
+		if (! $model->ContentComment->deleteAll($conditions, false)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
 

@@ -88,13 +88,16 @@ class ContentCommentHelper extends AppHelper {
  */
 	public function index($content) {
 		$output = '';
-		$useComment = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['useComment']);
+		$viewVars = $this->_View->viewVars;
+		$viewVarsKey = $this->settings['viewVarsKey'];
+
+		$useComment = Hash::get($viewVars, $viewVarsKey['useComment']);
 
 		// コメント承認を使う
-		$useCommentApproval = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['useCommentApproval']);
+		$useCommentApproval = Hash::get($viewVars, $viewVarsKey['useCommentApproval']);
 
 		// コンテンツキー
-		$contentKey = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['contentKey']);
+		$contentKey = Hash::get($viewVars, $viewVarsKey['contentKey']);
 
 		// コメントを利用しない
 		if (! $useComment) {
@@ -113,12 +116,13 @@ class ContentCommentHelper extends AppHelper {
 
 			// ビジター投稿許可フラグ
 			$permissions = $WorkflowComponent->getBlockRolePermissions(array('content_comment_creatable'));
-			$isVisitorCreatable = Hash::get($permissions, 'BlockRolePermissions.content_comment_creatable.visitor.value');
+			$isVisitorCreatable = Hash::get($permissions,
+				'BlockRolePermissions.content_comment_creatable.visitor.value');
 
 			// 未承認件数
 			$approvalCnt = (int)Hash::get($content, 'ContentCommentCnt.approval_cnt');
 			// メールのためのコンテンツタイトル
-			$contentTitleForMail = Hash::get($this->_View->viewVars, $this->settings['viewVarsKey']['contentTitleForMail']);
+			$contentTitleForMail = Hash::get($viewVars, $viewVarsKey['contentTitleForMail']);
 
 			$output .= $this->_View->element('ContentComments.index', array(
 				'contentKey' => $contentKey,

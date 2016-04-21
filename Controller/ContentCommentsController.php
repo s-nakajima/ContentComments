@@ -164,7 +164,8 @@ class ContentCommentsController extends ContentCommentsAppController {
 
 			// 承認依頼ならワーニング表示
 			if ($status == WorkflowComponent::STATUS_APPROVED) {
-				$message = __d('content_comments', 'Received your comment. It does not appear until it has been approved.');
+				$message = __d('content_comments',
+					'Received your comment. It does not appear until it has been approved.');
 				$this->NetCommons->setFlashNotification($message, array(
 					'class' => 'warning',
 					'interval' => NetCommonsComponent::ALERT_VALIDATE_ERROR_INTERVAL,

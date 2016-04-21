@@ -68,7 +68,8 @@ class ContentCommentsComponent extends Component {
 
 		// コンテントコメントからエラーメッセージを受け取る仕組み
 		/* @link http://skgckj.hateblo.jp/entry/2014/02/09/005111 */
-		$controller->ContentComment->validationErrors = $this->Session->read('ContentComments.forRedirect.errors');
+		$controller->ContentComment->validationErrors =
+			$this->Session->read('ContentComments.forRedirect.errors');
 	}
 
 /**
@@ -84,7 +85,9 @@ class ContentCommentsComponent extends Component {
  */
 	public function beforeRender(Controller $controller) {
 		// 設定なし
-		if (! isset($this->settings['viewVarsKey']['useComment'], $this->settings['viewVarsKey']['contentKey'], $this->settings['allow'])) {
+		if (! isset($this->settings['viewVarsKey']['useComment'],
+					$this->settings['viewVarsKey']['contentKey'],
+					$this->settings['allow'])) {
 			return;
 		}
 
@@ -172,7 +175,8 @@ class ContentCommentsComponent extends Component {
 			// コンテンツコメントのデータ保存
 			/** @see ContentComment::saveContentComment() */
 			if (!$this->_controller->ContentComment->saveContentComment($data)) {
-				$this->_controller->NetCommons->handleValidationError($this->_controller->ContentComment->validationErrors);
+				$this->_controller->NetCommons->handleValidationError(
+					$this->_controller->ContentComment->validationErrors);
 
 				// 別プラグインにエラーメッセージとどの処理を送るため
 				/* @link http://skgckj.hateblo.jp/entry/2014/02/09/005111 */
@@ -186,7 +190,8 @@ class ContentCommentsComponent extends Component {
 			// 削除
 		} elseif ($this->_controller->action == 'delete') {
 			// コンテンツコメントの削除
-			if (!$this->_controller->ContentComment->delete($this->_controller->request->data('ContentComment.id'))) {
+			if (!$this->_controller->ContentComment->delete(
+				$this->_controller->request->data('ContentComment.id'))) {
 				return false;
 			}
 		}
@@ -213,7 +218,8 @@ class ContentCommentsComponent extends Component {
 		}
 
 		// 承認処理 and 承認許可あり
-		if ($this->_controller->action == 'approve' && Current::permission('content_comment_publishable')) {
+		if ($this->_controller->action == 'approve' &&
+				Current::permission('content_comment_publishable')) {
 			return true;
 		}
 		return false;

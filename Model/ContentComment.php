@@ -89,7 +89,8 @@ class ContentComment extends ContentCommentsAppModel {
 			'comment' => array(
 				'notBlank' => array(
 					'rule' => array('notBlank'),
-					'message' => sprintf(__d('net_commons', 'Please input %s.'), __d('content_comments', 'comment')),
+					'message' => sprintf(__d('net_commons', 'Please input %s.'),
+						__d('content_comments', 'comment')),
 				)
 			),
 		));
@@ -153,7 +154,8 @@ class ContentComment extends ContentCommentsAppModel {
 
 		try {
 			/** @see MailQueueBehavior::setSetting() */
-			$this->setSetting(MailQueueBehavior::MAIL_QUEUE_SETTING_PLUGIN_NAME, __d('content_comments', 'comment'));
+			$this->setSetting(MailQueueBehavior::MAIL_QUEUE_SETTING_PLUGIN_NAME,
+				__d('content_comments', 'comment'));
 
 			if (! $contentComment = $this->save(null, false)) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
