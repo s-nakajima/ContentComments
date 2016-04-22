@@ -1,0 +1,69 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"PO-Revision-Date: 2016-04-22 18:28+0900\n"
+"Language-Team: EMAIL@ADDRESS\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: \n"
+"X-Generator: Poedit 1.8.7\n"
+"Last-Translator: \n"
+"Language: en\n"
+
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:91
+msgid "Commented."
+msgstr "Commented."
+
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:111
+msgid "Edit the comment."
+msgstr "Edit the comment."
+
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:131
+msgid "Approved the comment."
+msgstr "Approved the comment."
+
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:149
+msgid "Comment has been deleted."
+msgstr "Comment has been deleted."
+
+#: Plugin/ContentComments/Controller/ContentCommentsController.php:167
+msgid "Received your comment. It does not appear until it has been approved."
+msgstr "Received your comment. It does not appear until it has been approved."
+
+#: Plugin/ContentComments/Model/ContentComment.php:88
+#: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
+#: Plugin/ContentComments/View/Elements/editAndDeleteButton.ctp:49
+#: Plugin/Mails/Model/Behavior/MailQueueBehavior.php:290
+msgid "comment"
+msgstr "comment"
+
+#: Plugin/ContentComments/View/Elements/add.ctp:87
+#: Plugin/ContentComments/View/Elements/edit.ctp:79
+msgid "Comment"
+msgstr "Comment"
+
+#: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
+msgid "Approving the %s. Are you sure to proceed?"
+msgstr "Approving the %s. Are you sure to proceed?"
+
+#: Plugin/ContentComments/View/Elements/index.ctp:43
+msgid "%s comments"
+msgstr "%s comments"
+
+#: Plugin/ContentComments/View/Elements/index.ctp:47
+#: Plugin/ContentComments/View/Helper/ContentCommentHelper.php:63
+msgid "（%s unapproved）"
+msgstr "（%s unapproved）"
+
+#: Plugin/ContentComments/View/Elements/indexOnce.ctp:41
+msgid "Approving"
+msgstr "Approving"
+
+#: Plugin/Videos/View/Elements/VideoBlocks/edit_form.ctp:33
+msgid "Use comment"
+msgstr "Use comment"
