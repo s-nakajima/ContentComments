@@ -145,11 +145,9 @@ class ContentCommentBehavior extends ModelBehavior {
 			'conditions' => array($model->alias . '.id' => $model->id)
 		));
 
-		$conditions = array(
-			'ContentComment.content_key' => $content[$model->alias]['key']
-		);
 
 		// コンテンツコメント 削除
+		$conditions = array('ContentComment.content_key' => $content[$model->alias]['key']);
 		if (! $model->ContentComment->deleteAll($conditions, false)) {
 			throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 		}
