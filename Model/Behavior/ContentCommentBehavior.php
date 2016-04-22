@@ -145,7 +145,6 @@ class ContentCommentBehavior extends ModelBehavior {
 			'conditions' => array($model->alias . '.id' => $model->id)
 		));
 
-
 		// コンテンツコメント 削除
 		$conditions = array('ContentComment.content_key' => $content[$model->alias]['key']);
 		if (! $model->ContentComment->deleteAll($conditions, false)) {
