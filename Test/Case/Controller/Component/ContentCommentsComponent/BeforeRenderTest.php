@@ -24,7 +24,9 @@ class ContentCommentsComponentBeforeRenderTest extends NetCommonsControllerTestC
  *
  * @var array
  */
-	public $fixtures = array();
+	public $fixtures = array(
+		'plugin.content_comments.content_comment',
+	);
 
 /**
  * Plugin name
@@ -173,5 +175,44 @@ class ContentCommentsComponentBeforeRenderTest extends NetCommonsControllerTestC
 				),
 			),
 		);
+	}
+
+/**
+ * beforeRender()のPaginator例外テスト
+ *
+ * @return void
+ * @throws InternalErrorException
+ */
+	public function testBeforeRenderException() {
+		$this->generate(
+			'TestContentComments.TestContentCommentsComponent', [
+				'components' => [
+					'Paginator'
+				]
+			]
+		);
+
+		// Exception
+		$this->controller->Components->Paginator
+			->expects($this->once())
+			->method('paginate')
+			->will($this->returnCallback(function () {
+				throw new InternalErrorException();
+			}));
+
+		$settings = $this->__getSettings();
+		$viewVars = array(
+			'fake' => array(
+				'Fake' => array('key' => 'key'),
+			),
+			'fakeSetting' => array('use_comment' => 1),
+		);
+
+		$this->controller->ContentComments->settings = $settings;
+		$this->controller->viewVars = $viewVars;
+
+		//テスト実行
+		$this->_testGetAction('/test_content_comments/test_content_comments_component/index',
+			null, 'InternalErrorException', 'view');
 	}
 }
