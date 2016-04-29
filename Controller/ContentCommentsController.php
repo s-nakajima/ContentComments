@@ -66,7 +66,7 @@ class ContentCommentsController extends ContentCommentsAppController {
 
 		// ビジターまで投稿OKなら、ログインなしでもコメント投稿できる
 		if ($this->action == 'add' && $isVisitorCreatable) {
-			// Permissionコンポーネント外す
+			// 暫定対応：Permissionコンポーネント外す https://github.com/NetCommons3/NetCommons3/issues/198
 			$this->Components->unload('NetCommons.Permission');
 			// ゲストアクセスOKのアクションを設定
 			$this->Auth->allow('add');
