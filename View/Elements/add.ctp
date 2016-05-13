@@ -57,29 +57,27 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 					<div class="form-group">
 						<div class="input textarea">
 							<?php
-								/* 登録時入力エラー対応、Sessionのvalueをセット */
-								$contentCommentComment = array(
-									'class' => 'form-control nc-noresize',
-									'rows' => 2,
-								);
-								if (!$this->Session->read('ContentComments.forRedirect.requestData.id')) {
-									$contentCommentComment['value'] = $this->Session->read('ContentComments.forRedirect.requestData.comment');
-								}
+							/* 登録時入力エラー対応、Sessionのvalueをセット */
+							$contentCommentComment = array(
+								'class' => 'form-control nc-noresize',
+								'rows' => 2,
+							);
+							if (!$this->Session->read('ContentComments.forRedirect.requestData.id')) {
+								$contentCommentComment['value'] = $this->Session->read('ContentComments.forRedirect.requestData.comment');
+							}
 
-								echo $this->NetCommonsForm->textarea(
-									'ContentComment.comment',
-									$contentCommentComment
-								);
+							echo $this->NetCommonsForm->textarea(
+								'ContentComment.comment',
+								$contentCommentComment
+							);
+
+							// 登録時入力エラー対応 登録処理のみエラー表示エリア配置
+							if (!$this->Session->read('ContentComments.forRedirect.requestData.id')) {
+								echo $this->NetCommonsForm->error('ContentComment.comment');
+							}
 							?>
 						</div>
 					</div>
-
-					<?php /* 登録時入力エラー対応 登録処理のみエラー表示エリア配置 */ ?>
-					<?php if (!$this->Session->read('ContentComments.forRedirect.requestData.id')): ?>
-						<div class="has-error">
-							<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
-						</div>
-					<?php endif ?>
 
 					<div class="row">
 						<div class="col-xs-12 text-center">

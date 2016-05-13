@@ -58,16 +58,14 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 				}
 
 				echo $this->NetCommonsForm->textarea('ContentComment.comment', $contentCommentComment);
+
+				// 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置
+				if ($this->Session->read('ContentComments.forRedirect.requestData.id') == $contentComment['ContentComment']['id']) {
+					echo $this->NetCommonsForm->error('ContentComment.comment');
+				}
 				?>
 			</div>
 		</div>
-
-		<?php /* 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置 */ ?>
-		<?php if ($this->Session->read('ContentComments.forRedirect.requestData.id') == $contentComment['ContentComment']['id']): ?>
-			<div class="has-error">
-				<?php echo $this->NetCommonsForm->error('ContentComment.comment', null, array('class' => 'help-block')); ?>
-			</div>
-		<?php endif ?>
 
 		<div class="row">
 			<div class="col-xs-12 text-center">
