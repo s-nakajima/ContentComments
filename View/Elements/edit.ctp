@@ -44,23 +44,30 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		?>
 
 		<div class="form-group">
-			<div class="input textarea">
+			<?php
+			$err = Hash::get($this->validationErrors, 'ContentComment.comment');
+			$isEdit = $this->Session->read('ContentComments.forRedirect.requestData.id') == $contentComment['ContentComment']['id'];
+			$hasError = '';
+			// 編集で、エラーメッセージあり
+			if ($isEdit && !empty($err)) {
+				$hasError = 'has-error';
+			}
+			?>
+			<div class="<?php echo $hasError; ?>">
 				<?php
 				$contentCommentComment = array(
 					'class' => 'form-control nc-noresize',
 					'rows' => 2,
 					'value' => $contentComment['ContentComment']['comment'],
 				);
-
-				/* 編集時入力エラー対応 編集処理で、idが同じのみSessionのvalueをセット */
-				if ($this->Session->read('ContentComments.forRedirect.requestData.id') == $contentComment['ContentComment']['id']) {
+				// 編集時入力エラー対応 編集処理で、idが同じのみSessionのvalueをセット
+				if ($isEdit) {
 					$contentCommentComment['value'] = $this->Session->read('ContentComments.forRedirect.requestData.comment');
 				}
-
 				echo $this->NetCommonsForm->textarea('ContentComment.comment', $contentCommentComment);
 
 				// 編集時入力エラー対応 編集処理で、idが同じのみエラー表示エリア配置
-				if ($this->Session->read('ContentComments.forRedirect.requestData.id') == $contentComment['ContentComment']['id']) {
+				if ($isEdit) {
 					echo $this->NetCommonsForm->error('ContentComment.comment');
 				}
 				?>

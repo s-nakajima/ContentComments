@@ -55,24 +55,29 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 					<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 					<div class="form-group">
-						<div class="input textarea">
+						<?php
+						$err = Hash::get($this->validationErrors, 'ContentComment.comment');
+						$isAdd = !$this->Session->read('ContentComments.forRedirect.requestData.id');
+						$hasError = '';
+						// 登録で、エラーメッセージあり
+						if ($isAdd && !empty($err)) {
+							$hasError = 'has-error';
+						}
+						?>
+						<div class="<?php echo $hasError; ?>">
 							<?php
-							/* 登録時入力エラー対応、Sessionのvalueをセット */
 							$contentCommentComment = array(
 								'class' => 'form-control nc-noresize',
 								'rows' => 2,
 							);
-							if (!$this->Session->read('ContentComments.forRedirect.requestData.id')) {
+							// 登録時入力エラー対応、Sessionのvalueをセット
+							if ($isAdd) {
 								$contentCommentComment['value'] = $this->Session->read('ContentComments.forRedirect.requestData.comment');
 							}
-
-							echo $this->NetCommonsForm->textarea(
-								'ContentComment.comment',
-								$contentCommentComment
-							);
+							echo $this->NetCommonsForm->textarea('ContentComment.comment', $contentCommentComment);
 
 							// 登録時入力エラー対応 登録処理のみエラー表示エリア配置
-							if (!$this->Session->read('ContentComments.forRedirect.requestData.id')) {
+							if ($isAdd) {
 								echo $this->NetCommonsForm->error('ContentComment.comment');
 							}
 							?>
