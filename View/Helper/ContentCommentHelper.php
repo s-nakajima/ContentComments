@@ -65,8 +65,6 @@ class ContentCommentHelper extends AppHelper {
 				$element .= sprintf(__d('content_comments', '（%s unapproved）'), $approvalCnt);
 			}
 
-			$attributes = Hash::merge($attributes, array('style' => 'padding-right: 15px;'));
-
 			/* @link http://book.cakephp.org/2.0/ja/core-libraries/helpers/html.html#HtmlHelper::tag */
 			$output .= $this->Html->tag('span', $element, $attributes);
 		}
