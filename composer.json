@@ -18,12 +18,18 @@
     "license": "NetCommons License",
     "authors": [
         {
+            "name": "Mitsuru Mutaguchi(OpenSource WorkShop)",
+            "email": "mutaguchi@opensource-workshop.jp",
+            "homepage": "https://opensource-workshop.jp/",
+            "role": "Developer"
+        },
+        {
             "name": "NetCommons Community",
             "homepage": "https://github.com/NetCommons3/ContentComments/graphs/contributors"
         }
     ],
     "type":        "cakephp-plugin",
-    "keywords":    ["cakephp", "content-comments", "netcommons"],
+    "keywords":    ["cakephp", "content-comments"],
     "config": {
         "vendor-dir": "vendors"
     }
