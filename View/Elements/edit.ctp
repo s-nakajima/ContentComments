@@ -76,16 +76,18 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 
 		<div class="row">
 			<div class="col-xs-12 text-center">
-				<button type="button" class="btn btn-default btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = false;">
-					<span class="glyphicon glyphicon-remove"></span>
-					<?php echo __d('net_commons', 'Cancel') ?>
-				</button>
-				<?php echo $this->NetCommonsForm->button(
-					__d('content_comments', 'Comment'),
+				<?php echo $this->Button->cancelAndSave(
+					__d('net_commons', 'Cancel'),
+					__d('net_commons', 'OK'),
+					'#',
 					array(
-						'class' => 'btn btn-primary btn-sm',
-						'ng-class' => '{disabled: sending}',
-				)); ?>
+						'class' => 'btn btn-default btn-sm',
+						'ng-click' => 'isDisplayEdit' . $contentComment['ContentComment']['id'] . ' = false;',
+					),
+					array(
+						'class' => 'btn btn-primary btn-sm  btn-workflow'
+					)
+				); ?>
 			</div>
 		</div>
 	<?php echo $this->NetCommonsForm->end(); ?>
