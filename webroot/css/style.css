@@ -1,7 +1,6 @@
 /**
  * content_comments/css/style.css
  *
- * @author Noriko Arai <arai@nii.ac.jp>
  * @author Mitsuru Mutaguchi <mutaguchi@opensource-workshop.jp>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
@@ -21,4 +20,9 @@
 }
 .content-comments > .comment-no-form {
 	border: 0 none;
+}
+
+/* ボタン */
+.content-comment-button {
+	display: inline;
 }
