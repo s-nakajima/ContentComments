@@ -26,7 +26,7 @@ $pluginKey = $this->request->params['plugin'];
 <div class="row">
 	<div class="col-xs-12">
 		<article>
-			<?php if ($this->Paginator->param('count') >= 1 || Current::permission('content_comment_creatable')): ?>
+			<?php if ($this->Paginator->param('count') >= 1 || Current::permission('content_comment_creatable') || $isVisitorCreatable): ?>
 			<div class="panel panel-default">
 			<?php else: ?>
 			<div>
