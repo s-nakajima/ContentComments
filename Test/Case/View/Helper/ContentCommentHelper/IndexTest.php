@@ -232,6 +232,42 @@ class ContentCommentHelperIndexTest extends NetCommonsHelperTestCase {
 	}
 
 /**
+ * index()のテスト - パーミッションON 登録でエラーメッセージ表示
+ *
+ * @return void
+ */
+	public function testIndexPermissionOnAddError() {
+		//データ生成
+		$content = array(
+			'ContentCommentCnt' => array(
+				'approval_cnt' => 1,
+			)
+		);
+
+		$this->__setUp(1, 0, 1);
+
+		$SessionComponent = new SessionComponent(new ComponentCollection());
+		$SessionComponent->delete('ContentComments.forRedirect');
+
+		// エラーメッセージ
+		$this->ContentComment->_View->validationErrors = array(
+			'ContentComment' => array(
+				'comment' => array('コメントを入力してください。')
+			)
+		);
+
+		//テスト実施
+		$result = $this->ContentComment->index($content);
+
+		//チェック
+		//debug($result);
+		// add.ctp from表示確認
+		$this->assertContains('/content_comments/content_comments/add/', $result);
+		// edit.ctp from表示確認
+		$this->assertContains('/content_comments/content_comments/edit/', $result);
+	}
+
+/**
  * index()のテスト - コメントを利用しない場合、nullが返る
  *
  * @return void
