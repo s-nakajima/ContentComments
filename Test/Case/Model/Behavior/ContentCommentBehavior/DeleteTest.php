@@ -81,4 +81,18 @@ class ContentCommentBehaviorDeleteTest extends NetCommonsModelTestCase {
 		//debug($result);
 		$this->assertTrue($result);
 	}
+
+/**
+ * delete()の例外テスト
+ *
+ * @return void
+ */
+	public function testDeleteOnExeptionError() {
+		//テストデータ
+		$this->_mockForReturnFalse('TestModel', 'ContentComments.ContentComment', 'deleteAll');
+
+		//テスト実施
+		$this->setExpectedException('InternalErrorException');
+		$this->TestModel->delete(1);
+	}
 }
