@@ -23,7 +23,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 <?php /* 承認ボタン */ ?>
 <?php echo $this->NetCommonsForm->create('ContentComment', array(
 	'name' => 'form',
-	'style' => 'display: inline;',
+	'class' => 'content-comment-button',
 	'url' => '/content_comments/content_comments/approve/' . Current::read('Frame.id'),
 	'type' => 'put',
 )); ?>
