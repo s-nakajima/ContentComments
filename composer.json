@@ -9,7 +9,6 @@
     },
     "require": {
         "cakedc/migrations":            "~2.2",
-        "netcommons/blocks":            "dev-master",
         "netcommons/mails":             "dev-master",
         "netcommons/net-commons":       "dev-master",
         "netcommons/pages":             "dev-master",
@@ -19,18 +18,12 @@
     "license": "NetCommons License",
     "authors": [
         {
-          "name": "Mitsuru Mutaguchi(OpenSource WorkShop)",
-          "email": "mutaguchi@opensource-workshop.jp",
-          "homepage": "https://opensource-workshop.jp/",
-          "role": "Developer"
-        },
-        {
             "name": "NetCommons Community",
             "homepage": "https://github.com/NetCommons3/ContentComments/graphs/contributors"
         }
     ],
     "type":        "cakephp-plugin",
-    "keywords":    ["cakephp", "content-comments"],
+    "keywords":    ["cakephp", "content-comments", "netcommons"],
     "config": {
         "vendor-dir": "vendors"
     }
