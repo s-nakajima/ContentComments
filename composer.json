@@ -1,6 +1,7 @@
 {
     "name": "netcommons/content-comments",
     "description": "ContentComments for NetCommons Plugin",
+    "keywords":    ["cakephp", "content-comments"],
     "homepage": "http://www.netcommons.org/",
     "extra": {
         "installer-paths": {
