@@ -18,10 +18,10 @@
     "license": "NetCommons License",
     "authors": [
         {
-            "name": "Mitsuru Mutaguchi(OpenSource WorkShop)",
-            "email": "mutaguchi@opensource-workshop.jp",
-            "homepage": "https://opensource-workshop.jp/",
-            "role": "Developer"
+          "name": "Mitsuru Mutaguchi(OpenSource WorkShop)",
+          "email": "mutaguchi@opensource-workshop.jp",
+          "homepage": "https://opensource-workshop.jp/",
+          "role": "Developer"
         },
         {
             "name": "NetCommons Community",
