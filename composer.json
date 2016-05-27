@@ -23,7 +23,7 @@
         }
     ],
     "type":        "cakephp-plugin",
-    "keywords":    ["cakephp", "content-comments"],
+    "keywords":    ["cakephp", "content-comments", "netcommons"],
     "config": {
         "vendor-dir": "vendors"
     }
