@@ -9,6 +9,7 @@
     },
     "require": {
         "cakedc/migrations":            "~2.2",
+        "netcommons/blocks":            "dev-master",
         "netcommons/mails":             "dev-master",
         "netcommons/net-commons":       "dev-master",
         "netcommons/pages":             "dev-master",
