@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"PO-Revision-Date: 2016-05-24 21:29+0900\n"
+"PO-Revision-Date: 2016-05-26 19:07+0900\n"
 "Language-Team: EMAIL@ADDRESS\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,3 +67,6 @@ msgstr "未承認"
 #: Plugin/Videos/View/Elements/VideoBlocks/edit_form.ctp:33
 msgid "Use comment"
 msgstr "コメントを使う"
+
+msgid "Content comment creatable roles help"
+msgstr "参観者まで設定すると、ログインしていないユーザでもコメント投稿できます。"
