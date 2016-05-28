@@ -10,7 +10,6 @@
  */
 
 App::uses('ContentCommentsAppController', 'ContentComments.Controller');
-App::uses('MailSend', 'Mails.Utility');
 
 /**
  * コンテントコメント Controller
@@ -85,8 +84,6 @@ class ContentCommentsController extends ContentCommentsAppController {
 				$this->throwBadRequest();
 				return;
 			}
-			// キューからメール送信
-			MailSend::send();
 
 			$message = __d('content_comments', 'Commented.');
 			$this->__setFlashMessageAndRedirect($message);
@@ -105,8 +102,6 @@ class ContentCommentsController extends ContentCommentsAppController {
 				$this->throwBadRequest();
 				return;
 			}
-			// キューからメール送信
-			MailSend::send();
 
 			$message = __d('content_comments', 'Edit the comment.');
 			$this->__setFlashMessageAndRedirect($message);
@@ -125,8 +120,6 @@ class ContentCommentsController extends ContentCommentsAppController {
 				$this->throwBadRequest();
 				return;
 			}
-			// キューからメール送信
-			MailSend::send();
 
 			$message = __d('content_comments', 'Approved the comment.');
 			$this->__setFlashMessageAndRedirect($message);
