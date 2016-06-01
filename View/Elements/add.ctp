@@ -21,82 +21,70 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
 <div class="content-comments">
 	<div class="comment-form">
-		<div class="media">
-			<div class="media-left">
-				<?php /* 自分のアバター */ ?>
-				<?php /** @see DisplayUserHelper::avatarLink() */ ?>
-				<?php echo $this->DisplayUser->avatarLink(Current::read('User'), array(
-					'class' => 'img-rounded',
-					'alt' => Current::read('User.handlename'),
-				), [], 'id'); ?>
-			</div>
-			<div class="media-body">
-				<?php echo $this->NetCommonsForm->create('ContentComment', array(
-					'name' => 'form',
-					'url' => '/content_comments/content_comments/add/' . Current::read('Frame.id'),
-					'type' => 'post',
-				)); ?>
-					<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
-					<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
-					<?php echo $this->NetCommonsForm->hidden('_mail.content_title', array('value' => $contentTitleForMail)); ?>
-					<?php echo $this->NetCommonsForm->hidden('_mail.use_comment_approval', array('value' => $useCommentApproval)); ?>
-					<?php echo $this->NetCommonsForm->hidden('_tmp.is_visitor_creatable', array('value' => $isVisitorCreatable)); ?>
+		<?php echo $this->NetCommonsForm->create('ContentComment', array(
+			'name' => 'form',
+			'url' => '/content_comments/content_comments/add/' . Current::read('Frame.id'),
+			'type' => 'post',
+		)); ?>
+			<?php echo $this->NetCommonsForm->hidden('ContentComment.plugin_key', array('value' => $pluginKey)); ?>
+			<?php echo $this->NetCommonsForm->hidden('ContentComment.content_key', array('value' => $contentKey)); ?>
+			<?php echo $this->NetCommonsForm->hidden('_mail.content_title', array('value' => $contentTitleForMail)); ?>
+			<?php echo $this->NetCommonsForm->hidden('_mail.use_comment_approval', array('value' => $useCommentApproval)); ?>
+			<?php echo $this->NetCommonsForm->hidden('_tmp.is_visitor_creatable', array('value' => $isVisitorCreatable)); ?>
+			<?php
+			// コメント承認機能 0:使わない=>公開 1:使う=>未承認
+			$status = $useCommentApproval ? WorkflowComponent::STATUS_APPROVED : WorkflowComponent::STATUS_PUBLISHED;
+			if (Current::permission('content_comment_publishable')) {
+				// 公開
+				$status = WorkflowComponent::STATUS_PUBLISHED;
+			}
+			echo $this->NetCommonsForm->hidden('ContentComment.status', array('value' => $status));
+			?>
+			<?php // Block.idのみセットするのは、Controller::beforeFilter() => NetCommonsAppController::beforeFilter() => Current::initialize() => CurrentFrame::initialize() => CurrentFrame::setBlock()
+					// でBlock.idないとBlockをfindしてくれないため ?>
+			<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
+
+			<div class="form-group">
+				<?php
+				$err = Hash::get($this->validationErrors, 'ContentComment.comment');
+				$isAdd = !$this->Session->read('ContentComments.forRedirect.requestData.id');
+				$hasError = '';
+				// 登録で、エラーメッセージあり
+				if ($isAdd && !empty($err)) {
+					$hasError = 'has-error';
+				}
+				?>
+				<div class="<?php echo $hasError; ?>">
 					<?php
-					// コメント承認機能 0:使わない=>公開 1:使う=>未承認
-					$status = $useCommentApproval ? WorkflowComponent::STATUS_APPROVED : WorkflowComponent::STATUS_PUBLISHED;
-					if (Current::permission('content_comment_publishable')) {
-						// 公開
-						$status = WorkflowComponent::STATUS_PUBLISHED;
+					$contentCommentComment = array(
+						'class' => 'form-control nc-noresize',
+						'rows' => 2,
+					);
+					// 登録時入力エラー対応、Sessionのvalueをセット
+					if ($isAdd) {
+						$contentCommentComment['value'] = $this->Session->read('ContentComments.forRedirect.requestData.comment');
 					}
-					echo $this->NetCommonsForm->hidden('ContentComment.status', array('value' => $status));
+					echo $this->NetCommonsForm->textarea('ContentComment.comment', $contentCommentComment);
+
+					// 登録時入力エラー対応 登録処理のみエラー表示エリア配置
+					if ($isAdd) {
+						echo $this->NetCommonsForm->error('ContentComment.comment');
+					}
 					?>
-					<?php // Block.idのみセットするのは、Controller::beforeFilter() => NetCommonsAppController::beforeFilter() => Current::initialize() => CurrentFrame::initialize() => CurrentFrame::setBlock()
-							// でBlock.idないとBlockをfindしてくれないため ?>
-					<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
-
-					<div class="form-group">
-						<?php
-						$err = Hash::get($this->validationErrors, 'ContentComment.comment');
-						$isAdd = !$this->Session->read('ContentComments.forRedirect.requestData.id');
-						$hasError = '';
-						// 登録で、エラーメッセージあり
-						if ($isAdd && !empty($err)) {
-							$hasError = 'has-error';
-						}
-						?>
-						<div class="<?php echo $hasError; ?>">
-							<?php
-							$contentCommentComment = array(
-								'class' => 'form-control nc-noresize',
-								'rows' => 2,
-							);
-							// 登録時入力エラー対応、Sessionのvalueをセット
-							if ($isAdd) {
-								$contentCommentComment['value'] = $this->Session->read('ContentComments.forRedirect.requestData.comment');
-							}
-							echo $this->NetCommonsForm->textarea('ContentComment.comment', $contentCommentComment);
-
-							// 登録時入力エラー対応 登録処理のみエラー表示エリア配置
-							if ($isAdd) {
-								echo $this->NetCommonsForm->error('ContentComment.comment');
-							}
-							?>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-xs-12 text-center">
-							<?php echo $this->NetCommonsForm->button(
-								__d('content_comments', 'Comment'),
-								array(
-									'class' => 'btn btn-success btn-sm',
-									'ng-class' => '{disabled: sending}',
-									'icon' => 'glyphicon-plus',
-							)); ?>
-						</div>
-					</div>
-				<?php echo $this->NetCommonsForm->end(); ?>
+				</div>
 			</div>
-		</div>
+
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<?php echo $this->NetCommonsForm->button(
+						__d('content_comments', 'Comment'),
+						array(
+							'class' => 'btn btn-success btn-sm',
+							'ng-class' => '{disabled: sending}',
+							'icon' => 'glyphicon-plus',
+					)); ?>
+				</div>
+			</div>
+		<?php echo $this->NetCommonsForm->end(); ?>
 	</div>
 </div>
