@@ -68,3 +68,6 @@ msgstr ""
 
 msgid "Content comment creatable roles help"
 msgstr ""
+
+msgid "Approval"
+msgstr ""

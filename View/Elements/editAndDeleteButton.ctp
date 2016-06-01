@@ -25,8 +25,8 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 	<?php if ($this->Session->read('ContentComments.forRedirect.requestData.id') == $contentComment['ContentComment']['id']): ?>
 		ng-init="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;"
 	<?php endif; ?>>
-<button type="button" class="btn btn-primary btn-sm" ng-click="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;">
-	<span class='glyphicon glyphicon-edit'></span>
+<button type="button" class="btn btn-primary btn-xs nc-btn-style" ng-click="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;">
+	<span class='glyphicon glyphicon-edit'></span> <?php echo __d('net_commons', 'Edit'); ?>
 </button>
 
 <?php /* --- 削除ボタン */ ?>
@@ -43,9 +43,9 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 	<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 	<?php echo $this->NetCommonsForm->button(
-		"<span class='glyphicon glyphicon-trash'></span>",
+		"<span class='glyphicon glyphicon-trash'></span> " . __d('net_commons', 'Delete'),
 		array(
-			'class' => 'btn btn-danger btn-sm',
+			'class' => 'btn btn-danger btn-xs',
 			'onclick' => 'return confirm(\'' . sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')',
 			'ng-class' => '{disabled: sending}',
 	)); ?>
