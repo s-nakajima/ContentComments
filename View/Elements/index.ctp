@@ -28,21 +28,17 @@ $pluginKey = $this->request->params['plugin'];
 	<?php /* コメント数 */ ?>
 	<div class="content-comments">
 		<div class="comment-count">
-			<div class="row">
-				<div class="col-xs-12">
-					<label class="control-label" for="CommentComment">
-						<span class="glyphicon glyphicon-comment"></span>
-						<?php
-							echo sprintf(__d('content_comments', '%s comments'), $this->Paginator->param('count'));
+			<label class="control-label" for="CommentComment">
+				<span class="glyphicon glyphicon-comment"></span>
+				<?php
+					echo sprintf(__d('content_comments', '%s comments'), $this->Paginator->param('count'));
 
-							// 未承認1件以上
-							if ($approvalCnt >= 1) {
-								echo sprintf(__d('content_comments', '（%s unapproved）'), $approvalCnt);
-							}
-						?>
-					</label>
-				</div>
-			</div>
+					// 未承認1件以上
+					if ($approvalCnt >= 1) {
+						echo sprintf(__d('content_comments', '（%s unapproved）'), $approvalCnt);
+					}
+				?>
+			</label>
 		</div>
 	</div>
 
