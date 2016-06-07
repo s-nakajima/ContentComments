@@ -53,5 +53,4 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		'useCommentApproval' => $useCommentApproval,
 		'contentTitleForMail' => $contentTitleForMail,
 	)); ?>
-<?php endif; ?>
-
+<?php endif;
