@@ -13,9 +13,11 @@
 .content-comments > .comment-count {
 	padding-top: 1em;
 }
-.content-comments > .comment-form,
+.content-comments > .comment-form {
+	padding: 1em 0em;
+}
 .content-comments > .comment {
-	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
 	padding: 1em 0em;
 }
 .content-comments > .comment-no-form {
