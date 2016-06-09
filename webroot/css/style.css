@@ -8,7 +8,7 @@
  */
 
 .content-comments {
-	padding: 0em 1em;
+	/*padding: 0em 1em;*/
 }
 .content-comments > .comment-count {
 	padding-top: 1em;
@@ -17,11 +17,11 @@
 	padding: 1em 0em;
 }
 .content-comments > .comment {
-	border-top: 1px solid #ddd;
+	/*border-top: 1px solid #ddd;*/
 	padding: 1em 0em;
 }
 .content-comments > .comment-no-form {
-	border: 0 none;
+	/*border: 0 none;*/
 }
 
 /* ボタン */
