@@ -26,11 +26,12 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 		ng-init="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?> = true;"
 	<?php endif; ?>>
 <?php echo $this->NetCommonsForm->button(
-	"<span class='glyphicon glyphicon-edit'></span> " . __d('net_commons', 'Edit'),
+	__d('net_commons', 'Edit'),
 	array(
 		'class' => 'btn btn-primary btn-xs',
 		'ng-click' => 'isDisplayEdit' . $contentComment['ContentComment']['id'] . ' = true;',
 		'type' => 'button',
+		'icon' => 'glyphicon-edit',
 	)
 ); ?>
 
@@ -48,11 +49,12 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 	<?php echo $this->NetCommonsForm->hidden('Block.id', array('value' => Current::read('Block.id'))); ?>
 
 	<?php echo $this->NetCommonsForm->button(
-		"<span class='glyphicon glyphicon-trash'></span> " . __d('net_commons', 'Delete'),
+		__d('net_commons', 'Delete'),
 		array(
 			'class' => 'btn btn-danger btn-xs',
 			'onclick' => 'return confirm(\'' . sprintf(__d('net_commons', 'Deleting the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')',
 			'ng-class' => '{disabled: sending}',
+			'icon' => 'glyphicon-trash',
 		)
 	); ?>
 <?php echo $this->NetCommonsForm->end();

@@ -38,10 +38,11 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 	<?php echo $this->NetCommonsForm->hidden('_mail.use_comment_approval', array('value' => $useCommentApproval)); ?>
 
 	<?php echo $this->NetCommonsForm->button(
-		"<span class='glyphicon glyphicon-ok'></span> " . __d('content_comments', 'Approval'),
+		__d('content_comments', 'Approval'),
 		array(
 			'class' => 'btn btn-warning btn-xs',
 			'onclick' => 'return confirm(\'' . sprintf(__d('content_comments', 'Approving the %s. Are you sure to proceed?'), __d('content_comments', 'comment')) . '\')',
 			'ng-class' => '{disabled: sending}',
+			'icon' => 'glyphicon-ok',
 	)); ?>
 <?php echo $this->NetCommonsForm->end();
