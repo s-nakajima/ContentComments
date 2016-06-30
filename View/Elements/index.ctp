@@ -27,7 +27,7 @@ $pluginKey = $this->request->params['plugin'];
 <div class="content-comments">
 	<div class="comment-count">
 		<label class="control-label" for="CommentComment">
-			<span class="glyphicon glyphicon-comment"></span>
+			<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
 			<?php
 				echo sprintf(__d('content_comments', '%s comments'), $this->Paginator->param('count'));
 
