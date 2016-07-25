@@ -16,7 +16,7 @@
  * @package NetCommons\ContentComments\Config\Schema
  * @SuppressWarnings(PHPMD.LongVariable)
  */
-class ContentCommentSchema extends CakeSchema {
+class ContentCommentsSchema extends CakeSchema {
 
 /**
  * Database connection
