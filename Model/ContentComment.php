@@ -103,7 +103,7 @@ class ContentComment extends ContentCommentsAppModel {
  * Get conditions
  *
  * @param string|array $contentKeys コンテンツキー
- * @return query conditions
+ * @return array conditions
  */
 	public function getConditions($contentKeys) {
 		$conditions = array(
