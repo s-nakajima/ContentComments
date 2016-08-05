@@ -193,9 +193,9 @@ class ContentCommentHelperIndexTest extends NetCommonsHelperTestCase {
 		//チェック
 		//debug($result);
 		// add.ctp from表示確認
-		$this->assertContains('/content_comments/content_comments/add/', $result);
+		$this->assertContains('/content_comments/content_comments/add', $result);
 		// edit.ctp from表示確認
-		$this->assertContains('/content_comments/content_comments/edit/', $result);
+		$this->assertContains('/content_comments/content_comments/edit', $result);
 	}
 
 /**
@@ -226,9 +226,9 @@ class ContentCommentHelperIndexTest extends NetCommonsHelperTestCase {
 		//チェック
 		//debug($result);
 		// add.ctp from表示確認
-		$this->assertContains('/content_comments/content_comments/add/', $result);
+		$this->assertContains('/content_comments/content_comments/add', $result);
 		// edit.ctp from表示確認
-		$this->assertContains('/content_comments/content_comments/edit/', $result);
+		$this->assertContains('/content_comments/content_comments/edit', $result);
 	}
 
 /**
@@ -262,9 +262,9 @@ class ContentCommentHelperIndexTest extends NetCommonsHelperTestCase {
 		//チェック
 		//debug($result);
 		// add.ctp from表示確認
-		$this->assertContains('/content_comments/content_comments/add/', $result);
+		$this->assertContains('/content_comments/content_comments/add', $result);
 		// edit.ctp from表示確認
-		$this->assertContains('/content_comments/content_comments/edit/', $result);
+		$this->assertContains('/content_comments/content_comments/edit', $result);
 	}
 
 /**
