@@ -23,7 +23,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 <div ng-show="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
 	<?php echo $this->NetCommonsForm->create('ContentComment', array(
 		'name' => 'form',
-		'url' => '/content_comments/content_comments/edit/' . Current::read('Frame.id'),
+		'url' => NetCommonsUrl::blockUrl(['plugin' => 'content_comments', 'controller' => 'content_comments', 'action' => 'edit']),
 		'type' => 'put',
 	)); ?>
 		<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
@@ -81,7 +81,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 					__d('net_commons', 'OK'),
 					'#',
 					array(
-						'class' => 'btn btn-default btn-sm',
+						'class' => 'btn btn-default btn-sm btn-workflow',
 						'ng-click' => 'isDisplayEdit' . $contentComment['ContentComment']['id'] . ' = false;',
 					),
 					array(

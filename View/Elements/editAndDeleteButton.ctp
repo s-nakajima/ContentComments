@@ -39,7 +39,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 <?php echo $this->NetCommonsForm->create('ContentComment', array(
 	'name' => 'form',
 	'class' => 'content-comment-button',
-	'url' => '/content_comments/content_comments/delete/' . Current::read('Frame.id'),
+	'url' => NetCommonsUrl::blockUrl(['plugin' => 'content_comments', 'controller' => 'content_comments', 'action' => 'delete']),
 	'type' => 'delete',
 )); ?>
 	<?php echo $this->NetCommonsForm->hidden('ContentComment.id', array('value' => $contentComment['ContentComment']['id'])); ?>
