@@ -9,11 +9,11 @@
     },
     "require": {
         "cakedc/migrations":            "~2.2",
-        "netcommons/mails":             "dev-master",
-        "netcommons/net-commons":       "dev-master",
-        "netcommons/pages":             "dev-master",
-        "netcommons/users":             "dev-master",
-        "netcommons/workflow":          "dev-master"
+        "netcommons/mails":             "@dev",
+        "netcommons/net-commons":       "@dev",
+        "netcommons/pages":             "@dev",
+        "netcommons/users":             "@dev",
+        "netcommons/workflow":          "@dev"
     },
     "license": "NetCommons License",
     "authors": [
