@@ -27,7 +27,7 @@ class VideosController extends VideosAppController {
 
 	public $uses = array(
 		'Videos.Video',
-		'Videos.VideoBlockSetting'
+		'Videos.VideoSetting'
 	);
 
 	public $helpers = array(
@@ -35,8 +35,8 @@ class VideosController extends VideosAppController {
 			'viewVarsKey' => array(
 				'contentKey' => 'video.Video.key',
 				'contentTitleForMail' => 'video.Video.title',
-				'useComment' => 'videoBlockSetting.use_comment',
-				'useCommentApproval' => 'videoBlockSetting.use_comment_approval'
+				'useComment' => 'videoSetting.use_comment',
+				'useCommentApproval' => 'videoSetting.use_comment_approval'
 			)
 		)
 	);
@@ -44,10 +44,10 @@ class VideosController extends VideosAppController {
 	public function index() {
 		$query = array(
 			'conditions' => array(
-				'VideoBlockSetting.block_key' => Current::read('Block.key')
+				'VideoSetting.block_key' => Current::read('Block.key')
 			)
 		);
-		$viewVars['videoBlockSetting'] = $this->VideoBlockSetting->find('first', $query);
+		$viewVars['videoSetting'] = $this->VideoSetting->find('first', $query);
 		$viewVars['videos'] = $this->Video->find('all');
 
 		$this->set($viewVars);
@@ -91,7 +91,7 @@ class VideosController extends VideosAppController {
 
 	public $uses = array(
 		'Videos.Video',
-		'Videos.VideoBlockSetting'
+		'Videos.VideoSetting'
 	);
 
 	public $components = array(
@@ -99,8 +99,8 @@ class VideosController extends VideosAppController {
 			'viewVarsKey' => array(
 				'contentKey' => 'video.Video.key',
 				'contentTitleForMail' => 'video.Video.title',
-				'useComment' => 'videoBlockSetting.use_comment'
-				'useCommentApproval' => 'videoBlockSetting.use_comment_approval'
+				'useComment' => 'videoSetting.use_comment'
+				'useCommentApproval' => 'videoSetting.use_comment_approval'
 			),
 			'allow' => array('view')
 		)
@@ -109,10 +109,10 @@ class VideosController extends VideosAppController {
 	public function view($videoKey) {
 		$query = array(
 			'conditions' => array(
-				'VideoBlockSetting.block_key' => Current::read('Block.key')
+				'VideoSetting.block_key' => Current::read('Block.key')
 			)
 		);
-		$viewVars['videoBlockSetting'] = $this->VideoBlockSetting->find('first', $query);
+		$viewVars['videoSetting'] = $this->VideoSetting->find('first', $query);
 
 		$query = array(
 			'conditions' => array(
