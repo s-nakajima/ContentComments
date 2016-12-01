@@ -13,61 +13,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Plugin/ContentComments/Controller/ContentCommentsController.php:91
-msgid "Commented."
-msgstr ""
-
-#: Plugin/ContentComments/Controller/ContentCommentsController.php:111
-msgid "Edit the comment."
-msgstr ""
-
-#: Plugin/ContentComments/Controller/ContentCommentsController.php:131
-msgid "Approved the comment."
-msgstr ""
-
-#: Plugin/ContentComments/Controller/ContentCommentsController.php:149
-msgid "Comment has been deleted."
-msgstr ""
-
-#: Plugin/ContentComments/Controller/ContentCommentsController.php:167
-msgid "Received your comment. It does not appear until it has been approved."
-msgstr ""
-
-#: Plugin/ContentComments/Model/ContentComment.php:88
-#: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
-#: Plugin/ContentComments/View/Elements/editAndDeleteButton.ctp:49
-#: Plugin/Mails/Model/Behavior/MailQueueBehavior.php:290
-msgid "comment"
-msgstr ""
-
-#: Plugin/ContentComments/View/Elements/add.ctp:87
-#: Plugin/ContentComments/View/Elements/edit.ctp:79
-msgid "Comment"
-msgstr ""
-
-#: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
-msgid "Approving the %s. Are you sure to proceed?"
-msgstr ""
-
-#: Plugin/ContentComments/View/Elements/index.ctp:43
-msgid "%s comments"
-msgstr ""
-
-#: Plugin/ContentComments/View/Elements/index.ctp:47
-#: Plugin/ContentComments/View/Helper/ContentCommentHelper.php:63
-msgid "（%s unapproved）"
-msgstr ""
-
-#: Plugin/ContentComments/View/Elements/indexOnce.ctp:41
-msgid "Approving"
-msgstr ""
-
-#: Plugin/Videos/View/Elements/VideoBlocks/edit_form.ctp:33
-msgid "Use comment"
-msgstr ""
-
+#: Blogs/View/Elements/BlogBlockRolePermissions/edit_form.ctp:21
+#: Tasks/View/Elements/TaskBlockRolePermissions/edit_form.ctp:22
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:22
 msgid "Content comment creatable roles help"
 msgstr ""
 
+#: Blogs/View/Elements/BlogBlocks/edit_form.ctp:33
+#: Videos/View/Elements/VideoBlocks/edit_form.ctp:35
+msgid "Use comment"
+msgstr ""
+
+#: ContentComments/Controller/ContentCommentsController.php:88
+msgid "Commented."
+msgstr ""
+
+#: ContentComments/Controller/ContentCommentsController.php:106
+msgid "Edit the comment."
+msgstr ""
+
+#: ContentComments/Controller/ContentCommentsController.php:124
+msgid "Approved the comment."
+msgstr ""
+
+#: ContentComments/Controller/ContentCommentsController.php:142
+msgid "Comment has been deleted."
+msgstr ""
+
+#: ContentComments/Controller/ContentCommentsController.php:160
+msgid "Received your comment. It does not appear until it has been approved."
+msgstr ""
+
+#: ContentComments/Model/ContentComment.php:94;159
+#: ContentComments/Test/Case/Model/ContentComment/ValidateTest.php:79
+#: ContentComments/View/Elements/approvalButton.ctp:44
+#: ContentComments/View/Elements/editAndDeleteButton.ctp:55
+msgid "comment"
+msgstr ""
+
+#: ContentComments/Test/Case/View/Helper/ContentCommentHelper/CountTest.php:91
+#: ContentComments/View/Elements/index.ctp:36
+#: ContentComments/View/Helper/ContentCommentHelper.php:65
+msgid "（%s unapproved）"
+msgstr ""
+
+#: ContentComments/View/Elements/add.ctp:80
+msgid "Comment"
+msgstr ""
+
+#: ContentComments/View/Elements/approvalButton.ctp:41
 msgid "Approval"
 msgstr ""
+
+#: ContentComments/View/Elements/approvalButton.ctp:44
+msgid "Approving the %s. Are you sure to proceed?"
+msgstr ""
+
+#: ContentComments/View/Elements/index.ctp:32
+msgid "%s comments"
+msgstr ""
+
+#: ContentComments/View/Elements/indexOnce.ctp:30
+msgid "Approving"
+msgstr ""
+
