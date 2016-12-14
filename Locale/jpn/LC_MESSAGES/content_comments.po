@@ -15,61 +15,67 @@ msgstr ""
 "Last-Translator: \n"
 "Language: ja_JP\n"
 
-#: Plugin/ContentComments/Controller/ContentCommentsController.php:91
-msgid "Commented."
-msgstr "コメントしました。"
-
-#: Plugin/ContentComments/Controller/ContentCommentsController.php:111
-msgid "Edit the comment."
-msgstr "コメントを編集しました。"
-
-#: Plugin/ContentComments/Controller/ContentCommentsController.php:131
-msgid "Approved the comment."
-msgstr "コメントを承認しました。"
-
-#: Plugin/ContentComments/Controller/ContentCommentsController.php:149
-msgid "Comment has been deleted."
-msgstr "コメントを削除しました。"
-
-#: Plugin/ContentComments/Controller/ContentCommentsController.php:167
-msgid "Received your comment. It does not appear until it has been approved."
-msgstr "コメントを受付ました。承認されるまで表示されません。"
-
-#: Plugin/ContentComments/Model/ContentComment.php:88
-#: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
-#: Plugin/ContentComments/View/Elements/editAndDeleteButton.ctp:49
-#: Plugin/Mails/Model/Behavior/MailQueueBehavior.php:290
-msgid "comment"
-msgstr "コメント"
-
-#: Plugin/ContentComments/View/Elements/add.ctp:87
-#: Plugin/ContentComments/View/Elements/edit.ctp:79
-msgid "Comment"
-msgstr "コメント"
-
-#: Plugin/ContentComments/View/Elements/approvalButton.ctp:43
-msgid "Approving the %s. Are you sure to proceed?"
-msgstr "%s を承認します。本当によろしいですか？"
-
-#: Plugin/ContentComments/View/Elements/index.ctp:43
-msgid "%s comments"
-msgstr "%s コメント"
-
-#: Plugin/ContentComments/View/Elements/index.ctp:47
-#: Plugin/ContentComments/View/Helper/ContentCommentHelper.php:63
-msgid "（%s unapproved）"
-msgstr "（%s 未承認）"
-
-#: Plugin/ContentComments/View/Elements/indexOnce.ctp:41
-msgid "Approving"
-msgstr "未承認"
-
-#: Plugin/Videos/View/Elements/VideoBlocks/edit_form.ctp:33
-msgid "Use comment"
-msgstr "コメントを使用する"
-
+#: Blogs/View/Elements/BlogBlockRolePermissions/edit_form.ctp:21
+#: Tasks/View/Elements/TaskBlockRolePermissions/edit_form.ctp:22
+#: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:22
 msgid "Content comment creatable roles help"
 msgstr "参観者まで設定すると、ログインしていないユーザでもコメント投稿できます。"
 
+#: Blogs/View/Elements/BlogBlocks/edit_form.ctp:33
+#: Videos/View/Elements/VideoBlocks/edit_form.ctp:35
+msgid "Use comment"
+msgstr "コメントを使用する"
+
+#: ContentComments/Controller/ContentCommentsController.php:88
+msgid "Commented."
+msgstr "コメントしました。"
+
+#: ContentComments/Controller/ContentCommentsController.php:106
+msgid "Edit the comment."
+msgstr "コメントを編集しました。"
+
+#: ContentComments/Controller/ContentCommentsController.php:124
+msgid "Approved the comment."
+msgstr "コメントを承認しました。"
+
+#: ContentComments/Controller/ContentCommentsController.php:142
+msgid "Comment has been deleted."
+msgstr "コメントを削除しました。"
+
+#: ContentComments/Controller/ContentCommentsController.php:160
+msgid "Received your comment. It does not appear until it has been approved."
+msgstr "コメントを受付ました。承認されるまで表示されません。"
+
+#: ContentComments/Model/ContentComment.php:94;159
+#: ContentComments/Test/Case/Model/ContentComment/ValidateTest.php:79
+#: ContentComments/View/Elements/approvalButton.ctp:44
+#: ContentComments/View/Elements/editAndDeleteButton.ctp:55
+msgid "comment"
+msgstr "コメント"
+
+#: ContentComments/Test/Case/View/Helper/ContentCommentHelper/CountTest.php:91
+#: ContentComments/View/Elements/index.ctp:36
+#: ContentComments/View/Helper/ContentCommentHelper.php:65
+msgid "（%s unapproved）"
+msgstr "（%s 未承認）"
+
+#: ContentComments/View/Elements/add.ctp:80
+msgid "Comment"
+msgstr "コメント"
+
+#: ContentComments/View/Elements/approvalButton.ctp:41
 msgid "Approval"
 msgstr "承認"
+
+#: ContentComments/View/Elements/approvalButton.ctp:44
+msgid "Approving the %s. Are you sure to proceed?"
+msgstr "%s を承認します。本当によろしいですか？"
+
+#: ContentComments/View/Elements/index.ctp:32
+msgid "%s comments"
+msgstr "%s コメント"
+
+#: ContentComments/View/Elements/indexOnce.ctp:30
+msgid "Approving"
+msgstr "未承認"
+
