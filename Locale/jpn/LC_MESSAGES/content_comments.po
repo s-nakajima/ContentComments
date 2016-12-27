@@ -19,7 +19,7 @@ msgstr ""
 #: Tasks/View/Elements/TaskBlockRolePermissions/edit_form.ctp:22
 #: Videos/View/Elements/VideoBlockRolePermissions/edit_form.ctp:22
 msgid "Content comment creatable roles help"
-msgstr "参観者まで設定すると、ログインしていないユーザでもコメント投稿できます。"
+msgstr "ゲストまで設定すると、ログインしていないユーザでもコメント投稿できます。"
 
 #: Blogs/View/Elements/BlogBlocks/edit_form.ctp:33
 #: Videos/View/Elements/VideoBlocks/edit_form.ctp:35
