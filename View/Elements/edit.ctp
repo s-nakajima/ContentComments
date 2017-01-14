@@ -39,7 +39,7 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 			!Current::permission('content_comment_publishable') &&
 			$contentComment['ContentComment']['status'] == WorkflowComponent::STATUS_PUBLISHED) {
 
-			echo $this->NetCommonsForm->hidden('ContentComment.status', array('value' => WorkflowComponent::STATUS_APPROVED));
+			echo $this->NetCommonsForm->hidden('ContentComment.status', array('value' => WorkflowComponent::STATUS_APPROVAL_WAITING));
 		}
 		?>
 

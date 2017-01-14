@@ -69,7 +69,7 @@ $pluginKey = $this->request->params['plugin'];
 
 				<div class="text-right" ng-hide="isDisplayEdit<?php echo $contentComment['ContentComment']['id']; ?>">
 					<?php /* 承認許可あり and 未承認のコメント  */ ?>
-					<?php if (Current::permission('content_comment_publishable') && $contentComment['ContentComment']['status'] == WorkflowComponent::STATUS_APPROVED): ?>
+					<?php if (Current::permission('content_comment_publishable') && $contentComment['ContentComment']['status'] == WorkflowComponent::STATUS_APPROVAL_WAITING): ?>
 						<?php /* 承認ボタン */ ?>
 						<?php echo $this->element('ContentComments.approvalButton', array(
 							'pluginKey' => $pluginKey,

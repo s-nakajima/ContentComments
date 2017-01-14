@@ -76,7 +76,7 @@ class ContentCommentBehavior extends ModelBehavior {
 
 		// --- 未承認件数の取得
 		// 未承認のみ
-		$conditions['ContentComment.status'] = WorkflowComponent::STATUS_APPROVED;
+		$conditions['ContentComment.status'] = WorkflowComponent::STATUS_APPROVAL_WAITING;
 		$results = $this->__applyCnt($model, $results, $conditions, 'approval_cnt');
 
 		return $results;
