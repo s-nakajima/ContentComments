@@ -161,7 +161,7 @@ class ContentCommentsControllerTest extends NetCommonsControllerTestCase {
 					'ContentComment' => array(
 						'id' => 3,
 						'comment' => 'approve',
-						'status' => WorkflowComponent::STATUS_APPROVED,	// 承認依頼
+						'status' => WorkflowComponent::STATUS_APPROVAL_WAITING,	// 承認依頼
 					),
 				)),
 				'urlOptions' => array('action' => 'approve'),
