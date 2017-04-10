@@ -79,3 +79,5 @@ msgstr "%s コメント"
 msgid "Approving"
 msgstr "未承認"
 
+msgid "Guest(Not logged in)"
+msgstr "ゲスト(未ログイン)"
