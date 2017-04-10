@@ -21,7 +21,11 @@ $this->NetCommonsHtml->css(array('/content_comments/css/style.css'));
 ?>
 <div class="row">
 	<div class="col-xs-6">
-		<?php echo $this->DisplayUser->handleLink($contentComment, ['avatar' => true]); ?>
+		<?php if ($contentComment['ContentComment']['created_user']) : ?>
+			<?php echo $this->DisplayUser->handleLink($contentComment, ['avatar' => true]); ?>
+		<?php else : ?>
+			<?php echo __d('content_comments', 'Guest(Not logged in)'); ?>
+		<?php endif; ?>
 
 		<?php /* ステータス */ ?>
 		<?php echo $this->Workflow->label($contentComment['ContentComment']['status'], array(

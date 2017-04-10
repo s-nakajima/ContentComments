@@ -79,3 +79,5 @@ msgstr "%s comments"
 msgid "Approving"
 msgstr "Approving"
 
+msgid "Guest(Not logged in)"
+msgid ""
