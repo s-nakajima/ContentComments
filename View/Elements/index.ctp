@@ -98,6 +98,11 @@ $pluginKey = $this->request->params['plugin'];
 	</div>
 
 	<?php /* ページャ */ ?>
-	<?php echo $this->element('NetCommons.paginator'); ?>
+	<?php echo $this->element('NetCommons.paginator', array(
+		"url" => array(
+			Current::read('Block.id'),
+			$contentKey
+		)
+	)); ?>
 
 </div>
