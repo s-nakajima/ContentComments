@@ -112,7 +112,9 @@ class ContentCommentGetConditionsTest extends NetCommonsGetTest {
 		Current::$current['Block']['key'] = 'block_1';
 		Current::$current['Plugin']['key'] = 'plugin_1';
 		Current::$current['User']['id'] = 1;	// ログイン
-		Current::$current['Permission']['content_comment_publishable']['value'] = 1;
+		Current::$current['Room']['id'] = '2';
+		$permission['content_comment_publishable']['value'] = 1;
+		Current::writeCurrentPermissions('2', $permission);
 
 		//テスト実施
 		$result = $this->$model->$methodName($contentKeys);

@@ -108,7 +108,7 @@ class ContentCommentHelperIndexTest extends NetCommonsHelperTestCase {
 
 		// --- setCurrent
 		$permission = $this->__getPermission($isPermissionEnable);
-		Current::$current['Permission'] = $permission;
+		Current::writeCurrentPermissions('1', $permission);
 		Current::$current['Room']['id'] = '1';
 		Current::$current['User']['id'] = '1';
 	}

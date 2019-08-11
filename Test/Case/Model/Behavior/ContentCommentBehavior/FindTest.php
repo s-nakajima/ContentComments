@@ -81,7 +81,8 @@ class ContentCommentBehaviorFindTest extends NetCommonsModelTestCase {
 		$permission = $this->__getPermission('0');
 		Current::$current['Block']['key'] = 'block_1';
 		Current::$current['Plugin']['key'] = 'plugin_1';
-		Current::$current['Permission'] = $permission;
+		Current::$current['Room']['id'] = '2';
+		Current::writeCurrentPermissions('2', $permission);
 
 		//テスト実施
 		$result = $this->TestModel->find($type, $query);
@@ -107,7 +108,8 @@ class ContentCommentBehaviorFindTest extends NetCommonsModelTestCase {
 		$permission = $this->__getPermission('1');
 		Current::$current['Block']['key'] = 'block_1';
 		Current::$current['Plugin']['key'] = 'plugin_1';
-		Current::$current['Permission'] = $permission;
+		Current::$current['Room']['id'] = '2';
+		Current::writeCurrentPermissions('2', $permission);
 
 		//テスト実施
 		$result = $this->TestModel->find($type, $query);

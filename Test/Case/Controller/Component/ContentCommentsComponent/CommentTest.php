@@ -119,7 +119,7 @@ class ContentCommentsComponentCommentTest extends NetCommonsControllerTestCase {
 		$this->assertRegExp($pattern, $this->view);
 
 		$this->controller->action = $action;
-		Current::$current['Permission'] = $permission;
+		Current::writeCurrentPermissions('2', $permission);
 		Current::$current['Block']['key'] = 'block_1';
 
 		if (isset($data)) {
@@ -163,7 +163,7 @@ class ContentCommentsComponentCommentTest extends NetCommonsControllerTestCase {
 			),
 			'パーミッションがあるかチェック:全てなし' => array(
 				'action' => null,
-				'permission' => null,
+				'permission' => [],
 				'expected' => false,
 			),
 			'登録：投稿許可ありか:なし' => array(
@@ -255,7 +255,7 @@ class ContentCommentsComponentCommentTest extends NetCommonsControllerTestCase {
 
 		$this->controller->action = $action;
 
-		Current::$current['Permission'] = $permission;
+		Current::writeCurrentPermissions('2', $permission);
 		Current::$current['Block']['key'] = 'block_1';
 
 		if (isset($data)) {
